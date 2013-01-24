@@ -75,8 +75,8 @@ set guioptions+=c
 ":nnoremap y "+y
 ":vnoremap y "+y
 " yank into clipboard (linux)
-:nnoremap y "*y
-:vnoremap y "*y
+":nnoremap y "*y
+":vnoremap y "*y
 
 :nnoremap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
 
