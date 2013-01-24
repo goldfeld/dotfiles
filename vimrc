@@ -138,6 +138,19 @@ let g:LustyJugglerShowKeys = 'a'
 :noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
 
+:nnoremap <C-L> :LightBeam<CR>
+command! -nargs=0 LightBeam call LightBeam()
+let lightBeam = 0
+function! LightBeam()
+	if g:lightBeam == 0
+		set cursorcolumn
+		let g:lightBeam = 1
+	else
+		set cursorcolumn!
+		let g:lightBeam = 0
+	endif
+endfunction
+
 ":noremap <Space> :LineSeekToggle<CR>
 command! -nargs=0 LineSeekToggle call LineSeekToggle()
 let LineSeek = 0
