@@ -40,6 +40,7 @@ set ignorecase
 set smartcase							 			" ignore case of search only if all lowercase
 set smarttab 							 			" insert tabs on start of line according to shiftwidth, not tabstop
 set autoread                    " auto reload changed files if there's no conflict
+set number
 " gvim behave like vim: console tabs and no dialogs, menus or scrollbars
 set guioptions+=lrbmTLce
 set guioptions-=lrbmTLce
@@ -67,18 +68,6 @@ set guioptions+=c
 :cmap w!! w !sudo tee % >/dev/null
 
 :noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
-
-set number
-":autocmd FocusLost * :set number
-":autocmd FocusGained * :set relativenumber
-":autocmd InsertEnter * :set number
-":autocmd InsertLeave * :set relativenumber
-:nnoremap <C-N> :call NumberToggle()<CR>
-function! NumberToggle()
-	if (&relativenumber == 1) | set number
-	else | set relativenumber
-	endif
-endfunction
 
 " paste from clipboard
 "set clipboard=unnamed
