@@ -60,10 +60,10 @@ set guioptions+=c
 :nnoremap Y y$
 :nnoremap - $
 :nnoremap <Backspace> dh
-:map <C-h> <C-w>h
-:map <C-j> <C-w>j
-:map <C-k> <C-w>k
-:map <C-l> <C-w>l
+:map <C-H> <C-W>h
+:map <C-J> <C-W>j
+:map <C-K> <C-W>k
+:map <C-L> <C-W>l
  " save file opened without sudo after the fact
 :cmap w!! w !sudo tee % >/dev/null
 
@@ -120,14 +120,16 @@ let g:LustyJugglerShowKeys = 'a'
 " vim-fugitive plugin
 :nnoremap gs :Gstatus<CR>
 :nnoremap gb :Gblame<CR>
-:nnoremap gc :Gdiff<CR>
+" leave me on the index version, so I can
+" quickly check it and close it with ZZ.
+:nnoremap gc :Gdiff<CR><C-W>h
 :nnoremap gl :Ggrep "<cword>"<CR>
 :vnoremap gl y:Ggrep <C-R>"<CR>
 
 :noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
 
-:nnoremap <C-L> :LightBeam<CR>
+:nnoremap <C-N> :LightBeam<CR>
 command! -nargs=0 LightBeam call LightBeam()
 let lightBeam = 0
 function! LightBeam()
