@@ -13,12 +13,16 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-scripts/LustyJuggler'
 Bundle 'lordm/vim-browser-reload-linux'
 
-Bundle 'goldfeld/vimdow'
+Bundle 'croaker/mustang-vim'
+
+"Bundle 'goldfeld/vimdow'
 filetype plugin indent on
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
-colorscheme slate
+"colorscheme slate
+colorscheme mustang
+set cursorline
 
 if filereadable(expand("~/vcs.order-management/README.md"))
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,*.js
