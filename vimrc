@@ -142,6 +142,27 @@ function! LightBeam()
 	endif
 endfunction
 
+:nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
+command! -nargs=0 AutoHighlightToggle call AutoHighlightToggle()
+function! AutoHighlightToggle()
+  let @/ = ''
+  if exists('#auto_highlight')
+    au! auto_highlight
+    augroup! auto_highlight
+    setl updatetime=4000
+    echo 'Highlight current word: off'
+    return 0
+  else
+    augroup auto_highlight
+      au!
+      au CursorHold * let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
+    augroup end
+    setl updatetime=500
+    echo 'Highlight current word: ON'
+		return 1
+  endif
+endfunction
+
 ":noremap <Space> :LineSeekToggle<CR>
 command! -nargs=0 LineSeekToggle call LineSeekToggle()
 let LineSeek = 0
