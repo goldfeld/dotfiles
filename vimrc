@@ -82,6 +82,8 @@ nnoremap <Leader>i _wi
 :nmap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
 :nmap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
+" grab ssh publickey to clipboard.
+:nmap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
 " output current time and date with year and week, all pretty printed.
 :nmap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
 
@@ -382,15 +384,24 @@ function! Inform(data)
   let info = 'No matching info.'
 	let otherinfo = []
   if match(['wifi', 'pass'], a:data) != -1 | let info = '1241025655'
+	elseif match(['phone', 'tel'], a:data) != -1 | let info = '3176-6107'
 	elseif match(['heroku', 'buildpack'], a:data) != -1
-		let l:info = "heroku create myappname --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
-		call add(l:otherinfo, "heroku login")
+		let appname = input("enter your app's name: ")
+		echo "\n"
+		let l:info = "heroku create ".l:appname." --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
+		call add(l:otherinfo, "then do 'heroku login'")
+	elseif match(['ssh', 'publickey', 'keygen'], a:data) != -1
+		let email = input("enter email for publickey: ")
+		echo "\n"
+		let l:info = 'ssh-keygen -t rsa -C "'.l:email.'"'
+		call add(l:otherinfo, "just press enter when prompted for file in which to save")
+		call add(l:otherinfo, "use <Leader>.k to xclip the key")
   endif
 	let @* = l:info
 	let @+ = l:info
   echo l:info
 	for other in l:otherinfo
-		echo other
+		echo '# '.other
 	endfor
 	return
 endfunction
@@ -407,7 +418,9 @@ let viminderCoffee = [
 	\ '@@',
 	\ ':5,10norm! @h ',
 	\ 'gi - go back to last edited location',
-	\ ':.+1,.+20'
+	\ ':.+1,.+20',
+	\ 'o in visual mode to switch between selection ends',
+	\ 'O in visual block mode to switch between corners'
   \ ]
 let viminderCoffeeIterator = 0
 let viminderCoffeeMax = len(g:viminderCoffee)
