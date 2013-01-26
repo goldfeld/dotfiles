@@ -385,6 +385,7 @@ function! Inform(data)
 		let l:info = "heroku create myappname --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
   endif
 	let @* = l:info
+	let @+ = l:info
   echo l:info
 	return
 endfunction
