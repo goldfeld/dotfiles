@@ -51,15 +51,16 @@ set guioptions+=c
 :nnoremap j gj
 :nnoremap k gk
 " skip past big lines
-:noremap gj j
-:noremap gk k
+:nnoremap gj j
+:nnoremap gk k
  " go to last inserted but don't leave me in insert mode
-:noremap gi gi<Esc>
+:nnoremap gi gi<Esc>
 ":nnoremap <Space> ea
 :nnoremap ge gE
 :nnoremap Y y$
 :nnoremap - $
 :nnoremap <Backspace> dh
+" easy split window navigation.
 :map <C-H> <C-W>h
 :map <C-J> <C-W>j
 :map <C-K> <C-W>k
@@ -71,20 +72,19 @@ set guioptions+=c
 
 " paste from clipboard
 "set clipboard=unnamed
-" yank into clipboard (mac)
-":nnoremap y "+y
-":vnoremap y "+y
-" yank into clipboard (linux)
-":nnoremap y "*y
-":vnoremap y "*y
-
-:nnoremap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
 
 nnoremap <Leader>i _wi
 :nmap <Leader>/h /HEAD<CR>
 :nmap <Leader>/c /console<CR>
+" quickly edit my vimrc.
 :nmap <silent> <Leader>.v :e $MYVIMRC<CR>
+" source vimrc to allow live reloading of changes.
 :nmap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
+" allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
+:nmap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
+" output current time and date with year and week, all pretty printed.
+:nmap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
+
 :nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase
 :noremap <Leader>u vb~ea

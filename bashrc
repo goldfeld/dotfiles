@@ -7,8 +7,6 @@ fish
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
 
-./xcape -e 'Control_L=Escape'
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -112,3 +110,6 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
