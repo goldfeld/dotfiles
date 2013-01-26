@@ -380,13 +380,18 @@ endfunction
 command! -nargs=1 Inf call Inform(<f-args>)
 function! Inform(data)
   let info = 'No matching info.'
+	let otherinfo = []
   if match(['wifi', 'pass'], a:data) != -1 | let info = '1241025655'
 	elseif match(['heroku', 'buildpack'], a:data) != -1
 		let l:info = "heroku create myappname --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
+		call add(l:otherinfo, "heroku login")
   endif
 	let @* = l:info
 	let @+ = l:info
   echo l:info
+	for other in l:otherinfo
+		echo other
+	endfor
 	return
 endfunction
 
