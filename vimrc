@@ -381,9 +381,10 @@ command! -nargs=1 Inf call Inform(<f-args>)
 function! Inform(data)
   let info = 'No matching info.'
   if match(['wifi', 'pass'], a:data) != -1 | let info = '1241025655'
-  elseif match(['alberto', 'rent'], a:data) != -1
-    let l:info = "ag. 0733 cc. 50665-3 Alberto Giardino Diniz"
+	elseif match(['heroku', 'buildpack'], a:data) != -1
+		let l:info = "heroku create myappname --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
   endif
+	let @* = l:info
   echo l:info
 	return
 endfunction
