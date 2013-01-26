@@ -15,6 +15,7 @@ Bundle 'lordm/vim-browser-reload-linux'
 
 Bundle 'croaker/mustang-vim'
 
+Bundle 'goldfeld/vim-seek'
 "Bundle 'goldfeld/vimdow'
 filetype plugin indent on
 
@@ -233,61 +234,6 @@ function! LineSeekBack(num)
 	let dest = l:base . l:num
 	execute ":".dest
 endfunction
-
-" https://github.com/vim-scripts/InsertChar/blob/master/plugin/InsertChar.vim
-function! Seek()
-  if v:count >= 1
-    execute 'normal! '.v:count.'x'
-		startinsert
-	else
-		let c1 = getchar()
-		let c2 = getchar()
-		let line = getline('.')
-		let pos = getpos('.')[2]
-		let seek = stridx(l:line[l:pos :], nr2char(l:c1).nr2char(l:c2))
-		if seek != -1
-			execute 'normal! 0'.(l:pos + seek).'l'
-		endif
-	endif
-endfunction
-function! SeekBack()
-  let c1 = getchar()
-  let c2 = getchar()
-  let line = getline('.')
-  let pos = getpos('.')[2]
-  let seek = strridx(l:line[: l:pos - 1], nr2char(l:c1).nr2char(l:c2))
-  if seek != -1
-    execute 'normal! 0'.seek.'l'
-  endif
-endfunction
-function! SeekJump()
-	let c1 = getchar()
-	let c2 = getchar()
-	let line = getline('.')
-	let pos = getpos('.')[2]
-	let seek = stridx(l:line[l:pos :], nr2char(l:c1).nr2char(l:c2))
-	if seek != -1
-		execute 'normal! 0'.(l:pos + seek).'lviw'
-	endif
-endfunction
-function! SeekJumpBack()
-  let c1 = getchar()
-  let c2 = getchar()
-  let line = getline('.')
-  let pos = getpos('.')[2]
-  let seek = strridx(l:line[: l:pos + 1], nr2char(l:c1).nr2char(l:c2))
-  if seek != -1
-    execute 'normal! 0'.seek.'lviw'
-  endif
-endfunction
-:nnoremap s :<C-U>call Seek()<CR>
-:onoremap s :<C-U>call Seek()<CR>
-:onoremap j :<C-U>call SeekJump()<CR>
-
-:nnoremap S :<C-U>call SeekBack()<CR>
-:onoremap S :<C-U>call SeekBack()<CR>
-:onoremap J :<C-U>call SeekJumpBack()<CR>
-
 
 :noremap <Leader>c :Vimdow Chrome<CR>
 :noremap <Leader>h :Vimdow Luakit<CR>
