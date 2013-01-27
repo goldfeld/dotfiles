@@ -47,72 +47,72 @@ set guioptions+=lrbmTLce
 set guioptions-=lrbmTLce
 set guioptions+=c
 
-:let mapleader = ","
+let mapleader = ","
  " move within virtual (wrapped) lines
-:nnoremap j gj
-:nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 " skip past big lines
-:nnoremap gj j
-:nnoremap gk k
+nnoremap gj j
+nnoremap gk k
  " go to last inserted but don't leave me in insert mode
-:nnoremap gi gi<Esc>
+nnoremap gi gi<Esc>
 ":nnoremap <Space> ea
-:nnoremap ge gE
-:nnoremap Y y$
-:nnoremap - $
-:nnoremap <Backspace> dh
+nnoremap ge gE
+nnoremap Y y$
+nnoremap - $
+nnoremap <Backspace> dh
 
 " visual shifting (relect after shift)
 vnoremap < <gv
 vnoremap > >gv
 
 " easy split window navigation.
-:map <C-H> <C-W>h
-:map <C-J> <C-W>j
-:map <C-K> <C-W>k
-:map <C-L> <C-W>l
+map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
  " save file opened without sudo after the fact
-:cmap w!! w !sudo tee % >/dev/null
+cmap w!! w !sudo tee % >/dev/null
 
-:noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
+noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 
 " paste from clipboard
 "set clipboard=unnamed
 
 nnoremap <Leader>i _wi
-:nmap <Leader>/h /HEAD<CR>
-:nmap <Leader>/c /console<CR>
+nmap <Leader>/h /HEAD<CR>
+nmap <Leader>/c /console<CR>
 " quickly edit my vimrc.
-:nmap <silent> <Leader>.v :e $MYVIMRC<CR>
+nmap <silent> <Leader>.v :e $MYVIMRC<CR>
 " source vimrc to allow live reloading of changes.
-:nmap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
+nmap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
-:nmap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
+nmap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
 " grab ssh publickey to clipboard.
-:nmap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
+nmap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
 " output current time and date with year and week, all pretty printed.
-:nmap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
+nmap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
 
-:nnoremap <silent> <Esc> :noh<CR><Esc>
+nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase
-:noremap <Leader>u vb~ea
+noremap <Leader>u vb~ea
 " toggle capitalize first letter
-:noremap <Leader>U bv~ea
+noremap <Leader>U bv~ea
 
 " operator-pending
-:onoremap - $
-:onoremap in( :<C-U>normal! f(vi(<CR>
-:onoremap in< :<C-U>normal! f<vi<<CR>
-:onoremap in[ :<C-U>normal! f[vi[<CR>
-:onoremap ih :<C-U>execute "normal! ?^==\\+$\r:noh\rkvg_"<CR>
-:onoremap ah :<C-U>execute "normal! ?^==\\+$\r:noh\rg_vk0"<CR>
+onoremap - $
+onoremap in( :<C-U>normal! f(vi(<CR>
+onoremap in< :<C-U>normal! f<vi<<CR>
+onoremap in[ :<C-U>normal! f[vi[<CR>
+onoremap ih :<C-U>execute "normal! ?^==\\+$\r:noh\rkvg_"<CR>
+onoremap ah :<C-U>execute "normal! ?^==\\+$\r:noh\rg_vk0"<CR>
 
-:inoremap <A-C> <A-U>
+inoremap <A-C> <A-U>
 
-:noremap [q :cprevious<CR>
-:noremap ]q :cnext<CR>
+noremap [q :cprevious<CR>
+noremap ]q :cnext<CR>
 
-:let g:EasyMotion_leader_key = '<Leader>'
+let g:EasyMotion_leader_key = '<Leader>'
 ":nnoremap f <Leader>f
 ":nnoremap F <Leader>F
 
@@ -120,25 +120,25 @@ let g:ctrlp_extensions = ['commitdriven']
 let g:seek_enable_jumps = 1
 
 " LustyJuggler plugin
-:noremap <Tab> :LustyJuggler<CR>
-:noremap <silent> <Leader><Leader> :LustyJugglePrevious<CR>
+noremap <Tab> :LustyJuggler<CR>
+noremap <silent> <Leader><Leader> :LustyJugglePrevious<CR>
 let g:LustyJugglerDefaultMapping = 0
 let g:LustyJugglerKeyboardLayout = 'dvorak'
 let g:LustyJugglerShowKeys = 'a'
 
 " vim-fugitive plugin
-:nnoremap gs :Gstatus<CR>
-:nnoremap gb :Gblame<CR>
+nnoremap gs :Gstatus<CR>
+nnoremap gb :Gblame<CR>
 " leave me on the index version, so I can
 " quickly check it and close it with ZZ.
-:nnoremap gc :Gdiff<CR><C-W>h
-:nnoremap gl :Ggrep "<cword>"<CR>
-:vnoremap gl y:Ggrep <C-R>"<CR>
+nnoremap gc :Gdiff<CR><C-W>h
+nnoremap gl :Ggrep "<cword>"<CR>
+vnoremap gl y:Ggrep <C-R>"<CR>
 
-:noremap <C-T> :CommitDriven<CR>
+noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
 
-:nnoremap <C-N> :LightBeam<CR>
+nnoremap <C-N> :LightBeam<CR>
 command! -nargs=0 LightBeam call LightBeam()
 let lightBeam = 0
 function! LightBeam()
@@ -151,7 +151,7 @@ function! LightBeam()
 	endif
 endfunction
 
-:nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
+nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
 command! -nargs=0 AutoHighlightToggle call AutoHighlightToggle()
 function! AutoHighlightToggle()
   let @/ = ''
@@ -241,12 +241,12 @@ function! LineSeekBack(num)
 	execute ":".dest
 endfunction
 
-:noremap <Leader>c :Vimdow Chrome<CR>
-:noremap <Leader>h :Vimdow Luakit<CR>
-:noremap <Leader>s :Vimdow fish<CR>
-:noremap <Leader>o :Vimdow coffee<CR> " and compass
-:noremap <Leader>m :Vimdow meteor<CR>
-:noremap <Leader>g :Vimdow gedit<CR>
+noremap <Leader>c :Vimdow Chrome<CR>
+noremap <Leader>h :Vimdow Luakit<CR>
+noremap <Leader>s :Vimdow fish<CR>
+noremap <Leader>o :Vimdow coffee<CR> " and compass
+noremap <Leader>m :Vimdow meteor<CR>
+noremap <Leader>g :Vimdow gedit<CR>
 command! -nargs=1 Vimdow call Vimdow(<f-args>)
 " TODO make <Leader>o able to launch either coffee (first) or else compass
 " also <Leader>s should try fish, else bash
@@ -275,7 +275,7 @@ function! Vimdow(str)
 	" TODO echo a message saying to 'sudo apt-get install wmctrl' if needed
 endfunction
 
-:let reloading = 0
+let reloading = 0
 command! -nargs=* AutoReload call AutoReload()
 function! AutoReload()
 	if l:reloading | ChromeReloadStart<CR>
@@ -283,8 +283,8 @@ function! AutoReload()
 	endif
 	:let l:reloading = !l:reloading
 endfunction
-:noremap <Leader>R :AutoReload<CR>
-:noremap <Leader>r :w<CR>:ChromeReload<CR>
+noremap <Leader>R :AutoReload<CR>
+noremap <Leader>r :w<CR>:ChromeReload<CR>
 
 " put all this in your .vimrc or a plugin file
 command! -nargs=* Stab call Stab()
@@ -414,7 +414,7 @@ endfunction
 autocmd CursorMoved * call Hey()
 autocmd CursorMovedI * call Hoy()
 
-:nnoremap <Space> :call EasyLines()<CR>
+nnoremap <Space> :call EasyLines()<CR>
 function! EasyLines()
 	let v:count = 5
 	echo v:count
