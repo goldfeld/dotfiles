@@ -112,6 +112,7 @@ nnoremap <Leader>i _wi
 ":nnoremap F <Leader>F
 
 let g:ctrlp_extensions = ['commitdriven']
+let g:seek_enable_jumps = 1
 
 " LustyJuggler plugin
 :noremap <Tab> :LustyJuggler<CR>
