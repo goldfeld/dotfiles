@@ -61,6 +61,11 @@ set guioptions+=c
 :nnoremap Y y$
 :nnoremap - $
 :nnoremap <Backspace> dh
+
+" visual shifting (relect after shift)
+vnoremap < <gv
+vnoremap > >gv
+
 " easy split window navigation.
 :map <C-H> <C-W>h
 :map <C-J> <C-W>j
