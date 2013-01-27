@@ -79,9 +79,17 @@ noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 " paste from clipboard
 "set clipboard=unnamed
 
+" toggle showing hidden characters
+nnoremap <Leader>l :set list!<CR>
+" useful for uncommenting lines
 nnoremap <Leader>i _wi
+" output current time and date with year and week, all pretty printed.
+nmap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
+
+" common searches
 nmap <Leader>/h /HEAD<CR>
 nmap <Leader>/c /console<CR>
+
 " quickly edit my vimrc.
 nmap <silent> <Leader>.v :e $MYVIMRC<CR>
 " source vimrc to allow live reloading of changes.
@@ -90,8 +98,6 @@ nmap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
 nmap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
 " grab ssh publickey to clipboard.
 nmap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
-" output current time and date with year and week, all pretty printed.
-nmap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase
