@@ -5,17 +5,25 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
+Bundle 'lordm/vim-browser-reload-linux'
 Bundle 'jceb/vim-orgmode'
+
+" files
+Bundle 'tpope/vim-fugitive'
+Bundle 'vim-scripts/LustyJuggler'
+
+" moving
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'goldfeld/vim-seek'
+
+" syntax
 Bundle 'leafo/moonscript-vim'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'vim-scripts/LustyJuggler'
-Bundle 'lordm/vim-browser-reload-linux'
+Bundle 'tpope/vim-markdown'
 
+" colorschemes
 Bundle 'croaker/mustang-vim'
 
-Bundle 'goldfeld/vim-seek'
 "Bundle 'goldfeld/vimdow'
 filetype plugin indent on
 
