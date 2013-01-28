@@ -432,7 +432,16 @@ let viminderCoffee = [
 	\ 'gi - go back to last edited location',
 	\ ':.+1,.+20',
 	\ 'o in visual mode to switch between selection ends',
-	\ 'O in visual block mode to switch between corners'
+	\ 'O in visual block mode to switch between corners',
+	\ '*a to select all in page on gmail',
+	\ '*u to select unread in page on gmail',
+	\ '*t to select unstarred in page on gmail',
+	\ '<C-N> new window in dwm',
+	\ '<C-C> close window in dwm',
+	\ '<C-[J/K]> jump next/prev window in dwm',
+	\ '<C-Space> focus current window in dwm',
+	\ '<C-M> fullscreen window in dwm (C-Space to get out)',
+	\ '*t to select unstarred in page on gmail'
   \ ]
 let viminderCoffeeIterator = 0
 let viminderCoffeeMax = len(g:viminderCoffee)
