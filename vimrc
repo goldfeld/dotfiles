@@ -11,7 +11,7 @@ Bundle 'jceb/vim-orgmode'
 " files
 Bundle 'tpope/vim-fugitive'
 Bundle 'vim-scripts/LustyJuggler'
-Bundle 'spolu/dwm.vim'
+"Bundle 'spolu/dwm.vim'
 
 " moving
 Bundle 'Lokaltog/vim-easymotion'
