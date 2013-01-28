@@ -79,10 +79,10 @@ vnoremap < <gv
 vnoremap > >gv
 
 " easy split window navigation.
-map <C-H> <C-W>h
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-L> <C-W>l
+nnoremap <C-H> <C-W>h
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
  " save file opened without sudo after the fact
 cmap w!! w !sudo tee % >/dev/null
 
@@ -96,20 +96,20 @@ nnoremap <Leader>l :set list!<CR>
 " useful for uncommenting lines
 nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
-nmap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
+nnoremap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
 
 " common searches
-nmap <Leader>/h /HEAD<CR>
-nmap <Leader>/c /console<CR>
+nnoremap <Leader>/h /HEAD<CR>
+nnoremap <Leader>/c /console<CR>
 
 " quickly edit my vimrc.
-nmap <silent> <Leader>.v :e ~/dotfiles/vimrc<CR>
+nnoremap <silent> <Leader>.v :e ~/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
-nmap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
+nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
-nmap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
+nnoremap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
 " grab ssh publickey to clipboard.
-nmap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
+nnoremap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase
