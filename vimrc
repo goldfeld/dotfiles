@@ -16,6 +16,7 @@ Bundle 'spolu/dwm.vim'
 " moving
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'goldfeld/vim-seek'
+Bundle 'kshenoy/vim-signature'
 
 " syntax
 Bundle 'leafo/moonscript-vim'
@@ -135,6 +136,8 @@ let g:EasyMotion_leader_key = '<Leader>'
 ":nnoremap f <Leader>f
 ":nnoremap F <Leader>F
 
+" vim-signature shouldn't touch the m mark which I have remapped.
+let g:SignatureIncludeMarks = 'abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 let g:ctrlp_extensions = ['commitdriven']
 let g:seek_enable_jumps = 1
 
