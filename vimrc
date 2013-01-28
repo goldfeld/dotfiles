@@ -68,7 +68,11 @@ nnoremap gi gi<Esc>
 nnoremap ge gE
 nnoremap Y y$
 nnoremap - $
-nnoremap <Backspace> dh
+onoremap <Space> iw
+" sacrifice the m mark for my pinkies' sake.
+nnoremap mm :
+" repurpose the colon as my comma lost to leader.
+nnoremap : ,
 
 " visual shifting (relect after shift)
 vnoremap < <gv
