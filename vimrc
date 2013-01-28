@@ -469,19 +469,6 @@ endfunction
 " http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
 " https://github.com/amikula/vim_flashcards/blob/master/all_cards.txt
 " 
-autocmd BufRead,BufNewFile *.coffee,*.js execute "silent! echo Headsup('coffee')"
-let sms = 0
-function! Hey()
-	let g:sms += 1
-	return
-endfunction
-function! Hoy()
-	let g:sms += 1
-	return
-endfunction
-
-autocmd CursorMoved * call Hey()
-autocmd CursorMovedI * call Hoy()
 
 " Go to last file(s) if invoked without arguments.
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
