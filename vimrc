@@ -216,6 +216,42 @@ function! LineSeekToggle()
 	endif
 endfunction
 
+
+
+nnoremap <Space> :<C-U>Streamline<CR>
+nnoremap <S-Space> :<C-U>StreamlineBack<CR>
+" for vi/vim since only gvim distinguishes <S-Space>
+nnoremap + :<C-U>StreamlineBack<CR>
+
+command! -nargs=0 Streamline call Streamline(v:count)
+function! Streamline(target)
+	let lnum = line('.')
+	let lenlnum = len(l:lnum)
+	let relativeness = len(l:lnum) - len(a:target)
+
+	let base = l:lnum[: l:relativeness - 1]
+	
+	let abstarget = l:base.a:target
+	if l:abstarget <= l:lnum
+		let l:abstarget = (l:base + 1).a:target
+	endif
+	execute 'normal! '.l:abstarget.'G'
+endfunction
+
+command! -nargs=0 StreamlineBack call StreamlineBack(v:count)
+function! StreamlineBack(target)
+	let lnum = line('.')
+	let lenlnum = len(l:lnum)
+	let relativeness = len(l:lnum) - len(a:target)
+	let base = l:lnum[: l:relativeness - 1]
+	
+	let abstarget = l:base.a:target
+	if l:abstarget >= l:lnum
+		let l:abstarget = (l:base - 1).a:target
+	endif
+	execute 'normal! '.l:abstarget.'G'
+endfunction
+
 command! -nargs=1 LineSeek call LineSeek(<f-args>)
 command! -nargs=1 LineSeekBack call LineSeekBack(<f-args>)
 function! LineSeek(num)
@@ -431,12 +467,6 @@ endfunction
 
 autocmd CursorMoved * call Hey()
 autocmd CursorMovedI * call Hoy()
-
-nnoremap <Space> :call EasyLines()<CR>
-function! EasyLines()
-	let v:count = 5
-	echo v:count
-endfunction
 
 " Go to last file(s) if invoked without arguments.
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
