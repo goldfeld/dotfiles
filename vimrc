@@ -105,7 +105,7 @@ nnoremap <Leader>/h /HEAD<CR>
 nnoremap <Leader>/c /console<CR>
 
 " quickly edit my vimrc.
-nnoremap <silent> <Leader>.v :e ~/dotfiles/vimrc<CR>
+nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
 nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
