@@ -56,6 +56,8 @@ set number
 set guioptions+=lrbmTLce
 set guioptions-=lrbmTLce
 set guioptions+=c
+" modelines could be exploited maliciously
+set modelines=0
 
 let mapleader = ","
  " move within virtual (wrapped) lines
