@@ -5,7 +5,16 @@
 alias gvim='UBUNTU_MENUPROXY= gvim'
 fish
 
-alias gvim='UBUNTU_MENUPROXY= gvim'
+function git () {
+	case "$PWD": in
+		$HOME/goldfeld/*)
+			command git -c user.email=vic@longstorm.org -c user.name="Vic Goldfeld" "$@"
+			;;
+		*)
+			command git "$@"
+			;;
+	esac
+}
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
