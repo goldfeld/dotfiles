@@ -71,7 +71,7 @@ nnoremap gi gi<Esc>
 ":nnoremap <Space> ea
 nnoremap ge gE
 nnoremap Y y$
-nnoremap - $
+
 onoremap <Space> iw
 " sacrifice the m mark for my pinkies' sake.
 nnoremap mm :
@@ -81,6 +81,10 @@ nnoremap : ,
 " visual shifting (relect after shift)
 vnoremap < <gv
 vnoremap > >gv
+
+nnoremap - $
+onoremap - $
+vnoremap - $
 
 " easy split window navigation.
 nnoremap <C-H> <C-W>h
@@ -122,7 +126,6 @@ noremap <Leader>u vb~ea
 noremap <Leader>U bv~ea
 
 " operator-pending
-onoremap - $
 onoremap in( :<C-U>normal! f(vi(<CR>
 onoremap in< :<C-U>normal! f<vi<<CR>
 onoremap in[ :<C-U>normal! f[vi[<CR>
