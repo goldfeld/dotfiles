@@ -134,6 +134,9 @@ onoremap ah :<C-U>execute "normal! ?^==\\+$\r:noh\rg_vk0"<CR>
 
 inoremap <A-C> <A-U>
 
+nnoremap <C-;> yl:execute "normal! f" . @"<CR>
+nnoremap <C-:> yl:execute "normal! F" . @"<CR>
+
 noremap [q :cprevious<CR>
 noremap ]q :cnext<CR>
 
