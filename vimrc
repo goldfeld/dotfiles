@@ -246,13 +246,14 @@ function! LineSeekToggle()
 	endif
 endfunction
 
+onoremap <Leader>- :execute "normal! fwvaw"<CR>_
+
 nnoremap <Leader>c :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow Luakit<CR>
 nnoremap <Leader>s :Vimdow fish<CR>
 " and compass
 nnoremap <Leader>o :Vimdow coffee<CR>
 nnoremap <Leader>m :Vimdow meteor<CR>
-nnoremap <Leader>g :Vimdow gedit<CR>
 
 nnoremap <Space> :<C-U>Streamline<CR>
 nnoremap <S-Space> :<C-U>StreamlineBack<CR>
