@@ -7,6 +7,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'lordm/vim-browser-reload-linux'
 Bundle 'jceb/vim-orgmode'
+Bundle 'goldfeld/vimdow'
 
 " files
 Bundle 'tpope/vim-fugitive'
@@ -26,7 +27,6 @@ Bundle 'tpope/vim-markdown'
 " colorschemes
 Bundle 'croaker/mustang-vim'
 
-"Bundle 'goldfeld/vimdow'
 filetype plugin indent on
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -225,7 +225,13 @@ function! LineSeekToggle()
 	endif
 endfunction
 
-
+nnoremap <Leader>c :Vimdow Chrome<CR>
+nnoremap <Leader>h :Vimdow Luakit<CR>
+nnoremap <Leader>s :Vimdow fish<CR>
+" and compass
+nnoremap <Leader>o :Vimdow coffee<CR>
+nnoremap <Leader>m :Vimdow meteor<CR>
+nnoremap <Leader>g :Vimdow gedit<CR>
 
 nnoremap <Space> :<C-U>Streamline<CR>
 nnoremap <S-Space> :<C-U>StreamlineBack<CR>
