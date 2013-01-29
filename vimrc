@@ -9,6 +9,9 @@ Bundle 'lordm/vim-browser-reload-linux'
 Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
 
+" editing
+Bundle 'tpope/vim-surround'
+
 " files
 Bundle 'tpope/vim-fugitive'
 Bundle 'vim-scripts/LustyJuggler'
@@ -139,6 +142,21 @@ nnoremap <C-:> yl:execute "normal! F" . @"<CR>
 
 noremap [q :cprevious<CR>
 noremap ]q :cnext<CR>
+
+let g:surround_no_mappings = 1
+let g:surround_no_insert_mappings = 1
+nnoremap d`  <Plug>Dsurround
+nnoremap c`  <Plug>Csurround
+nnoremap y`  <Plug>Ysurround
+nnoremap y~  <Plug>YSurround
+nnoremap y`` <Plug>Yssurround
+nnoremap y~` <Plug>YSsurround
+nnoremap r~~ <Plug>YSsurround
+xnoremap ~   <Plug>VSurround
+xnoremap g~  <Plug>VgSurround
+inoremap <C-S> 	<Plug>Isurround
+inoremap <C-G>` <Plug>Isurround
+inoremap <C-G>~ <Plug>ISurround
 
 let g:EasyMotion_leader_key = '<Leader>'
 ":nnoremap f <Leader>f
