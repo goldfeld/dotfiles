@@ -304,40 +304,6 @@ function! LineSeekBack(num)
 	execute ":".dest
 endfunction
 
-noremap <Leader>c :Vimdow Chrome<CR>
-noremap <Leader>h :Vimdow Luakit<CR>
-noremap <Leader>s :Vimdow fish<CR>
-noremap <Leader>o :Vimdow coffee<CR> " and compass
-noremap <Leader>m :Vimdow meteor<CR>
-noremap <Leader>g :Vimdow gedit<CR>
-command! -nargs=1 Vimdow call Vimdow(<f-args>)
-" TODO make <Leader>o able to launch either coffee (first) or else compass
-" also <Leader>s should try fish, else bash
-" TODO implement cycling between open vim/gvim instances
-"	it should make it as though we were cycling between vim tabs/views
-"		the advantage is they can be on different monitors
-"	append 'vimdow#X' to vim window 
-"		http://vim.wikia.com/wiki/Automatically_set_screen_title
-" http://somanov.wordpress.com/2009/12/02/window-shortcuts-for-linux-desktops/
-" http://superuser.com/questions/16647/custom-hotkey-shortcut-to-open-bring-to-front-an-app
-" http://www.linuxquestions.org/questions/linux-desktop-74/shortcuts-to-switch-to-open-applications-786176/
-"
-" wmctrl man page http://linux.die.net/man/1/wmctrl
-"
-" register uppercase as waiting arguments e.g. <Leader>S :VimdowArgs
-" fish<CR>
-" 	so e.g. both of <Leader>SZ and <Leader>Sz would quit&save vim (:wq) and take me to fish
-" 
-" translate to riml
-function! Vimdow(str)
-	" if 'str' is found on more than one window, give lower priority to
-	" web browsers (which might just have a page loaded with 'str')
-	" also never go to vim itself (since the user is likely to use vim as his
-	" only text editor, this is already accounting for files open with 'str')
-	call system("wmctrl -a " . a:str)
-	" TODO echo a message saying to 'sudo apt-get install wmctrl' if needed
-endfunction
-
 let reloading = 0
 command! -nargs=* AutoReload call AutoReload()
 function! AutoReload()
