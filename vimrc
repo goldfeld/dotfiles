@@ -416,8 +416,10 @@ let viminderCoffee = [
 	\ '<C-[J/K]> jump next/prev window in dwm',
 	\ '<C-Space> focus current window in dwm',
 	\ '<C-M> fullscreen window in dwm (C-Space to get out)',
-	\ '*t to select unstarred in page on gmail'
+	\ '*t to select unstarred in page on gmail',
+	\ 'ga prints ascii codes of current char'
   \ ]
+
 let viminderCoffeeIterator = 0
 let viminderCoffeeMax = len(g:viminderCoffee)
 function! Headsup(context)
