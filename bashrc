@@ -5,7 +5,6 @@
 PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
-fish
 
 function git () {
 	case "$PWD": in
