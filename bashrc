@@ -11,6 +11,9 @@ function git () {
 		$HOME/goldfeld/*)
 			command git -c user.email=vic@longstorm.org -c user.name="Vic Goldfeld" "$@"
 			;;
+		$HOME/.vim/bundle/*)
+			command git -c user.email=vic@longstorm.org -c user.name="Vic Goldfeld" "$@"
+			;;
 		*)
 			command git "$@"
 			;;
