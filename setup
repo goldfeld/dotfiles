@@ -36,7 +36,45 @@ sudo apt-get install ruby1.8-dev rubygems
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
-### luamongo
+
+### luamongo1
+# Install mongodb 1.6.3 
+# ------------------------------ 
+mkdir ~/tmp 
+cd ~/tmp 
+sudo apt-get install devscripts 
+# OK 
+# No configuration, OK 
+
+# Install mongo dependencies (http://www.mongodb.org/display/DOCS/Building+for+Linux) 
+# ------------------------------ 
+sudo apt-get -y install tcsh git-core scons g++ 
+sudo apt-get -y install libpcre++-dev libboost-dev libreadline-dev xulrunner-dev 
+sudo apt-get -y install libboost-program-options-dev libboost-thread-dev libboost-filesystem-dev libboost-date-time-dev 
+wget http://archive.ubuntu.com/ubuntu/pool/universe/m/mongodb/mongodb_1.6.3-1ubuntu1.dsc 
+wget http://archive.ubuntu.com/ubuntu/pool/universe/m/mongodb/mongodb_1.6.3.orig.tar.gz 
+wget http://archive.ubuntu.com/ubuntu/pool/universe/m/mongodb/mongodb_1.6.3-1ubuntu1.debian.tar.gz 
+dpkg-source -x mongodb_1.6.3-1ubuntu1.dsc 
+cd mongodb-1.6.3/ 
+debuild
+
+# NOTE:  You can ignore the code signing error that is spewed at the end of the build. 
+cd .. 
+sudo dpkg -i *.deb 
+
+# Install luamongo db driver 
+# ------------------------------------- 
+cd ~/tmp 
+sudo apt-get install subversion 
+svn checkout http://luamongo.googlecode.com/svn/trunk/ luamongo 
+cd luamongo 
+sudo apt-get install liblua5.1-dev 
+debuild 
+# continue anyway:  Y 
+sudo dpkg -i ../liblua5.1-mongo_0.4-1_amd64.deb 
+
+
+### luamongo2
 mkdir ~/mongo
 cd ~/mongo
 # Download mongodb and driver
@@ -46,7 +84,7 @@ wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.0.2.tgz
 tar xvzf mongodb-linux-x86_64-2.0.2.tgz
 tar xvzf mongodb-linux-x86_64-v2.0-latest.tgz
 # Add mongo bin to PATH
-export PATH=$PATH:~/mongodb-linux-x86_64-2.0.2/bin
+PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 # Grab dev tools and dependencies (May need to run apt-get update to download all)
 sudo apt-get -y install tcsh scons libpcre++-dev libboost-dev libreadline-dev libboost-program-options-dev libboost-thread-dev libboost-filesystem-dev libboost-date-time-dev gcc g++ git lua5.1-dev make
 # Grab latest luamongo (will need to add your github ssh key)
