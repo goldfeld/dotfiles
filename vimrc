@@ -147,7 +147,7 @@ nnoremap <Leader>l :set list!<CR>
 " useful for uncommenting lines
 nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
-nnoremap <silent> <Leader>d :execute "echo system(\"date +'<%H:%M> %b %e %a [%Yw%W]'\")"<CR>
+nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %e %a <%H:%M>'\")"<CR>
 
 " common searches
 nnoremap <Leader>/h /HEAD<CR>
