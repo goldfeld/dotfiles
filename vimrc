@@ -83,6 +83,38 @@ nnoremap gi gi<Esc>
 nnoremap ge gE
 nnoremap Y y$
 
+nnoremap <Backspace> :call Backspace()<CR>
+function! Backspace()
+	" need to check the current word
+	" if we're at the end of it, need to 
+	" leave us at the end of the previous.
+
+	" also remap <Enter> to 'ea' or 'eal'
+
+	" get curront column
+	let cursor = getpos('.')[2]
+	" get line text
+	let line = getline('.')
+	" if we're not at the beginning of the word, go to it.
+	if l:line[l:cursor - 2] != ' '
+		execute "normal! b"
+	endif
+
+	let newcursor = getpos('.')[2]
+	let delta = l:cursor - l:newcursor
+	execute "normal! dawb"
+
+	let max = len(expand("<cword>")) - 1
+	let move = 0
+	if l:max > l:delta
+		let l:move = l:delta
+	else
+		let l:move = l:max
+	endif
+	
+	execute "normal! ".l:move."l"
+endfunction
+
 onoremap <Space> iw
 " sacrifice the m mark for my pinkies' sake.
 nnoremap mm :
