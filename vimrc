@@ -149,7 +149,7 @@ nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %e %a <%H:%M>'\")"<CR>
 
-command! -nargs=0 Sum :5,12!awk '{num = substr($7, 2, length($7) - 4); width += num; print} END {print width}'
+command! -nargs=0 Sum :5,12!awk '{num = substr($7, 2, length($7) - 4) + substr($8, 2, length($7) - 4); width += num; print} END {print width}'
 
 " common searches
 nnoremap <Leader>/h /HEAD<CR>
