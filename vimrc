@@ -286,8 +286,6 @@ function! LineSeekToggle()
 	endif
 endfunction
 
-onoremap <Leader>- :execute "normal! fwvaw"<CR>_
-
 nnoremap <Leader>c :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow Luakit<CR>
 nnoremap <Leader>s :Vimdow fish<CR>
