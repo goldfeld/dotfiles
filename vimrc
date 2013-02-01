@@ -66,14 +66,19 @@ set guioptions+=c
 set modelines=0
 
 let mapleader = ","
+
+inoremap hh <Esc>
+
  " move within virtual (wrapped) lines
 nnoremap j gj
 nnoremap k gk
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
+
  " go to last inserted but don't leave me in insert mode
 nnoremap gi gi<Esc>
+
 ":nnoremap <Space> ea
 nnoremap ge gE
 nnoremap Y y$
