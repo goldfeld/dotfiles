@@ -149,6 +149,11 @@ noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 " paste from clipboard
 "set clipboard=unnamed
 
+" to go end of textwidth.
+nnoremap <Leader>- 81\|
+" pull next line and delete any comment symbols.
+nnoremap <Leader>J Jldw
+
 " toggle showing hidden characters
 nnoremap <Leader>l :set list!<CR>
 " useful for uncommenting lines
