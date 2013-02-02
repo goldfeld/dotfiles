@@ -440,9 +440,12 @@ endfunction
 
 command! -nargs=1 Inf call Inform(<f-args>)
 function! Inform(data)
-  let info = 'No matching info.'
+	let info = 'No matching info.'
 	let otherinfo = []
-  if match(['wifi', 'pass'], a:data) != -1 | let info = '1241025655'
+	if match(['wifi', 'pass'], a:data) != -1 | let info = '1251025655'
+	elseif match(['restart'], a:data) != -1
+		let info = 'sudo service network-manager restart'
+		call add(l:otherinfo, 'then toggle hardware wireless switch')
 	elseif match(['phone', 'tel'], a:data) != -1 | let info = '3176-6107'
 	elseif match(['heroku', 'buildpack'], a:data) != -1
 		let appname = input("enter your app's name: ")
