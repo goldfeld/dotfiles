@@ -58,6 +58,13 @@ set smartcase							 			" ignore case of search only if all lowercase
 set smarttab 							 			" insert tabs on start of line according to shiftwidth, not tabstop
 set autoread                    " auto reload changed files if there's no conflict
 set number
+
+let &colorcolumn=join(range(81, 201), ",")
+augroup textWidth
+	autocmd!
+	autocmd BufRead,BufNewFile *.md let &colorcolumn=0
+augroup END
+
 " gvim behave like vim: console tabs and no dialogs, menus or scrollbars
 set guioptions+=lrbmTLce
 set guioptions-=lrbmTLce
