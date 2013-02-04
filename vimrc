@@ -494,7 +494,8 @@ let viminderCoffee = [
 	\ '<C-Space> focus current window in dwm',
 	\ '<C-M> fullscreen window in dwm (C-Space to get out)',
 	\ '*t to select unstarred in page on gmail',
-	\ 'ga prints ascii codes of current char'
+	\ 'ga prints ascii codes of current char',
+	\ 'js: callback pattern with this binding - findNodes("hide", nodeLayouter); then inside findNodes do callback_obj[callback_string].call(callback_obj, found)'
   \ ]
 
 let viminderCoffeeIterator = 0
