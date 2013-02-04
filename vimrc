@@ -128,13 +128,14 @@ nnoremap mm :
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
 
-" visual shifting (relect after shift)
+" visual shifting (relect after shift).
 vnoremap < <gv
 vnoremap > >gv
 
 nnoremap - $
 onoremap - $
-vnoremap - $
+" step back one char so it doesn't include the newline character.
+vnoremap - $h
 
 " easy split window navigation.
 nnoremap <C-H> <C-W>h
