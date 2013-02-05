@@ -137,11 +137,6 @@ onoremap - $
 " step back one char so it doesn't include the newline character.
 vnoremap - $h
 
-" easy split window navigation.
-nnoremap <C-H> <C-W>h
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-L> <C-W>l
  " save file opened without sudo after the fact
 cmap w!! w !sudo tee % >/dev/null
 
