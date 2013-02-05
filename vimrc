@@ -41,7 +41,7 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 colorscheme mustang
 set cursorline
 
-if filereadable(expand("~/vcs.order-management/README.md"))
+if filereadable(expand("~/punchcard"))
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,*.js
 else
   autocmd BufRead,BufNewFile *.coffee,*.js set expandtab
@@ -155,7 +155,7 @@ nnoremap <Leader>l :set list!<CR>
 " useful for uncommenting lines
 nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
-nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %e %a <%H:%M>'\")"<CR>
+nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
 command! -nargs=0 Sum :5,12!awk '{num = substr($7, 2, length($7) - 4) + substr($8, 2, length($7) - 4); width += num; print} END {print width}'
 
@@ -464,6 +464,20 @@ function! Inform(data)
 		echo '# '.other
 	endfor
 	return
+endfunction
+
+nnoremap <leader>.s :call Viminder()<CR>
+function! Viminder()
+	let [date, time] = split(system("date +'%Y%m%d_%T'"), '_')
+	let punchcard = '"' . expand('$HOME') . '/punchcard"'
+	echo punchcard
+	let awk = "awk '"
+		\ . "$1 ~ /".date."/ {print ".'"hey"'.", $0;"
+			\ . " print ".'"hay"'.", $0 > ".punchcard."}"
+		\ . " $1 !~ /".date."/ {print > ".punchcard."}"
+		\ . "' ~/punchcard"
+	let sys = system(l:awk)
+	echo sys
 endfunction
 
 " Show HN: Pomohunt - Pomodoro Meets Pro Tips for your Favorite Language/Tool
