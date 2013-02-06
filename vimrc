@@ -65,12 +65,24 @@ augroup textWidth
 	autocmd BufRead,BufNewFile *.md let &colorcolumn=0
 augroup END
 
+set laststatus=2
+set statusline=
+set statusline+=%m
+set statusline+=%h
+set statusline+=%{GetModifiedBuffers()}
+
+function! GetModifiedBuffers()
+	redir @b
+	silent! buffers
+	redir END
+	return system('echo "'.@b.'"' . " | awk '$3 ~ /\+/ {printf ".'"  " $4 "*"'."}'")
+endfunction
+
 " gvim behave like vim: console tabs and no dialogs, menus or scrollbars
 set guioptions+=lrbmTLce
 set guioptions-=lrbmTLce
 set guioptions+=c
 " modelines could be exploited maliciously
-set modelines=0
 
 let mapleader = ","
 
