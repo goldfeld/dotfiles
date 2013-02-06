@@ -479,6 +479,14 @@ function! Inform(data)
 	return
 endfunction
 
+nnoremap <leader>.h :call ShowingHNParse()<CR>
+function! ShowingHNParse()
+	let file = '"'. expand('$HOME/Dropbox/showhn') .'"'
+	let output = '"'. expand('$HOME/result') .'"'
+	let parsed = system("awk 'BEGIN {RS = ".'"[<>]"'."} NR == 2 {print}' ".file."")
+	echo parsed
+endfunction
+
 nnoremap <leader>.s :call Viminder()<CR>
 function! Viminder()
 	let [date, time] = split(system("date +'%Y%m%d_%T'"), '_')
