@@ -47,6 +47,7 @@ else
   autocmd BufRead,BufNewFile *.coffee,*.js set expandtab
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
 endif
+set hidden 											" allows switching buffer without saving and keeps undo history.
 set tabstop=2 						 			" number of spaces of tab character
 set shiftwidth=2 					 			" number of spaces to (auto)indent
 set scrolloff=3						 			" keep 3 lines when scrolling
