@@ -87,9 +87,6 @@ set guioptions+=c
 
 let mapleader = ","
 
-noremap h <NOP>
-noremap l <NOP>
-
 nnoremap j gj
 nnoremap k gk
 
@@ -225,6 +222,8 @@ inoremap <C-G>~ <Plug>ISurround
 let g:EasyMotion_leader_key = '<Leader>'
 let g:EasyMotion_mapping_w = '<Space>'
 let g:EasyMotion_mapping_b = '<Leader><Space>'
+let g:EasyMotion_mapping_j = 'l'
+let g:EasyMotion_mapping_k = 'h'
 ":nnoremap f <Leader>f
 ":nnoremap F <Leader>F
 
