@@ -89,9 +89,12 @@ let mapleader = ","
 
 inoremap hh <Esc>
 
- " move within virtual (wrapped) lines
+noremap h <NOP>
+noremap l <NOP>
+
 nnoremap j gj
 nnoremap k gk
+
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
@@ -316,8 +319,8 @@ nnoremap <Leader>s :Vimdow fish<CR>
 nnoremap <Leader>o :Vimdow coffee<CR>
 nnoremap <Leader>m :Vimdow meteor<CR>
 
-nnoremap <Space> :<C-U>Streamline<CR>
-nnoremap <S-Space> :<C-U>StreamlineBack<CR>
+nnoremap j :<C-U>Streamline<CR>
+nnoremap k :<C-U>StreamlineBack<CR>
 " for vi/vim since only gvim distinguishes <S-Space>
 nnoremap + :<C-U>StreamlineBack<CR>
 
