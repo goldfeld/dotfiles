@@ -87,8 +87,6 @@ set guioptions+=c
 
 let mapleader = ","
 
-inoremap hh <Esc>
-
 noremap h <NOP>
 noremap l <NOP>
 
