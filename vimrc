@@ -519,6 +519,7 @@ let viminderCoffee = [
 	\ '*a to select all in page on gmail',
 	\ '*u to select unread in page on gmail',
 	\ '*t to select unstarred in page on gmail',
+	\ '<C-U> in vi insert to cut to beginning of line.',
 	\ '<C-N> new window in dwm',
 	\ '<C-C> close window in dwm',
 	\ '<C-[J/K]> jump next/prev window in dwm',
