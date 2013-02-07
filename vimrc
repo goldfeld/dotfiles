@@ -223,6 +223,8 @@ inoremap <C-G>` <Plug>Isurround
 inoremap <C-G>~ <Plug>ISurround
 
 let g:EasyMotion_leader_key = '<Leader>'
+let g:EasyMotion_mapping_w = '<Space>'
+let g:EasyMotion_mapping_b = '<Leader><Space>'
 ":nnoremap f <Leader>f
 ":nnoremap F <Leader>F
 
