@@ -133,8 +133,11 @@ function! Backspace()
 endfunction
 
 onoremap <Space> iw
+
 " sacrifice the m mark for my pinkies' sake.
 nnoremap mm :
+" sacrifice the w mark for quick saving.
+nnoremap mw :w<CR>
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
 
