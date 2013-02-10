@@ -86,9 +86,6 @@ set guioptions+=c
 
 let mapleader = ","
 
-nnoremap j gj
-nnoremap k gk
-
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
@@ -99,6 +96,35 @@ nnoremap gi gi<Esc>
 ":nnoremap <Space> ea
 nnoremap ge gE
 nnoremap Y y$
+
+nnoremap j :call RestrainCommand('j', "Streamline")<CR>
+nnoremap k :call RestrainCommand('k', "StreamlineBack")<CR>
+nnoremap h :call RestrainCommand('h', "")<CR>
+nnoremap l :call RestrainCommand('l', "")<CR>
+
+augroup restrainCommand
+	autocmd!
+	autocmd CursorMoved * call CheckCurrentCommand()
+augroup END
+
+let g:currentCommand = ''
+let g:lastCommand = ''
+function! RestrainCommand(cmd, doublePressCmd)
+	if g:lastCommand == a:cmd
+		execute a:doublePressCmd
+	else
+		execute 'normal! '.a:cmd
+	endif
+	let g:currentCommand = a:cmd
+endfunction
+
+function! CheckCurrentCommand()
+	let g:lastCommand = ''
+	if g:currentCommand != ''
+		let g:lastCommand = g:currentCommand
+	endif
+	let g:currentCommand = ''
+endfunction
 
 nnoremap <Backspace> :call Backspace()<CR>
 function! Backspace()
@@ -309,11 +335,6 @@ nnoremap <Leader>s :Vimdow fish<CR>
 " and compass
 nnoremap <Leader>o :Vimdow coffee<CR>
 nnoremap <Leader>m :Vimdow meteor<CR>
-
-nnoremap j :<C-U>Streamline<CR>
-nnoremap k :<C-U>StreamlineBack<CR>
-" for vi/vim since only gvim distinguishes <S-Space>
-nnoremap + :<C-U>StreamlineBack<CR>
 
 command! -nargs=0 Streamline call Streamline(v:count)
 function! Streamline(target)
