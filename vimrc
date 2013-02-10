@@ -219,14 +219,6 @@ inoremap <C-S> 	<Plug>Isurround
 inoremap <C-G>` <Plug>Isurround
 inoremap <C-G>~ <Plug>ISurround
 
-let g:EasyMotion_leader_key = '<Leader>'
-let g:EasyMotion_mapping_w = '<Space>'
-let g:EasyMotion_mapping_b = '<Leader><Space>'
-let g:EasyMotion_mapping_j = 'l'
-let g:EasyMotion_mapping_k = 'h'
-":nnoremap f <Leader>f
-":nnoremap F <Leader>F
-
 " vim-signature shouldn't touch the m mark which I have remapped.
 let g:SignatureIncludeMarks = 'abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 let g:ctrlp_extensions = ['commitdriven']
