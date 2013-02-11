@@ -184,6 +184,9 @@ noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 " paste from clipboard
 "set clipboard=unnamed
 
+nnoremap <Leader>[ {o
+nnoremap <Leader>] }O
+
 " to go end of textwidth.
 nnoremap <Leader>- 81\|
 " pull next line and delete any comment symbols.
