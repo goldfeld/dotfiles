@@ -263,11 +263,14 @@ let g:LustyJugglerShowKeys = 'a'
 " vim-fugitive plugin
 nnoremap gs :Gstatus<CR>
 nnoremap gb :Gblame<CR>
+nnoremap gB :Gbrowse<CR>
 " leave me on the index version, so I can
 " quickly check it and close it with ZZ.
 nnoremap gc :Gdiff<CR><C-W>h
-nnoremap gl :Ggrep "<cword>"<CR>
-vnoremap gl y:Ggrep <C-R>"<CR>
+nnoremap gl :Glog<CR>
+nnoremap gn :Ggrep "<cword>"<CR>
+vnoremap gn y:Ggrep <C-R>"<CR>
+" use 'help index' to see vim's built-in mapped keys
 
 noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
