@@ -509,7 +509,7 @@ function! Inform(data)
   return
 endfunction
 
-nnoremap <leader>.h :call ShowingHNParse()<CR>
+nnoremap <leader>.p :call ShowingHNParse()<CR>
 function! ShowingHNParse()
 	let file = '"'. expand('$HOME/Dropbox/showhn') .'"'
 	let output = '"'. expand('$HOME/result') .'"'
