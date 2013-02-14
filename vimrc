@@ -26,7 +26,7 @@ Bundle 'goldfeld/vim-seek'
 " syntax
 Bundle 'leafo/moonscript-vim'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'tpope/vim-markdown'
+Bundle 'goldfeld/criticmarkup-vim'
 
 " colorschemes
 Bundle 'croaker/mustang-vim'
