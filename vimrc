@@ -264,12 +264,16 @@ let g:LustyJugglerShowKeys = 'a'
 nnoremap gs :Gstatus<CR>
 nnoremap gb :Gblame<CR>
 nnoremap gB :Gbrowse<CR>
-" leave me on the index version, so I can
-" quickly check it and close it with ZZ.
-nnoremap gc :Gdiff<CR><C-W>h
 nnoremap gl :Glog<CR>
 nnoremap gn :Ggrep "<cword>"<CR>
 vnoremap gn y:Ggrep <C-R>"<CR>
+
+" same as git add the current file.
+nnoremap gt :Gwrite<CR>
+" same as git checkout the current file, updating buffer.
+nnoremap gx :Gread<CR>
+" leave me on the index version, so I can quickly check it and close it.
+nnoremap gc :Gdiff<CR><C-W>h
 " use 'help index' to see vim's built-in mapped keys
 
 noremap <C-T> :CommitDriven<CR>
