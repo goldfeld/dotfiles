@@ -45,16 +45,16 @@ else
   autocmd BufRead,BufNewFile *.coffee,*.js set expandtab
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
 endif
-set hidden 											" allows switching buffer without saving and keeps undo history.
-set tabstop=2 						 			" number of spaces of tab character
-set shiftwidth=2 					 			" number of spaces to (auto)indent
-set scrolloff=3						 			" keep 3 lines when scrolling
-set backspace=indent,eol,start	" allow backspacing over everything in insert mode
-set hlsearch							 			" hightlight searches
-set incsearch							 			" do incremental searching
+set hidden                      " allows switching buffer without saving and keeps undo history.
+set tabstop=2                   " number of spaces of tab character
+set shiftwidth=2                " number of spaces to (auto)indent
+set scrolloff=3                 " keep 3 lines when scrolling
+set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set hlsearch                    " hightlight searches
+set incsearch                   " do incremental searching
 set ignorecase					 			
 set smartcase							 			" ignore case of search only if all lowercase
-set smarttab 							 			" insert tabs on start of line according to shiftwidth, not tabstop
+set smarttab                    " insert tabs on start of line according to shiftwidth, not tabstop
 set autoread                    " auto reload changed files if there's no conflict
 set number
 
