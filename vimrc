@@ -213,7 +213,8 @@ nnoremap <Leader>/c /console<CR>
 " convert time since epoch under cursor to readable time.
 nnoremap <Leader>.t :call FromEpoch(expand("<cword>"))<CR>
 function! FromEpoch(date)
-	echo system('date --date "Jan 1, 1970 00:00:00 +000 + '.a:date.' seconds"')
+	let date = strpart(a:date, 0, len(a:date) - 3)
+	echo system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
 endfunction
 
 " quickly edit my vimrc.
