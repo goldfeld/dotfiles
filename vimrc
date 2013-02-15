@@ -97,10 +97,10 @@ nnoremap gi gi<Esc>
 nnoremap ge gE
 nnoremap Y y$
 
-nnoremap j :call RestrainCommand('j', "Streamline")<CR>
-nnoremap k :call RestrainCommand('k', "StreamlineBack")<CR>
-nnoremap h :call RestrainCommand('h', "")<CR>
-nnoremap l :call RestrainCommand('l', "")<CR>
+nnoremap <silent> j :call RestrainCommand('j', "Streamline")<CR>
+nnoremap <silent> k :call RestrainCommand('k', "StreamlineBack")<CR>
+nnoremap <silent> h :call RestrainCommand('h', "")<CR>
+nnoremap <silent> l :call RestrainCommand('l', "")<CR>
 
 augroup restrainCommand
 	autocmd!
