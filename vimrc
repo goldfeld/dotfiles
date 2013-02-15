@@ -210,6 +210,12 @@ command! -nargs=0 Sum :5,12!awk '{num = substr($7, 2, length($7) - 4) + substr($
 nnoremap <Leader>/h /HEAD<CR>
 nnoremap <Leader>/c /console<CR>
 
+" convert time since epoch under cursor to readable time.
+nnoremap <Leader>.t :call FromEpoch(expand("<cword>"))<CR>
+function! FromEpoch(date)
+	echo system('date --date "Jan 1, 1970 00:00:00 +000 + '.a:date.' seconds"')
+endfunction
+
 " quickly edit my vimrc.
 nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
