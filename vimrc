@@ -160,10 +160,15 @@ endfunction
 
 onoremap <Space> iw
 
-" sacrifice the m mark for my pinkies' sake.
+" sacrifice the m mark for my pinkies' sake;
 nnoremap mm :
-" sacrifice the w mark for quick saving.
+" w mark for quick saving;
 nnoremap mw :w<CR>
+" v mark for vertical splits
+nnoremap mv :vs<CR>
+" s mark for horizontal splits
+nnoremap ms :sp<CR>
+
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
 
