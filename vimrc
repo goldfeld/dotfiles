@@ -124,11 +124,158 @@ function! RestrainCommand(cmd, doublePressCmd)
 endfunction
 
 function! CheckCurrentCommand()
-	let g:lastCommand = ''
-	if g:currentCommand != ''
-		let g:lastCommand = g:currentCommand
-	endif
-	let g:currentCommand = ''
+  let g:lastCommand = ''
+  if g:currentCommand != ''
+    let g:lastCommand = g:currentCommand
+  endif
+  let g:currentCommand = ''
+endfunction
+
+function! Timestamp()
+  let date = system('date +%s%N | cut -b1-13')
+  return strpart(l:date, 0, len(l:date) - 1)
+endfunction
+
+function! TimestampN(cmd)
+  let date = Timestamp()
+  let lnum = line('.')
+  execute "normal! ".a:cmd
+
+  execute "s/$/ {>>". l:date ."<<}/"
+  execute "normal! 0"
+  startinsert
+endfunction
+
+function! TimestampI(cmd)
+  let date = Timestamp()
+  call feedkeys(a:cmd.l:date)
+  execute 'normal! '.cmd.l:date
+endfunction
+
+" code from Vim The Hard Way
+function! IndentLevel(lnum)
+  return indent(a:lnum) / &shiftwidth
+endfunction
+function! NextNonBlankLine(lnum)
+  let numlines = line('$')
+  let current = a:lnum + 1
+  while current <= numlines
+    if getline(current) =~? '\v\S' | return current | endif
+    let current += 1
+  endwhile
+  return -2
+endfunction
+
+function! TNTFoldExpr(lnum)
+  if getline(a:lnum) =~? '\v^\s*$' | return -1 | endif
+  let this_indent = IndentLevel(a:lnum)
+  let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+  if next_indent == this_indent | return this_indent
+  elseif next_indent < this_indent | return this_indent
+  elseif next_indent > this_indent | return '>' . next_indent
+  endif
+endfunction
+
+function! TNTChildren(lnum)
+  let parent = IndentLevel(a:lnum)
+  let i = 1
+  let indent = IndentLevel(a:lnum + i)
+  let children = []
+  while indent > parent
+    if indent == parent + 1 | call add(children, a:lnum + i) | endif
+    let i = i + 1
+    let indent = IndentLevel(a:lnum + i)
+  endwhile
+  return l:children
+endfunction
+
+function! TNTHumanDate(line)
+  echo a:line
+  return
+  return substitute(a:line, '{>>\([^<]*\)<<}\s*$', '\=submatch(0)')
+endfunction
+
+" go to the function name from within a function
+let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
+execute "nnoremap <Leader>f ?".expr."<CR>"
+
+let g:TNTRandomCache = {}
+function! TNTFoldText(...)
+  if a:0 == 1 | let current = a:1
+  else | let current = v:foldstart
+  endif
+  let line = getline(l:current)
+  " a thread begins with a quote followed optionally by pairs of quotes.
+  if l:line =~? '^\s*"\([^"]*"[^"]*"\)*[^"]*$'
+    let l = getline(l:current + 1)
+    " make it optional for threads to show their content with a special symbol
+    " in front of them, e.g. the double quote or a bang
+    "let l:l = substitute(l:l, '\(^\s*\)\@<=\s\S\@=', '!', '')
+    "return strpart(l:l, 1)
+    return ' 4> ' . strpart(l:l, 2)
+  " a randomizer thread begins with a percent sign (whatever else does?).
+  elseif l:line =~? '^\s*%'
+    let label = get(g:TNTRandomCache, l:current, '')
+    if l:label == ''
+      let children = TNTChildren(l:current)
+      let number = strpart(Timestamp(), 5) + system('sh -c "echo -n $RANDOM"')
+      let random = l:number % len(l:children)
+      let label = strpart(TNTFoldText(l:children[random]), 2)
+      let g:TNTRandomCache[l:current] = l:label
+    endif
+    return l:label
+  else | return getline(l:current)
+  endif
+endfunction
+
+augroup timestamp
+  autocmd!
+  au BufRead,BufNewFile *.tnt.* call TimestampAutocmds()
+  " temporarily switch to manual folding when entering insert mode,
+  " so that adjacent folds won't inaverdtently open when we create new folds.
+  au InsertEnter *.tnt.* let w:last_fm=&foldmethod | setlocal foldmethod=manual
+  au InsertLeave *.tnt.* let &l:foldmethod=w:last_fm
+augroup END
+
+function! TimestampAutocmds()
+  set foldmethod=expr
+  set foldexpr=TNTFoldExpr(v:lnum)
+  set foldtext=TNTFoldText()
+  nnoremap <silent> <buffer> o :call TimestampN('o')<CR>
+  nnoremap <silent> <buffer> O :call TimestampN('O')<CR>
+  "inoremap <silent> <buffer> <CR> :call TimestampI("\<CR>")<CR>
+endfunction
+
+function! WriterTimestamp()
+  let date = system('date +%s%N | cut -b1-13')
+  return strpart(l:date, 0, len(l:date) - 1)
+endfunction
+"nnoremap <Leader>I :WriterMode<CR>
+command! -nargs=0 WriterMode call WriterMode()
+function! WriterMode()
+  let g:writerModeStart = WriterTimestamp()
+  let esc = maparg('<Esc>')
+  let bksp = maparg('<Backspace>')
+  if l:esc
+    let g:writerModeStoreEsc = l:esc
+    unmap <Esc>
+  endif
+  if l:bksp
+    let g:writerModeStoreBksp = l:bksp
+    unmap <Backspace>
+  endif
+  inoremap <silent> <Esc> <Esc>:WriterModeEnd<CR>
+  inoremap <silent> <Backspace> <NOP>
+  startinsert
+endfunction
+command! -nargs=0 WriterModeEnd call WriterModeEnd()
+function! WriterModeEnd()
+  let g:writerModeEnd = WriterTimestamp()
+  echo 'hey'
+  unmap <Esc>
+  unmap <Backspace>
+  if g:writerModeStoreEsc | execute 'nnoremap
+  "echo 'Writing started at '.g:writerModeStart.', '.g:writerModeEnd.' elapsed; X words typed, 180wpm'
 endfunction
 
 nnoremap <Backspace> :call Backspace()<CR>
@@ -293,7 +440,7 @@ nnoremap gt :Gwrite<CR>
 nnoremap gx :Gread<CR>
 " leave me on the index version, so I can quickly check it and close it.
 nnoremap gc :Gdiff<CR><C-W>h
-" use 'help index' to see vim's built-in mapped keys
+" use 'help index' to see vim's built-in natively mapped keys
 
 noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
