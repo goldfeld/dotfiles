@@ -215,10 +215,10 @@ nnoremap <Leader>/h /HEAD<CR>
 nnoremap <Leader>/c /console<CR>
 
 " convert time since epoch under cursor to readable time.
-nnoremap <Leader>.t :call FromEpoch(expand("<cword>"))<CR>
+nnoremap <Leader>.m :echo FromEpoch(expand("<cword>"))<CR>
 function! FromEpoch(date)
 	let date = strpart(a:date, 0, len(a:date) - 3)
-	echo system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
+	return system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
 endfunction
 
 " quick edit my hud outline
