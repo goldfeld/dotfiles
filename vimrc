@@ -30,13 +30,16 @@ Bundle 'goldfeld/criticmarkup-vim'
 
 " colorschemes
 Bundle 'croaker/mustang-vim'
+Bundle 'morhetz/gruvbox'
 
 filetype plugin indent on
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
-"colorscheme slate
-colorscheme mustang
+color slate
+"color gruvbox
+color mustang
+
 set cursorline
 
 if filereadable(expand("~/punchcard"))
