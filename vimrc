@@ -43,6 +43,7 @@ if filereadable(expand("~/punchcard"))
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,*.js
 else
   autocmd BufRead,BufNewFile *.coffee,*.js set expandtab
+  set expandtab
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
 endif
 set hidden                      " allows switching buffer without saving and keeps undo history.
