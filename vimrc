@@ -24,8 +24,9 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'goldfeld/vim-seek'
 
 " syntax
-Bundle 'leafo/moonscript-vim'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'leafo/moonscript-vim'
+Bundle 'vim-scripts/Vim-R-plugin'
 Bundle 'goldfeld/criticmarkup-vim'
 
 " colorschemes
