@@ -62,7 +62,7 @@ set number
 let &colorcolumn=join(range(81, 201), ",")
 augroup textWidth
 	autocmd!
-	autocmd BufRead,BufNewFile *.md let &colorcolumn=0
+	autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
 augroup END
 
 set laststatus=2
