@@ -94,7 +94,7 @@ nnoremap gk k
  " go to last inserted but don't leave me in insert mode
 nnoremap gi gi<Esc>
 
-":nnoremap <Space> ea
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap ge gE
 nnoremap Y y$
 
