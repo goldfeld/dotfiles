@@ -221,8 +221,8 @@ function! FromEpoch(date)
 	return system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
 endfunction
 
-" quick edit my hud outline
-nnoremap <silent> <Leader>.h :e ~/goldfeld/.hud/threads.hud.md<CR>
+" quickly edit my tnt outline
+nnoremap <silent> <Leader>.t :e ~/goldfeld/.tnt/lifethreads.tnt.md<CR>
 " quickly edit my vimrc.
 nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
