@@ -62,6 +62,8 @@ set smartcase							 			" ignore case of search only if all lowercase
 set smarttab                    " insert tabs on start of line according to shiftwidth, not tabstop
 set autoread                    " auto reload changed files if there's no conflict
 set number
+set autoindent
+set smartindent
 
 let &colorcolumn=join(range(81, 201), ",")
 augroup textWidth
