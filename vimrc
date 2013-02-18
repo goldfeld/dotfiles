@@ -181,16 +181,33 @@ function! TNTFoldExpr(lnum)
   endif
 endfunction
 
-function! TNTChildren(lnum)
-  let parent = IndentLevel(a:lnum)
+function! TNTChildren(...)
+  let [lnum, filter] = [0, '']
+  if a:0 == 0 | return | endif
+  if a:0 == 2 | let l:filter = a:2 | endif
+  let l:lnum = a:1
+
+  let parent = IndentLevel(l:lnum)
   let i = 1
-  let indent = IndentLevel(a:lnum + i)
+  let indent = IndentLevel(l:lnum + i)
   let children = []
-  while indent > parent
-    if indent == parent + 1 | call add(children, a:lnum + i) | endif
-    let i = i + 1
-    let indent = IndentLevel(a:lnum + i)
-  endwhile
+  if l:filter == ''
+    while indent > parent
+      if indent == parent + 1 | call add(children, l:lnum + i) | endif
+      let i = i + 1
+      let indent = IndentLevel(l:lnum + i)
+    endwhile
+  else
+    while indent > parent
+      if indent == parent + 1
+        if match(getline(l:lnum + i), l:filter) != -1
+          call add(children, l:lnum + i)
+        endif
+      endif
+      let i = i + 1
+      let indent = IndentLevel(l:lnum + i)
+    endwhile
+  endif
   return l:children
 endfunction
 
