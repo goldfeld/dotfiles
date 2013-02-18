@@ -221,6 +221,9 @@ endfunction
 let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
 execute "nnoremap <Leader>f ?".expr."<CR>"
 
+let g:tntWebpageRegex = '^\s*\[[^\]]*\][[^\]]*]\s*$'
+let g:TNTWebpageSymbol = '!'
+
 let g:TNTRandomCache = {}
 function! TNTFoldText(...)
   if a:0 == 1 | let current = a:1
@@ -246,8 +249,10 @@ function! TNTFoldText(...)
       let g:TNTRandomCache[l:current] = l:label
     endif
     return l:label
-  else | return getline(l:current)
   endif
+  let webpages = TNTChildren(l:current, g:tntWebpageRegex)
+  if len(webpages) | return g:TNTWebpageSymbol . getline(l:current) | endif
+  return getline(l:current)
 endfunction
 
 augroup timestamp
