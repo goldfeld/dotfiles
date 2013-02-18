@@ -20,6 +20,8 @@ xclip
 xdotool
 # vimdow
 wmctrl 
+# tnt.vim
+recode
 
 ### other
 apache2
