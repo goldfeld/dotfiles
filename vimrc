@@ -249,6 +249,43 @@ function! TimestampAutocmds()
   "inoremap <silent> <buffer> <CR> :call TimestampI("\<CR>")<CR>
 endfunction
 
+nnoremap <silent> <Leader>tl :TNTCreateWebpage<CR>
+command! -nargs=0 TNTCreateWebpage call TNTCreateWebpage()
+function! TNTCreateWebpage()
+  execute "normal! Ea]\<Esc>yBi["
+  let recordSeparator = "<[\s]*.?[\s]*title[\s]*>"
+  " note that for my sanity's sake I'm treating the closing slash on the title
+  " tag as simply any character that doesn't even actually need to be there.
+  " below you can see I simply open and close with <title>, in effect it should
+  " not make any difference and saves me from awk/perl/bash escaping nightmare.
+  let awkscriptBase = "awk 'BEGIN {RS=" . '"' . recordSeparator . '"}'
+    \ . " ; {if (FNR == 2) print "
+  let title = system('curl ' . @" . ' | '
+    \ . awkscriptBase . '"<title>"' . ' $0 ' . '"<title>"' . "}'")
+
+  " we're gonna try a few tools to decode the html entities
+  if TNTCheckBashUtility('php')
+    let decode = " | php -r 'echo html_entity_decode(fgets(STDIN),"
+      \ " ENT_NOQUOTES, " . '"UTF-8"' . ");'"
+  elseif TNTCheckBashUtility('recode')
+    let decode = " | recode HTML_4.0"
+  else | let decode = ''
+  endif
+
+  let pattern = "/".recordSeparator."([^<]+)".recordSeparator."/"
+  " we pass it through awk again since curl gives noisy output
+  let title = system('echo "' . title . '" | ' . awkscriptBase . "$0}'"
+    \ . " | tr -d '\n*'"
+    \ . " | sed -e 's/^[[:space:]\t]*//;s/[[:space:]\t]*$//'" . decode)
+  " finish the markdown link now that we (hopefully) have the title
+  execute "normal! a".title."]["
+endfunction
+
+function! TNTCheckBashUtility(name)
+  return system('hash '.a:name.' 2>/dev/null'
+    \ . ' || { echo >&1 "not available"; exit 1; }')
+endfunction
+
 function! WriterTimestamp()
   let date = system('date +%s%N | cut -b1-13')
   return strpart(l:date, 0, len(l:date) - 1)
