@@ -276,7 +276,15 @@ endfunction
 nnoremap <silent> <Leader>tl :TNTCreateWebpage<CR>
 command! -nargs=0 TNTCreateWebpage call TNTCreateWebpage()
 function! TNTCreateWebpage()
-  execute "normal! Ea]\<Esc>yBi["
+	" get curront column
+	let cursor = getpos('.')[2]
+	" get text on the character next to current position.
+	let next = (getline('.'))[cursor]
+  " if we're not at the end of the url.
+  let adjust = ''
+	if len(next) && !(next =~ '\s') | let l:adjust = 'E' | endif
+
+  execute "normal! " . adjust . "a]\<Esc>yBi["
   let recordSeparator = "<[\s]*.?[\s]*title[\s]*>"
   " note that for my sanity's sake I'm treating the closing slash on the title
   " tag as simply any character that doesn't even actually need to be there.
@@ -355,7 +363,7 @@ function! Backspace()
 	" get line text
 	let line = getline('.')
 	" if we're not at the beginning of the word, go to it.
-	if l:line[l:cursor - 2] != ' '
+	if !(l:line[l:cursor - 2] =~ '\s')
 		execute "normal! b"
 	endif
 
