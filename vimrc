@@ -237,7 +237,17 @@ function! TNTFoldText(...)
     " in front of them, e.g. the double quote or a bang
     "let l:l = substitute(l:l, '\(^\s*\)\@<=\s\S\@=', '!', '')
     "return strpart(l:l, 1)
-    return ' 4> ' . strpart(l:l, 2)
+		let label = ''
+		if l:line =~ '^\s*"!\d*'
+			" get how many chars we should ensure (padding formatting).
+			let chars = strpart(matchstr(l:line, '"!\d*'), 2)
+			" get the whole thread title up until it's timestamp, and add padding,
+			" and add padding.
+			let l:label = matchstr(l:line, '"![^{]*') . repeat(' ', chars)
+			" extract the actual title and format to the size constraint.
+			let l:label = strpart(l:label, 4, chars)
+		endif
+    return l:label . ' 4> ' . strpart(l:l, 2)
   " a randomizer thread begins with a percent sign (whatever else does?).
   elseif l:line =~? '^\s*%'
     let label = get(g:TNTRandomCache, l:current, '')
