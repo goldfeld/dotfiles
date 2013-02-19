@@ -255,19 +255,20 @@ function! TNTFoldText(...)
   return getline(l:current)
 endfunction
 
-augroup timestamp
+augroup TNT
   autocmd!
-  au BufRead,BufNewFile *.tnt.* call TimestampAutocmds()
+  au BufRead,BufNewFile *.tnt.* call TNTAutocmds()
   " temporarily switch to manual folding when entering insert mode,
   " so that adjacent folds won't inaverdtently open when we create new folds.
   au InsertEnter *.tnt.* let w:last_fm=&foldmethod | setlocal foldmethod=manual
   au InsertLeave *.tnt.* let &l:foldmethod=w:last_fm
 augroup END
 
-function! TimestampAutocmds()
+function! TNTAutocmds()
   set foldmethod=expr
   set foldexpr=TNTFoldExpr(v:lnum)
   set foldtext=TNTFoldText()
+  set foldopen=search,mark,percent,quickfix,tag,undo
   nnoremap <silent> <buffer> o :call TimestampN('o')<CR>
   nnoremap <silent> <buffer> O :call TimestampN('O')<CR>
   "inoremap <silent> <buffer> <CR> :call TimestampI("\<CR>")<CR>
