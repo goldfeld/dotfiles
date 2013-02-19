@@ -46,8 +46,7 @@ set cursorline
 if filereadable(expand("~/punchcard"))
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,*.js
 else
-  autocmd BufRead,BufNewFile *.coffee,*.js set expandtab
-  set expandtab
+  autocmd BufRead,BufNewFile *.coffee,*.js setlocal expandtab
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
 endif
 set hidden                      " allows switching buffer without saving and keeps undo history.
@@ -66,9 +65,10 @@ set autoindent
 set smartindent
 
 let &colorcolumn=join(range(81, 201), ",")
-augroup textWidth
+augroup filetypeSettings
 	autocmd!
 	autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
+  autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
 
 set laststatus=2
