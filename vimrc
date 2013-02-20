@@ -93,6 +93,8 @@ set guioptions+=c
 
 let mapleader = ","
 
+let g:TNTWebBrowser = 'luakit'
+
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
@@ -223,6 +225,21 @@ let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
 execute "nnoremap <Leader>f ?".expr."<CR>"
 
 let g:tntWebpageRegex = '^\s*\[[^\]]*\]\[[^\]]*\]\s*\({>>\d*<<}\)\?\s*$'
+
+nnoremap <Leader>tt :TNTTriggerSession<CR>
+command! -nargs=0 TNTTriggerSession call TNTTriggerSession(line('.'))
+function! TNTTriggerSession(lnum)
+	let browser = get(g:, 'TNTWebBrowser', '')
+	if !len(browser) | return | endif
+	let webpages = TNTChildren(a:lnum, g:tntWebpageRegex)
+	if !len(webpages) | return | endif
+	let links = ''
+	for page in webpages
+		let link = matchstr(getline(page), '\[http\S*\]')
+		let l:links = l:links . ' ' . strpart(link, 1, len(link) - 2)
+	endfor
+	call system(browser.l:links)
+endfunction
 
 function! TNTSessionTriggerSymbol(lnum)
 	if len(TNTChildren(a:lnum, g:tntWebpageRegex))
