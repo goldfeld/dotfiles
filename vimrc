@@ -197,6 +197,7 @@ function! TNTChildren(...)
       let i = i + 1
       let indent = IndentLevel(l:lnum + i)
     endwhile
+
   else
     while indent > parent
       if indent == parent + 1
@@ -221,23 +222,33 @@ endfunction
 let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
 execute "nnoremap <Leader>f ?".expr."<CR>"
 
-let g:tntWebpageRegex = '^\s*\[[^\]]*\][[^\]]*]\s*$'
-let g:TNTWebpageSymbol = '!'
+let g:tntWebpageRegex = '^\s*\[[^\]]*\]\[[^\]]*\]\s*\({>>\d*<<}\)\?\s*$'
 
-let g:TNTRandomCache = {}
+function! TNTSessionTriggerSymbol(lnum)
+	if len(TNTChildren(a:lnum, g:tntWebpageRegex))
+		return ':'
+	else | return ''
+	endif
+endfunction
+
+let g:TNTFoldCache = {}
 function! TNTFoldText(...)
   if a:0 == 1 | let current = a:1
   else | let current = v:foldstart
   endif
   let line = getline(l:current)
+	" the label will be our final folded text
+
   " a thread begins with a quote followed optionally by pairs of quotes.
   if l:line =~? '^\s*"\([^"]*"[^"]*"\)*[^"]*$'
-    let l = getline(l:current + 1)
+		let children = len(TNTChildren(l:current))
+    let l = matchstr(getline(l:current + 1), '\S[^{]*')
+		let lindent = strpart(matchstr(getline(l:current + 1), '^\s*'), 2)
+		let prelabel = TNTSessionTriggerSymbol(l:current + 1)
     " make it optional for threads to show their content with a special symbol
     " in front of them, e.g. the double quote or a bang
     "let l:l = substitute(l:l, '\(^\s*\)\@<=\s\S\@=', '!', '')
     "return strpart(l:l, 1)
-		let label = ''
 		if l:line =~ '^\s*"!\d*'
 			" get how many chars we should ensure (padding formatting).
 			let chars = strpart(matchstr(l:line, '"!\d*'), 2)
@@ -245,23 +256,26 @@ function! TNTFoldText(...)
 			" and add padding.
 			let l:label = matchstr(l:line, '"![^{]*') . repeat(' ', chars)
 			" extract the actual title and format to the size constraint.
-			let l:label = strpart(l:label, 4, chars)
+			let l:label = strpart(l:label, 4, chars) . ' '
+			return l:lindent . l:prelabel . l:label . l:l . '['.children.']'
 		endif
-    return l:label . ' 4> ' . strpart(l:l, 2)
+    return l:lindent . l:prelabel . l:l . '['.children.']'
+
   " a randomizer thread begins with a percent sign (whatever else does?).
   elseif l:line =~? '^\s*%'
-    let label = get(g:TNTRandomCache, l:current, '')
+    let label = get(g:TNTFoldCache, l:current, '')
     if l:label == ''
       let children = TNTChildren(l:current)
       let number = strpart(Timestamp(), 5) + system('sh -c "echo -n $RANDOM"')
       let random = l:number % len(l:children)
-      let label = strpart(TNTFoldText(l:children[random]), 2)
-      let g:TNTRandomCache[l:current] = l:label
+			let child = l:children[random]
+
+			let prelabel = TNTSessionTriggerSymbol(child)
+      let label = strpart(TNTFoldText(child), 2)
+      let g:TNTFoldCache[l:current] = prelabel . l:label
     endif
     return l:label
   endif
-  let webpages = TNTChildren(l:current, g:tntWebpageRegex)
-  if len(webpages) | return g:TNTWebpageSymbol . getline(l:current) | endif
   return getline(l:current)
 endfunction
 
