@@ -9,7 +9,6 @@ Bundle 'lordm/vim-browser-reload-linux'
 " workflow
 Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
-Bundle 'longstorm/hudmode-vim'
 
 " editing
 Bundle 'tpope/vim-surround'
