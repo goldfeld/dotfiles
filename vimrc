@@ -292,8 +292,34 @@ function! TNTFoldText(...)
       let g:TNTFoldCache[l:current] = prelabel . l:label
     endif
     return l:label
+	
+	" a note begins with a hash, and we'd like to show it's contents' word count.
+	elseif l:line =~? '^\s*#'
+		let lindent = matchstr(getline(l:current), '^\s*')
+		return lindent . matchstr(getline(l:current), '\S[^{]*') . '('
+			\ . TNTWordCountRecursive(l:current) . ' words)'
   endif
+
   return getline(l:current)
+endfunction
+
+function! TNTWordCount(lnum)
+	" remove one to account for tnt timestamp.
+	return len(split(getline(a:lnum), '\s')) - 1
+endfunction
+
+nnoremap <leader>.w :call TNTWordCountRecursive(line('.'))<CR>
+function! TNTWordCountRecursive(lnum)
+	let wc = get(g:TNTFoldCache, a:lnum, 0)
+	if l:wc == 0
+		let children = TNTChildren(a:lnum)
+		for child in children
+			let l:wc += TNTWordCountRecursive(child)
+		endfor
+		let l:wc += TNTWordCount(a:lnum)
+		let g:TNTFoldCache[a:lnum] = l:wc
+	endif
+	return l:wc
 endfunction
 
 augroup TNT
