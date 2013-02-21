@@ -784,20 +784,25 @@ function! Inform(data)
   let info = 'No matching info.'
   let otherinfo = []
   if match(['wifi', 'pass'], a:data) != -1 | let l:info = '1251025655'
-  elseif match(['chmod', 'permission', 'executable', 'exe'], a:data) != -1
-    let l:info = 'chmod +x filename'
+  elseif match(['phone', 'tel'], a:data) != -1 | let l:info = '3176-6107'
+
   elseif match(['moon', 'moonc'], a:data) != -1
     let l:info = 'moonc -t "$HOME/.vim/bundle/hudmode-vim/core" .'
     call add(l:otherinfo, 'execute command from ~/goldfeld/hudmode/core')
   elseif match(['restart'], a:data) != -1
     let l:info = 'sudo service network-manager restart'
     call add(l:otherinfo, 'then toggle hardware wireless switch')
-  elseif match(['phone', 'tel'], a:data) != -1 | let l:info = '3176-6107'
+  elseif match(['chmod', 'permission', 'executable', 'exe'], a:data) != -1
+    let l:info = 'chmod +x filename'
+  elseif match(['tar'], a:data) != -1
+    let l:info = 'tar xvzf filename.tar.gz'
+
   elseif match(['heroku', 'buildpack'], a:data) != -1
     let appname = input("enter your app's name: ")
     echo "\n"
     let l:info = "heroku create ".l:appname." --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
     call add(l:otherinfo, "then do 'heroku login'")
+
   elseif match(['ssh', 'publickey', 'keygen'], a:data) != -1
     let email = input("enter email for publickey: ")
     echo "\n"
@@ -805,6 +810,7 @@ function! Inform(data)
     call add(l:otherinfo, "just press enter when prompted for file in which to save")
     call add(l:otherinfo, "use <Leader>.k to xclip the key")
   endif
+
   let @* = l:info
   let @+ = l:info
   echo l:info
