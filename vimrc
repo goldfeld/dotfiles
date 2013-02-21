@@ -381,8 +381,11 @@ function! TNTCreateWebpage()
 endfunction
 
 function! TNTCheckBashUtility(name)
-  return system('hash '.a:name.' 2>/dev/null'
+  let result = system('hash '.a:name.' 2>/dev/null'
     \ . ' || { echo >&1 "not available"; exit 1; }')
+  if result =~ 'not available' | return 0
+  else | return 1
+  endif
 endfunction
 
 function! WriterTimestamp()
