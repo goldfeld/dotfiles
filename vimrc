@@ -903,55 +903,6 @@ function! Viminder()
 	echo sys
 endfunction
 
-" Show HN: Pomohunt - Pomodoro Meets Pro Tips for your Favorite Language/Tool
-" halogen design, with red circle for main color/theme
-" use same database as Leak, use same collection as hacker.leakmap.com/leak (vim tag)
-" small rewards (read book X), medium rewards, great rewards (buy something)
-	" allow showing one tip worthy of each reward tier and user picks which 
-let viminderCoffee = [
-	\ 'gI insert at first columnn',
-	\ '<Leader>i insert after first symbol',
-	\ "ci['/\"] change inner quote",
-	\ '@@',
-	\ ':5,10norm! @h ',
-	\ 'gi - go back to last edited location',
-	\ ':.+1,.+20',
-	\ 'o in visual mode to switch between selection ends',
-	\ 'O in visual block mode to switch between corners',
-	\ '*a to select all in page on gmail',
-	\ '*u to select unread in page on gmail',
-	\ '*t to select unstarred in page on gmail',
-	\ '<C-U> in vi insert to cut to beginning of line.',
-	\ '<C-N> new window in dwm',
-	\ '<C-C> close window in dwm',
-	\ '<C-[J/K]> jump next/prev window in dwm',
-	\ '<C-Space> focus current window in dwm',
-	\ '<C-M> fullscreen window in dwm (C-Space to get out)',
-	\ '*t to select unstarred in page on gmail',
-	\ 'ga prints ascii codes of current char',
-	\ 'js: callback pattern with this binding - findNodes("hide", nodeLayouter); then inside findNodes do callback_obj[callback_string].call(callback_obj, found)'
-  \ ]
-
-let viminderCoffeeIterator = 0
-let viminderCoffeeMax = len(g:viminderCoffee)
-function! Headsup(context)
-	if a:context == 'coffee'
-		if g:viminderCoffeeIterator >= g:viminderCoffeeMax
-			let g:viminderCoffeeIterator = 0
-		else | let g:viminderCoffeeIterator += 1
-		endif
-		return g:viminderCoffee[ g:viminderCoffeeIterator ]
-	endif
-endfunction
-
-" Headsup is a tool for when you feel the need to up your game,
-" it's always in your statusline, waiting for you to look down on it
-" You can let it send back to the server when you improve your mappings
-	" It never sends back any code or characters! Only motions and commands,
-	" filtering out any search data (replacing it with stock text).
-" You can connect to the server to get other people's mappings
-
-
 " http://learnvimscriptthehardway.stevelosh.com/chapters/12.html
 " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
 " http://forrst.com/posts/Adding_a_Next_Adjective_to_Vim_Version_2-C4P#comment-land
