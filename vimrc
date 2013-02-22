@@ -173,13 +173,12 @@ nnoremap <silent> <Space>mj zcddpzo
 nnoremap <silent> <Space>mk zcddkPzo
 
 function! TNTPreviousSibling()
+	let column = getpos('.')[2]
 	let heading = IndentLevel(line('.'))
-	if IndentLevel(line('.') - 1) == heading
-		execute 'normal! k'
-	else
-		let column = getpos('.')[2]
-		execute 'normal! zk'
-		while IndentLevel(line('.')) > l:heading
+	execute 'normal! k'
+	let prev = line('.')
+	if IndentLevel(prev) != heading || foldclosed(prev) == -1
+		while IndentLevel(line('.')) > heading
 			execute 'normal! [z'
 		endwhile
 		execute 'normal! '.column.'|'
@@ -189,12 +188,11 @@ endfunction
 
 function! TNTNextSibling()
 	let current = line('.')
-	let indent = IndentLevel(current)
-	let nextindent = IndentLevel(current + 1)
-	if nextindent > indent | execute 'normal! ]zj'
-	elseif nextindent == indent | execute 'normal! j'
+	execute 'normal! j'
+	let next = line('.')
+	if IndentLevel(next) > IndentLevel(current)
+		execute 'normal! ]zj'
 	endif
-	" do nothing if the next item has less indent than the current.
 endfunction
 
 function! TNTTimestamp()
