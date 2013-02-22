@@ -101,7 +101,7 @@ nnoremap gk k
  " go to last inserted but don't leave me in insert mode
 nnoremap gi gi<Esc>
 
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap ge gE
 nnoremap Y y$
 
@@ -137,13 +137,73 @@ function! CheckCurrentCommand()
   let g:currentCommand = ''
 endfunction
 
-function! Timestamp()
+nnoremap <silent> <Space>w :TNTTriggerSession<CR>
+nnoremap <silent> <Space>W :TNTCreateWebpage<CR>
+nnoremap <silent> <Space>m :execute "normal! a{>>". TNTTimestamp() ."<<}"<CR>
+nnoremap <silent> <Space>t :echo 'cmd-t for folds'<CR>
+
+" go to current heading's next sibling.
+nnoremap <silent> <Space>j :call TNTNextSibling()<CR>
+" go to current heading's previous sibling.
+nnoremap <silent> <Space>k :call TNTPreviousSibling()<CR>
+" go to current subtree's heading.
+nnoremap <silent> <Space>h [z
+" go to next subtree's heading.
+nnoremap <silent> <Space>l ]zzj
+
+" go to current subtree's last open item.
+nnoremap <silent> <Space>e ]z
+
+" open all folds on current block.
+nnoremap <silent> <Space>bo {v}zo
+" close all folds on current block.
+nnoremap <silent> <Space>bc {v}zc
+" minimize all folds on current block.
+nnoremap <silent> <Space>bm {v}zmzc
+" open all threads on current block.
+nnoremap <silent> <Space>bt {v}zmzo
+
+" demote current heading.
+nnoremap <silent> <Space>>> zc>>zo
+" promote current heading.
+nnoremap <silent> <Space><< zc<<zo
+" move current fold down one position.
+nnoremap <silent> <Space>mj zcddpzo
+" move current fold up one position.
+nnoremap <silent> <Space>mk zcddkPzo
+
+function! TNTPreviousSibling()
+	let heading = IndentLevel(line('.'))
+	if IndentLevel(line('.') - 1) == heading
+		execute 'normal! k'
+	else
+		let column = getpos('.')[2]
+		execute 'normal! zk'
+		while IndentLevel(line('.')) > l:heading
+			execute 'normal! [z'
+		endwhile
+		execute 'normal! '.column.'|'
+		"call cursor(line('.'), column)
+	endif
+endfunction
+
+function! TNTNextSibling()
+	let current = line('.')
+	let indent = IndentLevel(current)
+	let nextindent = IndentLevel(current + 1)
+	if nextindent > indent | execute 'normal! ]zj'
+	elseif nextindent == indent | execute 'normal! j'
+	endif
+	" do nothing if the next item has less indent than the current.
+endfunction
+
+function! TNTTimestamp()
   let date = system('date +%s%N | cut -b1-13')
   return strpart(l:date, 0, len(l:date) - 1)
 endfunction
 
-function! TimestampN(cmd)
-  let date = Timestamp()
+function! TNTTimestampN(cmd)
+  let date = TNTTimestamp()
   let lnum = line('.')
   execute "normal! ".a:cmd
 
@@ -152,8 +212,8 @@ function! TimestampN(cmd)
   startinsert
 endfunction
 
-function! TimestampI(cmd)
-  let date = Timestamp()
+function! TNTTimestampI(cmd)
+  let date = TNTTimestamp()
   call feedkeys(a:cmd.l:date)
   execute 'normal! '.cmd.l:date
 endfunction
@@ -225,7 +285,6 @@ execute "nnoremap <Leader>f ?".expr."<CR>"
 
 let g:tntWebpageRegex = '^\s*\[[^\]]*\]\[[^\]]*\]\s*\({>>\d*<<}\)\?\s*$'
 
-nnoremap <Leader>tt :TNTTriggerSession<CR>
 command! -nargs=0 TNTTriggerSession call TNTTriggerSession(line('.'))
 function! TNTTriggerSession(lnum)
 	let browser = get(g:, 'TNTWebBrowser', '')
@@ -282,7 +341,7 @@ function! TNTFoldText(...)
     let label = get(g:TNTFoldCache, l:current, '')
     if l:label == ''
       let children = TNTChildren(l:current)
-      let number = strpart(Timestamp(), 5) + system('sh -c "echo -n $RANDOM"')
+      let number = strpart(TNTTimestamp(), 5) + system('sh -c "echo -n $RANDOM"')
       let random = l:number % len(l:children)
 			let child = l:children[random]
 
@@ -335,12 +394,11 @@ function! TNTAutocmds()
   setlocal foldexpr=TNTFoldExpr(v:lnum)
   setlocal foldtext=TNTFoldText()
   setlocal foldopen=search,mark,percent,quickfix,tag,undo
-  nnoremap <silent> <buffer> o :call TimestampN('o')<CR>
-  nnoremap <silent> <buffer> O :call TimestampN('O')<CR>
-  "inoremap <silent> <buffer> <CR> :call TimestampI("\<CR>")<CR>
+  nnoremap <silent> <buffer> o :call TNTTimestampN('o')<CR>
+  nnoremap <silent> <buffer> O :call TNTTimestampN('O')<CR>
+  "inoremap <silent> <buffer> <CR> :call TNTTimestampI("\<CR>")<CR>
 endfunction
 
-nnoremap <silent> <Leader>tl :TNTCreateWebpage<CR>
 command! -nargs=0 TNTCreateWebpage call TNTCreateWebpage()
 function! TNTCreateWebpage()
 	" get curront column
