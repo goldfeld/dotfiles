@@ -306,12 +306,18 @@ endfunction
 let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
 execute "nnoremap <Leader>f ?".expr."<CR>"
 
-let g:tntWebpageRegex = '^\s*\[[^\]]*\]\[[^\]]*\]\s*\({>>\d*<<}\)\?\s*$'
+let g:tntWebpageRegex = '^\s*\((\d\d\d\?%)\)\?'
+  \ . '\[[^\]]*\]\[[^\]]*\]'
+  \ . '\s*\({>>\d*<<}\)\?\s*$'
 
 command! -nargs=0 TNTTriggerSession call TNTTriggerSession(line('.'))
 function! TNTTriggerSession(lnum)
 	let browser = get(g:, 'TNTWebBrowser', '')
-	if !len(browser) | return | endif
+	if !len(browser)
+		echom 'Please set your web browser by having e.g."'
+			\ . "let g:TNTWebBrowser = 'google-chrome'" . '" in your vimrc.'
+		return
+	endif
 	let webpages = TNTChildren(a:lnum, g:tntWebpageRegex)
 	if !len(webpages) | return | endif
 	let links = ''
@@ -424,39 +430,61 @@ endfunction
 
 command! -nargs=0 TNTCreateWebpage call TNTCreateWebpage()
 function! TNTCreateWebpage()
-	" get curront column
-	let cursor = getpos('.')[2]
-	" get text on the character next to current position.
-	let next = (getline('.'))[cursor]
+  " get curront column
+  let cursor = getpos('.')[2]
+  " get text on the character next to current position.
+  let next = (getline('.'))[cursor]
   " if we're not at the end of the url.
   let adjust = ''
-	if len(next) && !(next =~ '\s') | let l:adjust = 'E' | endif
-
+  if len(next) && !(next =~ '\s') | let l:adjust = 'E' | endif
   execute "normal! " . adjust . "a]\<Esc>yBi["
-  let recordSeparator = "<[\s]*.?[\s]*title[\s]*>"
-  " note that for my sanity's sake I'm treating the closing slash on the title
-  " tag as simply any character that doesn't even actually need to be there.
-  " below you can see I simply open and close with <title>, in effect it should
-  " not make any difference and saves me from awk/perl/bash escaping nightmare.
-  let awkscriptBase = "awk 'BEGIN {RS=" . '"' . recordSeparator . '"}'
-    \ . " ; {if (FNR == 2) print "
-  let title = system('curl ' . @" . ' | '
-    \ . awkscriptBase . '"<title>"' . ' $0 ' . '"<title>"' . "}'")
 
-  " we're gonna try a few tools to decode the html entities
-  if TNTCheckBashUtility('php')
-    let decode = " | php -r 'echo html_entity_decode(fgets(STDIN),"
-      \ " ENT_NOQUOTES, " . '"UTF-8"' . ");'"
-  elseif TNTCheckBashUtility('recode')
-    let decode = " | recode HTML_4.0"
-  else | let decode = ''
+  " our normal call above used the y operator to capture the url.
+  let url = @"
+
+  let engines = { 'google': '\v(google\.com(\....?)?\/search\?q\=)@<=(\S*)' }
+  let engine = ''
+  let query = ''
+  " if our url is a query in one of the listed engines, we treat it differently.
+  for pattern in items(engines)
+    let query = matchstr(url, pattern[1])
+    let engine = pattern[0] . ':'
+  endfor
+
+  if query != ''
+    " we simply url-decode the query and prepend the engine's name, and we
+    " have our title.
+    let title = engine . system('echo "' . query . '"'
+    \ . ' | echo -e "$(sed ' . "'s/%/\\\\x/g'" . ')"')
+  else
+    let recordSeparator = "<[\s]*.?[\s]*title[\s]*>"
+    " note that for my sanity's sake I treat the closing slash on the title
+    " tag as simply any character that doesn't even actually need to be there.
+    " you can see I just open and close with <title>, in effect it should not
+    " make any difference and spares me from awk/perl/bash escaping nightmare.
+    let awkscriptBase = "awk 'BEGIN {RS=" . '"' . recordSeparator . '"}'
+      \ . " ; {if (FNR == 2) print "
+    " grab the title and make sure we guard against some evil saboteur putting
+    " backticks instead of single quotes on his webpage's title.
+    let title = substitute(system('curl ' . url . ' | ' . awkscriptBase
+      \ . '"<title>"' . ' $0 ' . '"<title>"' . "}'"), '[`"]', "'", 'g')
+
+    " we're gonna try a few tools to decode the html entities.
+    if TNTCheckBashUtility('php')
+      let decode = " | php -r 'echo html_entity_decode(fgets(STDIN),"
+        \ " ENT_NOQUOTES, " . '"UTF-8"' . ");'"
+    elseif TNTCheckBashUtility('recode')
+      let decode = " | recode HTML_4.0"
+    else | let decode = ''
+    endif
+
+    " we pass it through awk again since curl gives noisy output, like an ogre.
+    let title = system('echo "' . title . '"'
+    \ . ' | ' . awkscriptBase . "$0}'" . decode)
   endif
 
-  let pattern = "/".recordSeparator."([^<]+)".recordSeparator."/"
-  " we pass it through awk again since curl gives noisy output
-  let title = system('echo "' . title . '" | ' . awkscriptBase . "$0}'"
-    \ . " | tr -d '\n*'"
-    \ . " | sed -e 's/^[[:space:]\t]*//;s/[[:space:]\t]*$//'" . decode)
+  let title = system('echo "' . title . '"' . " | tr -d '\n*'"
+    \ . " | sed -e 's/^[[:space:]\t]*//;s/[[:space:]\t]*$//'")
   " finish the markdown link now that we (hopefully) have the title
   execute "normal! a".title."]["
 endfunction
