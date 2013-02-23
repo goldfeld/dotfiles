@@ -149,10 +149,15 @@ nnoremap <silent> <Space>k :call TNTPreviousSibling()<CR>
 " go to current subtree's heading.
 nnoremap <silent> <Space>h [z
 " go to next subtree's heading.
-nnoremap <silent> <Space>l ]zzj
+nnoremap <silent> <Space>n ]zj
 
+" go to first heading of a lower level than the current.
+nnoremap <silent> <Space>l :call TNTFirstLower()<CR>
 " go to current subtree's last open item.
 nnoremap <silent> <Space>e ]z
+
+" go to top-level heading of current fold.
+nnoremap <silent> <Space>H :call TNTTopLevelHeading()<CR>
 
 " open all folds on current block.
 nnoremap <silent> <Space>bo {v}zo
@@ -193,6 +198,26 @@ function! TNTNextSibling()
 	if IndentLevel(next) > IndentLevel(current)
 		execute 'normal! ]zj'
 	endif
+endfunction
+
+function! TNTTopLevelHeading()
+  while IndentLevel(line('.')) > 0
+    execute 'normal! [z'
+  endwhile
+endfunction
+
+function! TNTFirstLower()
+  let startindent = IndentLevel(line('.'))
+  execute 'normal! j'
+  let current = line('.')
+  let currentindent = IndentLevel(current)
+  while currentindent <= startindent
+    \ || matchstr(getline(current), g:tntWebpageRegex) != ''
+    if currentindent < startindent | return | endif
+    execute 'normal! j'
+    let l:current = line('.')
+    let l:currentindent = IndentLevel(current)
+  endwhile
 endfunction
 
 function! TNTTimestamp()
