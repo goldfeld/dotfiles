@@ -16,6 +16,9 @@ function git () {
 		$HOME/.vim/bundle/*)
 			command git -c user.email=vic@longstorm.org -c user.name="Vic Goldfeld" "$@"
 			;;
+		$HOME/vtex/*)
+			command git -c user.email=bernardo@vtex.com.br -c user.name="Bernardo Szpilman" "$@"
+			;;
 		*)
 			command git "$@"
 			;;
