@@ -221,17 +221,15 @@ function! TNTFirstLower()
   endwhile
 endfunction
 
-if TNTCheckBashUtility('ruby')
-  function! TNTTimestamp()
+function! TNTTimestamp()
+  if TNTCheckBashUtility('ruby')
     let date = system("ruby -e 'puts Time.now.to_f'")
     return strpart(substitute(l:date, '\.', '', 'g'), 0, len(l:date) - 4)
-  endfunction
-else
-  function! TNTTimestamp()
+  else
     let date = system('date +%s%N | cut -b1-13')
     return strpart(l:date, 0, len(l:date) - 1)
-  endfunction
-endif
+  endif
+endfunction
 
 function! TNTTimestampN(cmd)
   let date = TNTTimestamp()
