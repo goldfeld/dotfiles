@@ -144,21 +144,21 @@ nnoremap <silent> <Space>m :execute "normal! a{>>". TNTTimestamp() ."<<}"<CR>
 nnoremap <silent> <Space>t :echo 'cmd-t for folds'<CR>
 
 " go to current heading's next sibling.
-nnoremap <silent> <Space>j :call TNTNextSibling()<CR>
+noremap <silent> <Space>j :call TNTNextSibling()<CR>
 " go to current heading's previous sibling.
-nnoremap <silent> <Space>k :call TNTPreviousSibling()<CR>
+noremap <silent> <Space>k :call TNTPreviousSibling()<CR>
 " go to current subtree's heading.
-nnoremap <silent> <Space>h [z
+noremap <silent> <Space>h [z
 " go to next subtree's heading.
-nnoremap <silent> <Space>n ]zj
+noremap <silent> <Space>n ]zj
 
 " go to first heading of a lower level than the current.
-nnoremap <silent> <Space>l :call TNTFirstLower()<CR>
+noremap <silent> <Space>l :call TNTFirstLower()<CR>
 " go to current subtree's last open item.
-nnoremap <silent> <Space>e ]z
+noremap <silent> <Space>e ]z
 
 " go to top-level heading of current fold.
-nnoremap <silent> <Space>H :call TNTTopLevelHeading()<CR>
+noremap <silent> <Space>H :call TNTTopLevelHeading()<CR>
 
 " open all folds on current block.
 nnoremap <silent> <Space>bo {v}zo
