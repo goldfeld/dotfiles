@@ -41,6 +41,9 @@ color slate
 color mustang
 
 set cursorline
+hi CursorLine guibg=#373737 ctermbg=236
+hi ColorColumn guibg=#373737 ctermbg=236
+hi CursorColumn guibg=#373737 ctermbg=236
 
 if filereadable(expand("~/punchcard"))
   autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
