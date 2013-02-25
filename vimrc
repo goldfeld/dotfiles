@@ -147,21 +147,21 @@ nnoremap <silent> <Space>m :execute "normal! a{>>". TNTTimestamp() ."<<}"<CR>
 nnoremap <silent> <Space>t :echo 'cmd-t for folds'<CR>
 
 " go to current heading's next sibling.
-noremap <silent> <Space>j :call TNTNextSibling()<CR>
+noremap <silent> <Space>j :call TNTGoNextSibling()<CR>
 " go to current heading's previous sibling.
-noremap <silent> <Space>k :call TNTPreviousSibling()<CR>
+noremap <silent> <Space>k :call TNTGoPreviousSibling()<CR>
 " go to current subtree's heading.
 noremap <silent> <Space>h [z
 " go to next subtree's heading.
 noremap <silent> <Space>n ]zj
 
 " go to first heading of a lower level than the current.
-noremap <silent> <Space>l :call TNTFirstLower()<CR>
+noremap <silent> <Space>l :call TNTGoFirstLower()<CR>
 " go to current subtree's last open item.
 noremap <silent> <Space>e ]z
 
-" go to top-level heading of current fold.
-noremap <silent> <Space>H :call TNTTopLevelHeading()<CR>
+" go to 0th-level heading of current fold, or nth-level with a count.
+noremap <silent> <Space>H :<C-U>call TNTGoTopLevelHeading(v:count)<CR>
 
 " open all folds on current block.
 nnoremap <silent> <Space>bo {v}zo
@@ -181,7 +181,7 @@ nnoremap <silent> <Space>mj zcddpzo
 " move current fold up one position.
 nnoremap <silent> <Space>mk zcddkPzo
 
-function! TNTPreviousSibling()
+function! TNTGoPreviousSibling()
 	let column = getpos('.')[2]
 	let heading = IndentLevel(line('.'))
 	execute 'normal! k'
@@ -195,7 +195,7 @@ function! TNTPreviousSibling()
 	endif
 endfunction
 
-function! TNTNextSibling()
+function! TNTGoNextSibling()
 	let current = line('.')
 	execute 'normal! j'
 	let next = line('.')
@@ -204,13 +204,7 @@ function! TNTNextSibling()
 	endif
 endfunction
 
-function! TNTTopLevelHeading()
-  while IndentLevel(line('.')) > 0
-    execute 'normal! [z'
-  endwhile
-endfunction
-
-function! TNTFirstLower()
+function! TNTGoFirstLower()
   let startindent = IndentLevel(line('.'))
   execute 'normal! j'
   let current = line('.')
@@ -223,6 +217,17 @@ function! TNTFirstLower()
     let l:currentindent = IndentLevel(current)
   endwhile
 endfunction
+
+function! TNTGoTopLevelHeading(upto)
+  echo a:upto
+  while IndentLevel(line('.')) > a:upto
+    execute 'normal! [z'
+  endwhile
+endfunction
+
+"syn region FoldFocus start="\(\([^\r\n]*[\r\n]\)\{6}\)\@<=\s*\S" end="\[^\r\n]*[\r\n]\(\([^[\r\n]*[\r\n]\)\{2}\)\@="
+"hi FoldFocus gui=bold guifg=LimeGreen cterm=bold ctermfg=Green
+"hi def link FoldFocus FoldFocus
 
 function! TNTTimestamp()
   if TNTCheckBashUtility('ruby')
@@ -374,7 +379,7 @@ function! TNTFoldText(...)
 		endif
     return l:lindent . l:prelabel . l:l . '['.children.']'
 
-  " a randomizer thread begins with a percent sign (whatever else does?).
+  " a randomizer thread begins with a percent sign (whatever else does?)
   elseif l:line =~? '^\s*%'
     let label = get(g:TNTFoldCache, l:current, '')
     if l:label == ''
@@ -390,7 +395,7 @@ function! TNTFoldText(...)
     return l:label
 	
 	" a note begins with a hash, and we'd like to show it's contents' word count.
-	elseif l:line =~? '^\s*#'
+	elseif l:line =~? '^\s*!\?#'
 		let lindent = matchstr(getline(l:current), '^\s*')
 		return lindent . matchstr(getline(l:current), '\S[^{]*') . '('
 			\ . TNTWordCountRecursive(l:current) . ' words)'
@@ -404,7 +409,6 @@ function! TNTWordCount(lnum)
 	return len(split(getline(a:lnum), '\s')) - 1
 endfunction
 
-nnoremap <leader>.w :call TNTWordCountRecursive(line('.'))<CR>
 function! TNTWordCountRecursive(lnum)
 	let wc = get(g:TNTFoldCache, a:lnum, 0)
 	if l:wc == 0
