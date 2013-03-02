@@ -492,36 +492,30 @@ function! TNTCreateWebpage()
     let title = engine . system('echo "' . query . '"'
     \ . ' | echo -e "$(sed ' . "'s/%/\\\\x/g'" . ')"')
   else
-    let recordSeparator = "<[\s]*.?[\s]*title[\s]*>"
-    " note that for my sanity's sake I treat the closing slash on the title
-    " tag as simply any character that doesn't even actually need to be there.
-    " you can see I just open and close with <title>, in effect it should not
-    " make any difference and spares me from awk/perl/bash escaping nightmare.
-    let awkscriptBase = "awk 'BEGIN {RS=" . '"' . recordSeparator . '"}'
-      \ . " ; {if (FNR == 2) print "
     " grab the title and make sure we guard against some evil saboteur putting
     " backticks instead of single quotes on his webpage's title.
-    let title = substitute(system('curl ' . url . ' | ' . awkscriptBase
-      \ . '"<title>"' . ' $0 ' . '"<title>"' . "}'"), '[`"]', "'", 'g')
+    let raw = system("curl '" . url . "'")
+    let begin = match(raw, '<\s*title\s*>') + 7
+    let end = match(raw, '<\s*.\?\s*title\s*>', begin)
+    let title = strpart(raw, begin, end - begin)
+    let title = substitute(title, '[\r\n]\|\r\n', '', 'g')
+    let title = substitute(title, '^\s*\|\s*$', '', 'g')
+    let title = substitute(title, '[`"]', "'", 'g')
 
     " we're gonna try a few tools to decode the html entities.
     if TNTCheckBashUtility('php')
-      let decode = " | php -r 'echo html_entity_decode(fgets(STDIN),"
-        \ " ENT_NOQUOTES, " . '"UTF-8"' . ");'"
+      let decode = "php -r 'echo html_entity_decode(fgets(STDIN),"
+        \ . " ENT_NOQUOTES, " . '"UTF-8"' . ");'"
     elseif TNTCheckBashUtility('recode')
-      let decode = " | recode HTML_4.0"
+      let decode = "recode HTML_4.0"
     else | let decode = ''
     endif
-
-    " we pass it through awk again since curl gives noisy output, like an ogre.
-    let title = system('echo "' . title . '"'
-    \ . ' | ' . awkscriptBase . "$0}'" . decode)
+    if decode != '' | let title = system('echo "'.title.'" | '.decode) | endif
   endif
 
-  let title = system('echo "' . title . '"' . " | tr -d '\n*'"
-    \ . " | sed -e 's/^[[:space:]\t]*//;s/[[:space:]\t]*$//'")
   " finish the markdown link now that we (hopefully) have the title
-  execute "normal! a".title."]["
+  execute "normal! a".title
+  execute "normal! kJxha]["
 endfunction
 
 function! TNTCheckBashUtility(name)
