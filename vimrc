@@ -85,7 +85,7 @@ function! GetModifiedBuffers()
 	redir @b
 	silent! buffers
 	redir END
-	return system('echo "'.@b.'"' . " | awk '$3 ~ /\+/ {printf ".'"  " $4 "*"'."}'")
+	return system('echo "'.@b.'"' . " | awk '$3 ~ /\\+/ {printf ".'"  " $4 "*"'."}'")
 endfunction
 
 " gvim behave like vim: console tabs and no dialogs, menus or scrollbars
