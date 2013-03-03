@@ -254,7 +254,7 @@ endfunction
 function! TNTTimestamp()
   if TNTCheckBashUtility('ruby')
     let date = system("ruby -e 'puts Time.now.to_f'")
-    return strpart(substitute(l:date, '\.', '', 'g'), 0, len(l:date) - 4)
+    return strpart(substitute(l:date, '\.', '', 'g'), 0, 13)
   else
     let date = system('date +%s%N | cut -b1-13')
     return strpart(l:date, 0, len(l:date) - 1)
@@ -364,13 +364,6 @@ function! TNTTriggerSession(lnum)
 	call system(browser.l:links)
 endfunction
 
-function! TNTSessionTriggerSymbol(lnum)
-	if len(TNTChildren(a:lnum, g:tntWebpageRegex))
-		return ':'
-	else | return ''
-	endif
-endfunction
-
 let g:TNTFoldCache = {}
 function! TNTFoldText(...)
   if a:0 == 1 | let current = a:1
@@ -384,7 +377,6 @@ function! TNTFoldText(...)
 		let children = len(TNTChildren(l:current))
     let l = matchstr(getline(l:current + 1), '\S[^{]*')
 		let lindent = strpart(matchstr(getline(l:current + 1), '^\s*'), 2)
-		let prelabel = TNTSessionTriggerSymbol(l:current + 1)
     " make it optional for threads to show their content with a special symbol
     " in front of them, e.g. the double quote or a bang
     "let l:l = substitute(l:l, '\(^\s*\)\@<=\s\S\@=', '!', '')
@@ -397,9 +389,9 @@ function! TNTFoldText(...)
 			let l:label = matchstr(l:line, '"![^{]*') . repeat(' ', chars)
 			" extract the actual title and format to the size constraint.
 			let l:label = strpart(l:label, 4, chars) . ' '
-			return l:lindent . l:prelabel . l:label . l:l . '['.children.']'
+			return l:lindent . l:label . l:l . '['.children.']'
 		endif
-    return l:lindent . l:prelabel . l:l . '['.children.']'
+    return l:lindent . l:l . '['.children.']'
 
   " a randomizer thread begins with a percent sign (whatever else does?)
   elseif l:line =~? '^\s*%'
@@ -410,9 +402,8 @@ function! TNTFoldText(...)
       let random = l:number % len(l:children)
 			let child = l:children[random]
 
-			let prelabel = TNTSessionTriggerSymbol(child)
       let label = strpart(TNTFoldText(child), 2)
-      let g:TNTFoldCache[l:current] = prelabel . l:label
+      let g:TNTFoldCache[l:current] = l:label
     endif
     return l:label
 	
