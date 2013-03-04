@@ -59,8 +59,8 @@ set scrolloff=3                 " keep 3 lines when scrolling
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set hlsearch                    " hightlight searches
 set incsearch                   " do incremental searching
-set ignorecase					 			
-set smartcase							 			" ignore case of search only if all lowercase
+set ignorecase                 
+set smartcase                     " ignore case of search only if all lowercase
 set smarttab                    " insert tabs on start of line according to shiftwidth, not tabstop
 set autoread                    " auto reload changed files if there's no conflict
 set number
@@ -69,8 +69,8 @@ set smartindent
 
 let &colorcolumn=join(range(81, 201), ",")
 augroup filetypeSettings
-	autocmd!
-	autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
+  autocmd!
+  autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
 
@@ -82,10 +82,10 @@ set statusline+=%h
 set statusline+=%{GetModifiedBuffers()}
 
 function! GetModifiedBuffers()
-	redir @b
-	silent! buffers
-	redir END
-	return system('echo "'.@b.'"' . " | awk '$3 ~ /\\+/ {printf ".'"  " $4 "*"'."}'")
+  redir @b
+  silent! buffers
+  redir END
+  return system('echo "'.@b.'"' . " | awk '$3 ~ /\\+/ {printf ".'"  " $4 "*"'."}'")
 endfunction
 
 " gvim behave like vim: console tabs and no dialogs, menus or scrollbars
@@ -118,19 +118,19 @@ nnoremap <silent> h :call RestrainCommand('h', "")<CR>
 nnoremap <silent> l :call RestrainCommand('l', "")<CR>
 
 augroup restrainCommand
-	autocmd!
-	autocmd CursorMoved * call CheckCurrentCommand()
+  autocmd!
+  autocmd CursorMoved * call CheckCurrentCommand()
 augroup END
 
 let g:currentCommand = ''
 let g:lastCommand = ''
 function! RestrainCommand(cmd, doublePressCmd)
-	if g:lastCommand == a:cmd
-		execute a:doublePressCmd
-	else
-		execute 'normal! '.a:cmd
-	endif
-	let g:currentCommand = a:cmd
+  if g:lastCommand == a:cmd
+    execute a:doublePressCmd
+  else
+    execute 'normal! '.a:cmd
+  endif
+  let g:currentCommand = a:cmd
 endfunction
 
 function! CheckCurrentCommand()
@@ -204,26 +204,26 @@ nnoremap <silent> <Space>mj zcddpzo
 nnoremap <silent> <Space>mk zcddkPzo
 
 function! TNTGoPreviousSibling()
-	let column = getpos('.')[2]
-	let heading = IndentLevel(line('.'))
-	execute 'normal! k'
-	let prev = line('.')
-	if IndentLevel(prev) != heading || foldclosed(prev) == -1
-		while IndentLevel(line('.')) > heading
-			execute 'normal! [z'
-		endwhile
-		execute 'normal! '.column.'|'
-		"call cursor(line('.'), column)
-	endif
+  let column = getpos('.')[2]
+  let heading = IndentLevel(line('.'))
+  execute 'normal! k'
+  let prev = line('.')
+  if IndentLevel(prev) != heading || foldclosed(prev) == -1
+    while IndentLevel(line('.')) > heading
+      execute 'normal! [z'
+    endwhile
+    execute 'normal! '.column.'|'
+    "call cursor(line('.'), column)
+  endif
 endfunction
 
 function! TNTGoNextSibling()
-	let current = line('.')
-	execute 'normal! j'
-	let next = line('.')
-	if IndentLevel(next) > IndentLevel(current)
-		execute 'normal! ]zj'
-	endif
+  let current = line('.')
+  execute 'normal! j'
+  let next = line('.')
+  if IndentLevel(next) > IndentLevel(current)
+    execute 'normal! ]zj'
+  endif
 endfunction
 
 function! TNTGoFirstLower(direction)
@@ -348,20 +348,20 @@ let g:tntWebpageRegex = '^\s*\((\d\d\d\?%)\)\?'
 
 command! -nargs=0 TNTTriggerSession call TNTTriggerSession(line('.'))
 function! TNTTriggerSession(lnum)
-	let browser = get(g:, 'TNTWebBrowser', '')
-	if !len(browser)
-		echom 'Please set your web browser by having e.g."'
-			\ . "let g:TNTWebBrowser = 'google-chrome'" . '" in your vimrc.'
-		return
-	endif
-	let webpages = TNTChildren(a:lnum, g:tntWebpageRegex)
-	if !len(webpages) | return | endif
-	let links = ''
-	for page in webpages
-		let link = matchstr(getline(page), '\[http\S*\]')
-		let l:links = l:links . ' ' . strpart(link, 1, len(link) - 2)
-	endfor
-	call system(browser.l:links)
+  let browser = get(g:, 'TNTWebBrowser', '')
+  if !len(browser)
+    echom 'Please set your web browser by having e.g."'
+      \ . "let g:TNTWebBrowser = 'google-chrome'" . '" in your vimrc.'
+    return
+  endif
+  let webpages = TNTChildren(a:lnum, g:tntWebpageRegex)
+  if !len(webpages) | return | endif
+  let links = ''
+  for page in webpages
+    let link = matchstr(getline(page), '\[http\S*\]')
+    let l:links = l:links . ' ' . strpart(link, 1, len(link) - 2)
+  endfor
+  call system(browser.l:links)
 endfunction
 
 let g:TNTFoldCache = {}
@@ -370,27 +370,27 @@ function! TNTFoldText(...)
   else | let current = v:foldstart
   endif
   let line = getline(l:current)
-	" the label will be our final folded text
+  " the label will be our final folded text
 
   " a thread begins with a quote followed optionally by pairs of quotes.
   if l:line =~? '^\s*"\([^"]*"[^"]*"\)*[^"]*$'
-		let children = len(TNTChildren(l:current))
+    let children = len(TNTChildren(l:current))
     let l = matchstr(getline(l:current + 1), '\S[^{]*')
-		let lindent = strpart(matchstr(getline(l:current + 1), '^\s*'), 2)
+    let lindent = strpart(matchstr(getline(l:current + 1), '^\s*'), 2)
     " make it optional for threads to show their content with a special symbol
     " in front of them, e.g. the double quote or a bang
     "let l:l = substitute(l:l, '\(^\s*\)\@<=\s\S\@=', '!', '')
     "return strpart(l:l, 1)
-		if l:line =~ '^\s*"!\d*'
-			" get how many chars we should ensure (padding formatting).
-			let chars = strpart(matchstr(l:line, '"!\d*'), 2)
-			" get the whole thread title up until it's timestamp, and add padding,
-			" and add padding.
-			let l:label = matchstr(l:line, '"![^{]*') . repeat(' ', chars)
-			" extract the actual title and format to the size constraint.
-			let l:label = strpart(l:label, 4, chars) . ' '
-			return l:lindent . l:label . l:l . '['.children.']'
-		endif
+    if l:line =~ '^\s*"!\d*'
+      " get how many chars we should ensure (padding formatting).
+      let chars = strpart(matchstr(l:line, '"!\d*'), 2)
+      " get the whole thread title up until it's timestamp, and add padding,
+      " and add padding.
+      let l:label = matchstr(l:line, '"![^{]*') . repeat(' ', chars)
+      " extract the actual title and format to the size constraint.
+      let l:label = strpart(l:label, 4, chars) . ' '
+      return l:lindent . l:label . l:l . '['.children.']'
+    endif
     return l:lindent . l:l . '['.children.']'
 
   " a randomizer thread begins with a percent sign (whatever else does?)
@@ -400,39 +400,39 @@ function! TNTFoldText(...)
       let children = TNTChildren(l:current)
       let number = strpart(TNTTimestamp(), 5) + system('sh -c "echo -n $RANDOM"')
       let random = l:number % len(l:children)
-			let child = l:children[random]
+      let child = l:children[random]
 
       let label = strpart(TNTFoldText(child), 2)
       let g:TNTFoldCache[l:current] = l:label
     endif
     return l:label
-	
-	" a note begins with a hash, and we'd like to show it's contents' word count.
-	elseif l:line =~? '^\s*!\?#'
-		let lindent = matchstr(getline(l:current), '^\s*')
-		return lindent . matchstr(getline(l:current), '\S[^{]*') . '('
-			\ . TNTWordCountRecursive(l:current) . ' words)'
+  
+  " a note begins with a hash, and we'd like to show it's contents' word count.
+  elseif l:line =~? '^\s*!\?#'
+    let lindent = matchstr(getline(l:current), '^\s*')
+    return lindent . matchstr(getline(l:current), '\S[^{]*') . '('
+      \ . TNTWordCountRecursive(l:current) . ' words)'
   endif
 
   return getline(l:current)
 endfunction
 
 function! TNTWordCount(lnum)
-	" remove one to account for tnt timestamp.
-	return len(split(getline(a:lnum), '\s')) - 1
+  " remove one to account for tnt timestamp.
+  return len(split(getline(a:lnum), '\s')) - 1
 endfunction
 
 function! TNTWordCountRecursive(lnum)
-	let wc = get(g:TNTFoldCache, a:lnum, 0)
-	if l:wc == 0
-		let children = TNTChildren(a:lnum)
-		for child in children
-			let l:wc += TNTWordCountRecursive(child)
-		endfor
-		let l:wc += TNTWordCount(a:lnum)
-		let g:TNTFoldCache[a:lnum] = l:wc
-	endif
-	return l:wc
+  let wc = get(g:TNTFoldCache, a:lnum, 0)
+  if l:wc == 0
+    let children = TNTChildren(a:lnum)
+    for child in children
+      let l:wc += TNTWordCountRecursive(child)
+    endfor
+    let l:wc += TNTWordCount(a:lnum)
+    let g:TNTFoldCache[a:lnum] = l:wc
+  endif
+  return l:wc
 endfunction
 
 augroup TNT
@@ -551,34 +551,34 @@ endfunction
 
 nnoremap <Backspace> :call Backspace()<CR>
 function! Backspace()
-	" need to check the current word
-	" if we're at the end of it, need to 
-	" leave us at the end of the previous.
+  " need to check the current word
+  " if we're at the end of it, need to 
+  " leave us at the end of the previous.
 
-	" also remap <Enter> to 'ea' or 'eal'
+  " also remap <Enter> to 'ea' or 'eal'
 
-	" get curront column
-	let cursor = getpos('.')[2]
-	" get line text
-	let line = getline('.')
-	" if we're not at the beginning of the word, go to it.
-	if !(l:line[l:cursor - 2] =~ '\s')
-		execute "normal! b"
-	endif
+  " get curront column
+  let cursor = getpos('.')[2]
+  " get line text
+  let line = getline('.')
+  " if we're not at the beginning of the word, go to it.
+  if !(l:line[l:cursor - 2] =~ '\s')
+    execute "normal! b"
+  endif
 
-	let newcursor = getpos('.')[2]
-	let delta = l:cursor - l:newcursor
-	execute "normal! dawb"
+  let newcursor = getpos('.')[2]
+  let delta = l:cursor - l:newcursor
+  execute "normal! dawb"
 
-	let max = len(expand("<cword>")) - 1
-	let move = 0
-	if l:max > l:delta
-		let l:move = l:delta
-	else
-		let l:move = l:max
-	endif
-	
-	execute "normal! ".l:move."l"
+  let max = len(expand("<cword>")) - 1
+  let move = 0
+  if l:max > l:delta
+    let l:move = l:delta
+  else
+    let l:move = l:max
+  endif
+  
+  execute "normal! ".l:move."l"
 endfunction
 
 onoremap <Space> iw
@@ -636,8 +636,8 @@ nnoremap <Leader>/c /console<CR>
 " convert time since epoch under cursor to readable time.
 nnoremap <Leader>.m :echo FromEpoch(expand("<cword>"))<CR>
 function! FromEpoch(date)
-	let date = strpart(a:date, 0, len(a:date) - 3)
-	return system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
+  let date = strpart(a:date, 0, len(a:date) - 3)
+  return system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
 endfunction
 
 " quickly edit my tnt outline
@@ -683,7 +683,7 @@ nnoremap y~` <Plug>YSsurround
 nnoremap r~~ <Plug>YSsurround
 xnoremap ~   <Plug>VSurround
 xnoremap g~  <Plug>VgSurround
-inoremap <C-S> 	<Plug>Isurround
+inoremap <C-S>   <Plug>Isurround
 inoremap <C-G>` <Plug>Isurround
 inoremap <C-G>~ <Plug>ISurround
 
@@ -720,13 +720,13 @@ nnoremap <C-N> :LightBeam<CR>
 command! -nargs=0 LightBeam call LightBeam()
 let lightBeam = 0
 function! LightBeam()
-	if g:lightBeam == 0
-		set cursorcolumn
-		let g:lightBeam = 1
-	else
-		set cursorcolumn!
-		let g:lightBeam = 0
-	endif
+  if g:lightBeam == 0
+    set cursorcolumn
+    let g:lightBeam = 1
+  else
+    set cursorcolumn!
+    let g:lightBeam = 0
+  endif
 endfunction
 
 nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
@@ -746,7 +746,7 @@ function! AutoHighlightToggle()
     augroup end
     setl updatetime=500
     echo 'Highlight current word: ON'
-		return 1
+    return 1
   endif
 endfunction
 
@@ -757,23 +757,23 @@ let seq = '1234567890'
 let qes = '!@#$%^&*()'
 let seqlen = len(seq)
 function! LineSeekToggle()
-	if g:LineSeek == 0
-		let g:LineSeek = 1
-		let i = 0
-		while i < g:seqlen
-			execute 'nmap '.g:seq[i].' :<C-U>LineSeek '.g:seq[i].'<CR>'
-			execute 'nmap '.g:qes[i].' :<C-U>LineSeekBack '.g:qes[i].'<CR>'
-			let i = i + 1
-		endwhile
-	else
-		let g:LineSeek = 0
-		let i = 0
-		while i < g:seqlen
-			execute 'unmap '.g:seq[i]
-			execute 'unmap '.g:qes[i]
-			let i = i + 1
-		endwhile
-	endif
+  if g:LineSeek == 0
+    let g:LineSeek = 1
+    let i = 0
+    while i < g:seqlen
+      execute 'nmap '.g:seq[i].' :<C-U>LineSeek '.g:seq[i].'<CR>'
+      execute 'nmap '.g:qes[i].' :<C-U>LineSeekBack '.g:qes[i].'<CR>'
+      let i = i + 1
+    endwhile
+  else
+    let g:LineSeek = 0
+    let i = 0
+    while i < g:seqlen
+      execute 'unmap '.g:seq[i]
+      execute 'unmap '.g:qes[i]
+      let i = i + 1
+    endwhile
+  endif
 endfunction
 
 nnoremap <Leader>c :Vimdow Chrome<CR>
@@ -785,83 +785,83 @@ nnoremap <Leader>m :Vimdow meteor<CR>
 
 command! -nargs=0 Streamline call Streamline(v:count)
 function! Streamline(target)
-	let lnum = line('.')
-	let lenlnum = len(l:lnum)
-	let relativeness = len(l:lnum) - len(a:target)
+  let lnum = line('.')
+  let lenlnum = len(l:lnum)
+  let relativeness = len(l:lnum) - len(a:target)
 
-	let base = l:lnum[: l:relativeness - 1]
-	
-	let abstarget = l:base.a:target
-	if l:abstarget <= l:lnum
-		let l:abstarget = (l:base + 1).a:target
-	endif
-	execute 'normal! '.l:abstarget.'G'
+  let base = l:lnum[: l:relativeness - 1]
+  
+  let abstarget = l:base.a:target
+  if l:abstarget <= l:lnum
+    let l:abstarget = (l:base + 1).a:target
+  endif
+  execute 'normal! '.l:abstarget.'G'
 endfunction
 
 command! -nargs=0 StreamlineBack call StreamlineBack(v:count)
 function! StreamlineBack(target)
-	let lnum = line('.')
-	let lenlnum = len(l:lnum)
-	let relativeness = len(l:lnum) - len(a:target)
-	let base = l:lnum[: l:relativeness - 1]
-	
-	let abstarget = l:base.a:target
-	if l:abstarget >= l:lnum
-		let l:abstarget = (l:base - 1).a:target
-	endif
-	execute 'normal! '.l:abstarget.'G'
+  let lnum = line('.')
+  let lenlnum = len(l:lnum)
+  let relativeness = len(l:lnum) - len(a:target)
+  let base = l:lnum[: l:relativeness - 1]
+  
+  let abstarget = l:base.a:target
+  if l:abstarget >= l:lnum
+    let l:abstarget = (l:base - 1).a:target
+  endif
+  execute 'normal! '.l:abstarget.'G'
 endfunction
 
 command! -nargs=1 LineSeek call LineSeek(<f-args>)
 command! -nargs=1 LineSeekBack call LineSeekBack(<f-args>)
 function! LineSeek(num)
-	let lnum = line(".")
-	let lennum = len(l:lnum)
+  let lnum = line(".")
+  let lennum = len(l:lnum)
 
-	if l:lnum < 10
-		if l:lnum[lennum - 1] >= a:num
-			let l:base = 1
-		else
-			let base = 0
-		endif
-	else 
-		let base = l:lnum[: lennum - 2]
-		if l:lnum[lennum - 1] >= a:num
-			let l:base = l:base + 1
-		endif
-	endif
-	let dest = l:base . a:num
-	execute ":".dest
+  if l:lnum < 10
+    if l:lnum[lennum - 1] >= a:num
+      let l:base = 1
+    else
+      let base = 0
+    endif
+  else 
+    let base = l:lnum[: lennum - 2]
+    if l:lnum[lennum - 1] >= a:num
+      let l:base = l:base + 1
+    endif
+  endif
+  let dest = l:base . a:num
+  execute ":".dest
 endfunction
 function! LineSeekBack(num)
-	let lnum = line(".")
-	let lennum = len(l:lnum)
-	let num = g:seq[ match(g:qes, a:num) ]
+  let lnum = line(".")
+  let lennum = len(l:lnum)
+  let num = g:seq[ match(g:qes, a:num) ]
 
-	if l:lnum < 10
-		if l:lnum[lennum - 1] <= l:num
-			execute ":0"
-			return
-		else
-			let base = 0
-		endif
-	else 
-		let base = l:lnum[: lennum - 2]
-		if l:lnum[lennum - 1] <= l:num
-			let l:base = l:base - 1
-		endif
-	endif
-	let dest = l:base . l:num
-	execute ":".dest
+  if l:lnum < 10
+    if l:lnum[lennum - 1] <= l:num
+      execute ":0"
+      return
+    else
+      let base = 0
+    endif
+  else 
+    let base = l:lnum[: lennum - 2]
+    if l:lnum[lennum - 1] <= l:num
+      let l:base = l:base - 1
+    endif
+  endif
+  let dest = l:base . l:num
+  execute ":".dest
 endfunction
 
 let reloading = 0
 command! -nargs=* AutoReload call AutoReload()
 function! AutoReload()
-	if l:reloading | ChromeReloadStart<CR>
-	else | ChromeReloadStop<CR>
-	endif
-	:let l:reloading = !l:reloading
+  if l:reloading | ChromeReloadStart<CR>
+  else | ChromeReloadStop<CR>
+  endif
+  :let l:reloading = !l:reloading
 endfunction
 noremap <Leader>R :AutoReload<CR>
 noremap <Leader>r :w<CR>:ChromeReload<CR>
@@ -960,24 +960,24 @@ endfunction
 
 nnoremap <leader>.p :call ShowingHNParse()<CR>
 function! ShowingHNParse()
-	let file = '"'. expand('$HOME/Dropbox/showhn') .'"'
-	let output = '"'. expand('$HOME/result') .'"'
-	let parsed = system("awk 'BEGIN {RS = ".'"[<>]"'."} NR == 2 {print}' ".file."")
-	echo parsed
+  let file = '"'. expand('$HOME/Dropbox/showhn') .'"'
+  let output = '"'. expand('$HOME/result') .'"'
+  let parsed = system("awk 'BEGIN {RS = ".'"[<>]"'."} NR == 2 {print}' ".file."")
+  echo parsed
 endfunction
 
 nnoremap <leader>.s :call Viminder()<CR>
 function! Viminder()
-	let [date, time] = split(system("date +'%Y%m%d_%T'"), '_')
-	let punchcard = '"' . expand('$HOME') . '/punchcard"'
-	echo punchcard
-	let awk = "awk '"
-		\ . "$1 ~ /".date."/ {print ".'"hey"'.", $0;"
-			\ . " print ".'"hay"'.", $0 > ".punchcard."}"
-		\ . " $1 !~ /".date."/ {print > ".punchcard."}"
-		\ . "' ~/punchcard"
-	let sys = system(l:awk)
-	echo sys
+  let [date, time] = split(system("date +'%Y%m%d_%T'"), '_')
+  let punchcard = '"' . expand('$HOME') . '/punchcard"'
+  echo punchcard
+  let awk = "awk '"
+    \ . "$1 ~ /".date."/ {print ".'"hey"'.", $0;"
+      \ . " print ".'"hay"'.", $0 > ".punchcard."}"
+    \ . " $1 !~ /".date."/ {print > ".punchcard."}"
+    \ . "' ~/punchcard"
+  let sys = system(l:awk)
+  echo sys
 endfunction
 
 " http://learnvimscriptthehardway.stevelosh.com/chapters/12.html
@@ -989,12 +989,12 @@ endfunction
 
 " Go to last file(s) if invoked without arguments.
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
-    \ call mkdir($HOME . "/.vim") |
-    \ endif |
-    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+  \ call mkdir($HOME . "/.vim") |
+  \ endif |
+  \ execute "mksession! " . $HOME . "/.vim/Session.vim"
 
 autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
-    \ execute "source " . $HOME . "/.vim/Session.vim"
+  \ execute "source " . $HOME . "/.vim/Session.vim"
 
 " From vimrc_example.vim distributed with Vim 7.
 " When editing a file, always jump to the last known cursor position.
@@ -1016,9 +1016,9 @@ autocmd FileType text setlocal textwidth=78
 " Also don't do it when the mark is in the first line, that is the default
 " position when opening a file.
 autocmd BufReadPost *
-	\ if line("'\"") > 1 && line("'\"") <= line("$") |
-	\   exe "normal! g`\"" |
-	\ endif
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
 augroup END
 
 " Convenient command to see the difference between the current buffer and the
@@ -1026,5 +1026,5 @@ augroup END
 " Only define it when not defined already.
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+    \ | wincmd p | diffthis
 endif
