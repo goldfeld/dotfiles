@@ -143,7 +143,7 @@ endfunction
 
 nnoremap <silent> <Space>w :TNTTriggerSession<CR>
 nnoremap <silent> <Space>W :TNTCreateWebpage<CR>
-nnoremap <silent> <Space>m :execute "normal! a{>>". TNTTimestamp() ."<<}"<CR>
+nnoremap <silent> <Space>mt :execute "normal! a{>>". TNTTimestamp() ."<<}"<CR>
 nnoremap <silent> <Space>t :echo 'cmd-t for folds'<CR>
 
 " go to current heading's next sibling.
@@ -934,6 +934,12 @@ function! Inform(data)
     echo "\n"
     let l:info = "heroku create ".l:appname." --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
     call add(l:otherinfo, "then do 'heroku login'")
+
+  elseif match(['watch', 'inotify'], a:data) != -1
+    let l:info = "echo 10000 > /proc/sys/fs/inotify/max_user_watches"
+    call add(l:otherinfo, "should 'sudo su' first")
+    call add(l:otherinfo, "may also need to pipe to max_user_instances")
+    call add(l:otherinfo, "after done, do 'exit'")
 
   elseif match(['ssh', 'publickey', 'keygen'], a:data) != -1
     let email = input("enter email for publickey: ")
