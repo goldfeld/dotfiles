@@ -9,6 +9,7 @@ Bundle 'lordm/vim-browser-reload-linux'
 " workflow
 Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
+Bundle 'mikewest/vimroom'
 
 " editing
 Bundle 'tpope/vim-surround'
@@ -73,6 +74,7 @@ augroup filetypeSettings
   autocmd!
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
+  autocmd BufRead,BufNewFile *.tnt.* execute "normal \<Plug>VimroomToggle"
 augroup END
 
 set laststatus=2
@@ -441,11 +443,12 @@ endfunction
 
 augroup TNT
   autocmd!
-  au BufRead,BufNewFile *.tnt.* call TNTAutocmds()
+  autocmd BufRead,BufNewFile *.tnt.* call TNTAutocmds()
   " temporarily switch to manual folding when entering insert mode,
   " so that adjacent folds won't inaverdtently open when we create new folds.
-  au InsertEnter *.tnt.* let w:last_fm=&foldmethod | setlocal foldmethod=manual
-  au InsertLeave *.tnt.* let &l:foldmethod=w:last_fm
+  autocmd InsertEnter *.tnt.* let w:last_fm=&foldmethod
+    \ | setlocal foldmethod=manual
+  autocmd InsertLeave *.tnt.* let &l:foldmethod=w:last_fm
 augroup END
 
 function! TNTAutocmds()
@@ -991,14 +994,18 @@ endfunction
 " https://github.com/amikula/vim_flashcards/blob/master/all_cards.txt
 " 
 
-" Go to last file(s) if invoked without arguments.
+nnoremap <Leader>v :call LoadSession()<CR>
+function! LoadSession()
+  if filereadable($HOME . "/.vim/Session.vim")
+    execute "source " . $HOME . "/.vim/Session.vim"
+  endif
+endfunction
+
+" save session on exit.
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
   \ call mkdir($HOME . "/.vim") |
   \ endif |
   \ execute "mksession! " . $HOME . "/.vim/Session.vim"
-
-autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
-  \ execute "source " . $HOME . "/.vim/Session.vim"
 
 " From vimrc_example.vim distributed with Vim 7.
 " When editing a file, always jump to the last known cursor position.
