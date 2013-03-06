@@ -15,6 +15,7 @@ Bundle 'tpope/vim-surround'
 
 " files
 Bundle 'tpope/vim-fugitive'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'vim-scripts/LustyJuggler'
 "Bundle 'spolu/dwm.vim'
 
@@ -41,9 +42,9 @@ color slate
 color mustang
 
 set cursorline
-hi CursorLine guibg=#373737 ctermbg=236
-hi ColorColumn guibg=#373737 ctermbg=236
-hi CursorColumn guibg=#373737 ctermbg=236
+highlight CursorLine guibg=#373737 ctermbg=236
+highlight ColorColumn guibg=#373737 ctermbg=236
+highlight CursorColumn guibg=#373737 ctermbg=236
 
 if filereadable(expand("~/punchcard"))
   autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
@@ -1028,3 +1029,6 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
     \ | wincmd p | diffthis
 endif
+
+" fix vim-gitgutter for dark background.
+autocmd VimEnter * highlight clear SignColumn
