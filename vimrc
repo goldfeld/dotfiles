@@ -186,6 +186,9 @@ noremap <silent> <Space>L :call TNTGoFirstLower('k')<CR>
 " append a new sibling to the current fold's parent.
 "nnoremap <silent> <Space>O
 
+" capital B should operate always on top level block.
+" b should be aware of the current indentation's block.
+
 " open all folds on current block.
 nnoremap <silent> <Space>bo {v}zo
 " close all folds on current block.
