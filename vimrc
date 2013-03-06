@@ -118,6 +118,19 @@ nnoremap <silent> k :call RestrainCommand('k', "StreamlineBack")<CR>
 nnoremap <silent> h :call RestrainCommand('h', "")<CR>
 nnoremap <silent> l :call RestrainCommand('l', "")<CR>
 
+" use minus to do an end of line seek on double press,
+" and to do a cut short seek in operator pending mode.
+nnoremap <silent> - :call RestrainCommand('$', "")<CR>
+let g:SeekCutShortKey = '-'
+
+" use underscore to do a beginning of line seek on double press,
+" and to do a cut short back seek in operator pending mode.
+nnoremap <silent> _ :call RestrainCommand('_', "")<CR>
+let g:SeekBackCutShortKey = '_'
+
+" step back one char so it doesn't include the newline character.
+vnoremap - $h
+
 augroup restrainCommand
   autocmd!
   autocmd CursorMoved * call CheckCurrentCommand()
@@ -603,11 +616,6 @@ nnoremap : ,
 " visual shifting (relect after shift).
 vnoremap < <gv
 vnoremap > >gv
-
-nnoremap - $
-onoremap - $
-" step back one char so it doesn't include the newline character.
-vnoremap - $h
 
  " save file opened without sudo after the fact
 cmap w!! w !sudo tee % >/dev/null
