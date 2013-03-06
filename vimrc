@@ -17,11 +17,9 @@ Bundle 'tpope/vim-surround'
 " files
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'vim-scripts/LustyJuggler'
 "Bundle 'spolu/dwm.vim'
 
 " moving
-Bundle 'Lokaltog/vim-easymotion'
 Bundle 'goldfeld/vim-seek'
 
 " syntax
@@ -619,6 +617,8 @@ noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 " paste from clipboard
 "set clipboard=unnamed
 
+nnoremap <Leader><Leader> :b#<CR>
+
 nnoremap <Leader>[ {o
 nnoremap <Leader>] }O
 
@@ -697,12 +697,7 @@ inoremap <C-G>~ <Plug>ISurround
 let g:ctrlp_extensions = ['commitdriven']
 let g:seek_enable_jumps = 1
 
-" LustyJuggler plugin
-noremap <Tab> :LustyJuggler<CR>
-noremap <silent> <Leader><Leader> :LustyJugglePrevious<CR>
-let g:LustyJugglerDefaultMapping = 0
-let g:LustyJugglerKeyboardLayout = 'dvorak'
-let g:LustyJugglerShowKeys = 'a'
+noremap <Tab> :CtrlPBuffer<CR>
 
 " vim-fugitive plugin
 nnoremap gs :Gstatus<CR>
