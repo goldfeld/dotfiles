@@ -20,6 +20,7 @@ Bundle 'airblade/vim-gitgutter'
 "Bundle 'spolu/dwm.vim'
 
 " moving
+Bundle 'bkad/CamelCaseMotion'
 Bundle 'goldfeld/vim-seek'
 
 " syntax
