@@ -61,7 +61,7 @@ set backspace=indent,eol,start  " allow backspacing over everything in insert mo
 set hlsearch                    " hightlight searches
 set incsearch                   " do incremental searching
 set ignorecase                 
-set smartcase                     " ignore case of search only if all lowercase
+set smartcase                   " ignore case of search only if all lowercase
 set smarttab                    " insert tabs on start of line according to shiftwidth, not tabstop
 set autoread                    " auto reload changed files if there's no conflict
 set number
@@ -626,7 +626,8 @@ noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 " paste from clipboard
 "set clipboard=unnamed
 
-nnoremap <Leader><Leader> :b#<CR>
+" equivalent to :b#
+nnoremap <Leader><Leader> <C-^>
 
 nnoremap <Leader>[ {o
 nnoremap <Leader>] }O
