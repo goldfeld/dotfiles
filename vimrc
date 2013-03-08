@@ -108,7 +108,6 @@ nnoremap gk k
 nnoremap gi gi<Esc>
 
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-nnoremap ge gE
 nnoremap Y y$
 
 " insert two en-dashes (&#8211)
