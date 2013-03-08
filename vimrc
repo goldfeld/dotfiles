@@ -115,6 +115,11 @@ inoremap <C-D> ––
 
 nnoremap <silent> j :call RestrainCommand('j', "Streamline")<CR>
 nnoremap <silent> k :call RestrainCommand('k', "StreamlineBack")<CR>
+" move a line of text using ALT-{j,k}
+" bind these to jk and kj (restrained)
+nnoremap <M-j> mz:m+<CR>`z
+nnoremap <M-k> mz:m-2<CR>`z
+
 nnoremap <silent> h :call RestrainCommand('h', "")<CR>
 nnoremap <silent> l :call RestrainCommand('l', "")<CR>
 
@@ -125,7 +130,7 @@ let g:SeekCutShortKey = '-'
 
 " use underscore to do a beginning of line seek on double press,
 " and to do a cut short back seek in operator pending mode.
-nnoremap <silent> _ :call RestrainCommand('_', "")<CR>
+nnoremap <silent> _ :call RestrainCommand('^', "")<CR>
 let g:SeekBackCutShortKey = '_'
 
 " step back one char so it doesn't include the newline character.
@@ -635,6 +640,8 @@ nnoremap <Leader>] }O
 nnoremap <Leader>- 81\|
 " pull next line and delete any comment symbols.
 nnoremap <Leader>J Jldw
+" delete to first char in line, including current char.
+nnoremap <Leader>D d^x
 
 " toggle showing hidden characters
 nnoremap <Leader>l :set list!<CR>
