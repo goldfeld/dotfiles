@@ -610,9 +610,11 @@ onoremap <Space> iw
 nnoremap mm :
 " w mark for quick saving;
 nnoremap mw :w<CR>
-" v mark for vertical splits
+" b mark for closing buffer;
+nnoremap mb :bd<CR>
+" v mark for vertical splits;
 nnoremap mv :vs<CR>
-" s mark for horizontal splits
+" s mark for horizontal splits.
 nnoremap ms :sp<CR>
 
 " repurpose the colon as my comma lost to leader.
