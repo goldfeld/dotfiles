@@ -714,6 +714,7 @@ inoremap <C-G>~ <Plug>ISurround
 
 let g:ctrlp_extensions = ['commitdriven']
 let g:seek_enable_jumps = 1
+let g:seek_char_aliases = '[{ ]} 9( 0) \| ;:'
 
 noremap <Tab> :CtrlPBuffer<CR>
 
