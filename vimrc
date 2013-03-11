@@ -945,7 +945,7 @@ function Day(date)
   while 1
     let day = system('date --date "' . l:now
       \ . l:offset . ' seconds" ' . "+'%b %-e %a'")
-    if match(l:day, '\c' . a:date) != -1
+    if match(l:day, '\c\W' . a:date . '\W') != -1
       echo system('date --date "' . l:now
         \ . l:offset . ' seconds" ' . "+'[%Yw%W] %b %-e %a'")
       return
