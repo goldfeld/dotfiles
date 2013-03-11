@@ -932,6 +932,28 @@ function! Stab()
   endtry
 endfunction
 
+command! -nargs=1 Day call Day(<f-args>)
+function Day(date)
+  if a:date > 31 && a:date < 1 && !match(
+    \ ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'], '\c' . a:date)
+    return
+  endif
+  let now = system("date +'%b %-e, %Y 00:00:00 +000 + '")
+  let l:now = strpart(l:now, 0, len(l:now) - 1)
+  let offset = 86400
+
+  while 1
+    let day = system('date --date "' . l:now
+      \ . l:offset . ' seconds" ' . "+'%b %-e %a'")
+    if match(l:day, '\c' . a:date) != -1
+      echo system('date --date "' . l:now
+        \ . l:offset . ' seconds" ' . "+'[%Yw%W] %b %-e %a'")
+      return
+    endif
+    let l:offset += 86400
+  endwhile
+endfunction
+
 command! -nargs=1 Inf call Inform(<f-args>)
 function! Inform(data)
   let info = 'No matching info.'
