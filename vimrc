@@ -73,7 +73,6 @@ augroup filetypeSettings
   autocmd!
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
-  autocmd BufRead,BufNewFile *.tnt.* execute "normal \<Plug>VimroomToggle"
 augroup END
 
 set laststatus=2
@@ -645,6 +644,8 @@ nnoremap <Leader>J Jldw
 " delete to first char in line, including current char.
 nnoremap <Leader>D d^x
 
+nnoremap <Leader>v :call LoadSession()<CR>
+
 " toggle showing hidden characters
 nnoremap <Leader>l :set list!<CR>
 " useful for uncommenting lines
@@ -933,7 +934,7 @@ function! Stab()
 endfunction
 
 command! -nargs=1 Day call Day(<f-args>)
-function Day(date)
+function! Day(date)
   if a:date > 31 && a:date < 1 && !match(
     \ ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'], '\c' . a:date)
     return
@@ -1030,7 +1031,6 @@ endfunction
 " https://github.com/amikula/vim_flashcards/blob/master/all_cards.txt
 " 
 
-nnoremap <Leader>v :call LoadSession()<CR>
 function! LoadSession()
   if filereadable($HOME . "/.vim/Session.vim")
     execute "source " . $HOME . "/.vim/Session.vim"
