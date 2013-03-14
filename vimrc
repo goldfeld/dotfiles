@@ -115,8 +115,8 @@ nnoremap Y y$
 " insert two en-dashes (&#8211)
 inoremap <C-D> ––
 
-nnoremap <silent> j :call RestrainCommand('gj', "Streamline")<CR>
-nnoremap <silent> k :call RestrainCommand('gk', "StreamlineBack")<CR>
+nnoremap <silent> j :<C-U>call RestrainCommand('gj', "Streamline", v:count)<CR>
+nnoremap <silent> k :<C-U>call RestrainCommand('gk', "StreamlineBack", v:count)<CR>
 " move a line of text using ALT-{j,k}
 " bind these to jk and kj (restrained)
 nnoremap <M-j> mz:m+<CR>`z
@@ -145,11 +145,10 @@ augroup END
 
 let g:currentCommand = ''
 let g:lastCommand = ''
-function! RestrainCommand(cmd, doublePressCmd)
-  if g:lastCommand == a:cmd
-    execute a:doublePressCmd
-  else
-    execute 'normal! '.a:cmd
+function! RestrainCommand(cmd, doublePressCmd, count)
+  echo a:cmd . ' ' . a:doublePressCmd
+  if g:lastCommand == a:cmd | execute a:doublePressCmd
+  else | execute 'normal! ' . a:count . a:cmd
   endif
   let g:currentCommand = a:cmd
 endfunction
