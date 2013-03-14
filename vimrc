@@ -146,7 +146,6 @@ augroup END
 let g:currentCommand = ''
 let g:lastCommand = ''
 function! RestrainCommand(cmd, doublePressCmd, count)
-  echo a:cmd . ' ' . a:doublePressCmd
   if g:lastCommand == a:cmd | execute a:doublePressCmd
   else | execute 'normal! ' . a:count . a:cmd
   endif
