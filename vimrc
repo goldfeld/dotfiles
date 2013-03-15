@@ -122,17 +122,17 @@ nnoremap <silent> k :<C-U>call RestrainCommand('gk', "StreamlineBack", v:count)<
 nnoremap <M-j> mz:m+<CR>`z
 nnoremap <M-k> mz:m-2<CR>`z
 
-nnoremap <silent> h :call RestrainCommand('h', "")<CR>
-nnoremap <silent> l :call RestrainCommand('l', "")<CR>
+nnoremap <silent> h :<C-U>call RestrainCommand('h', "", v:count1)<CR>
+nnoremap <silent> l :<C-U>call RestrainCommand('l', "", v:count1)<CR>
 
 " use minus to do an end of line seek on double press,
 " and to do a cut short seek in operator pending mode.
-nnoremap <silent> - :call RestrainCommand('$', "")<CR>
+nnoremap <silent> - :<C-U>call RestrainCommand('$', "", v:count)<CR>
 let g:SeekCutShortKey = '-'
 
 " use underscore to do a beginning of line seek on double press,
 " and to do a cut short back seek in operator pending mode.
-nnoremap <silent> _ :call RestrainCommand('^', "")<CR>
+nnoremap <silent> _ :<C-U>call RestrainCommand('^', "", v:count)<CR>
 let g:SeekBackCutShortKey = '_'
 
 " step back one char so it doesn't include the newline character.
@@ -340,7 +340,7 @@ inoremap <C-G>~ <Plug>ISurround
 
 let g:ctrlp_extensions = ['commitdriven']
 let g:seek_enable_jumps = 1
-let g:seek_char_aliases = '[{ ]} 9( 0) \| ;:'
+let g:seek_char_aliases = '[{ ]} 9( 8* 7& 6^ 5% 4$ 3# 2@ 1! 0) \| ;: ,< .> `~ -_ /? =+'
 
 noremap <Tab> :CtrlPBuffer<CR>
 
