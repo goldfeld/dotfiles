@@ -115,8 +115,9 @@ nnoremap Y y$
 " insert two en-dashes (&#8211)
 inoremap <C-D> ––
 
-nnoremap <silent> j :<C-U>call RestrainCommand('gj', "Streamline", v:count)<CR>
-nnoremap <silent> k :<C-U>call RestrainCommand('gk', "StreamlineBack", v:count)<CR>
+nnoremap <silent> j :<C-U>call RestrainCommand('j', "Streamline", v:count1)<CR>
+nnoremap <silent> k :<C-U>call RestrainCommand('k', "StreamlineBack", v:count1)<CR>
+
 " move a line of text using ALT-{j,k}
 " bind these to jk and kj (restrained)
 nnoremap <M-j> mz:m+<CR>`z
