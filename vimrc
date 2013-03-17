@@ -115,8 +115,10 @@ nnoremap Y y$
 " insert two en-dashes (&#8211)
 inoremap <C-D> ––
 
-nnoremap <silent> j :<C-U>call RestrainCommand('j', "Streamline", v:count1)<CR>
-nnoremap <silent> k :<C-U>call RestrainCommand('k', "StreamlineBack", v:count1)<CR>
+nnoremap <silent> j
+  \ :<C-U>call RestrainCommand('j', "Streamline", v:count1, 2)<CR>
+nnoremap <silent> k
+  \ :<C-U>call RestrainCommand('k', "StreamlineBack", v:count1, 2)<CR>
 
 " move a line of text using ALT-{j,k}
 " bind these to jk and kj (restrained)
@@ -146,9 +148,25 @@ augroup END
 
 let g:currentCommand = ''
 let g:lastCommand = ''
-function! RestrainCommand(cmd, doublePressCmd, count)
-  if g:lastCommand == a:cmd | execute a:doublePressCmd
-  else | execute 'normal! ' . a:count . a:cmd
+function! RestrainCommand(cmd, doublePressCmd, ...)
+  " the two splat arguments we might get are first a
+  " count to pass to the restrained command, and maybe
+  " an integer saying at what minimum count we should
+  " override the restrainment, that is, ignore it.
+  if a:0 >= 1 | let cnt = a:1
+  else | let cnt = ''
+  endif
+
+  " if an override was passed and the passed count meets
+  " the override value, we set our boolean to that value,
+  " which means simply setting it to true.
+  if a:0 >= 2 && l:cnt >= a:2 | let countOverride = a:2
+  else | let countOverride = 0
+  endif
+
+  if g:lastCommand == a:cmd && !l:countOverride
+    execute a:doublePressCmd
+  else | execute 'normal! ' . l:cnt . a:cmd
   endif
   let g:currentCommand = a:cmd
 endfunction
