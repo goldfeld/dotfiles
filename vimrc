@@ -219,7 +219,7 @@ function! Backspace()
 
   " also remap <Enter> to 'ea' or 'eal'
 
-  " get curront column
+  " get current column
   let cursor = getpos('.')[2]
   " get line text
   let line = getline('.')
@@ -364,6 +364,30 @@ let g:ctrlp_user_command =
 let g:seek_enable_jumps = 1
 let g:seek_char_aliases =
   \ "[{ ]} 9( 8* 7& 6^ 5% 4$ 3# 2@ 1! 0) \| ;: ,< .> `~ -_ /? =+ '" . '"'
+
+nnoremap <silent> <Leader>e :call Sass()<CR>
+function! Sass()
+  " get current column
+  let cursor = getpos('.')[2]
+  " get line text
+  let line = getline('.')
+
+  let beginning = ''
+  let word = expand("<cWORD>")
+  if stridx(l:word, '(') != -1
+    " if we're not at the beginning of the sass invocation, go to it.
+    if !(l:line[l:cursor - 2] =~ '\s')
+      let l:beginning = 'B'
+    endif
+  else
+    let l:beginning = 'F(B'
+  endif
+
+  execute 'normal! ' . l:beginning . 'vf)"qy'
+  let output = system('echo "' . @q . '" | sass -i | xargs echo')
+  let @q = strpart(l:output, matchend(l:output, @q) + 1, 7)
+  execute 'normal! gv"qp'
+endfunction
 
 noremap <Tab> :CtrlPBuffer<CR>
 
