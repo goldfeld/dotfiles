@@ -365,6 +365,27 @@ let g:seek_enable_jumps = 1
 let g:seek_char_aliases =
   \ "[{ ]} 9( 8* 7& 6^ 5% 4$ 3# 2@ 1! 0) \| ;: ,< .> `~ -_ /? =+ '" . '"'
 
+nnoremap <silent> <Leader>a :call CallGithub()<CR>
+function! CallGithub()
+  let line = getline('.')
+  let i1 = stridx(l:line, '"')
+  let i2 = stridx(l:line, '"', i1 + 1)
+  let i3 = stridx(l:line, '"', i2 + 1)
+  let i4 = stridx(l:line, '"', i3 + 1)
+  let user = strpart(l:line, i1 + 1, i2 - i1 - 1)
+  let repo = strpart(l:line, i3 + 1, i4 - i3 - 1)
+
+  let res = system("curl -s -i https://api.github.com/users/"
+    \ . user . " | awk '/email/ {print} /Limit-Remaining/ {print}'")
+  let ress = split(res, "\n")
+  if stridx(ress[1], "@") != -1
+    execute "normal! f}hi, " . strpart(ress[1], 2, len(ress[1]) - 1) . "\<Esc>xj_"
+  else
+    execute "normal! f}hC, \"email\": null },\<Esc>j_"
+  endif
+  echo ress[0]
+endfunction
+
 nnoremap <silent> <Leader>e :call Sass()<CR>
 function! Sass()
   " get current column
