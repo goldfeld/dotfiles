@@ -391,9 +391,8 @@ function! CallGithub()
   let limit = ress[0]
   let ress[0] = ''
   let res = join(ress, '')
-  execute "normal! f}hi, tech: " . strpart(res, 2, len(ress[1]) - 1) . "\<Esc>xj_"
-  endif
-  echo ress[0]
+  execute "normal! f}hi, tech: " . strpart(res, 2, len(res) - 1) . "\<Esc>xj_"
+  echo limit
 endfunction
 
 nnoremap <silent> <Leader>e :call Sass()<CR>
