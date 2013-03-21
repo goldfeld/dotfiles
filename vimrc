@@ -375,13 +375,23 @@ function! CallGithub()
   let user = strpart(l:line, i1 + 1, i2 - i1 - 1)
   let repo = strpart(l:line, i3 + 1, i4 - i3 - 1)
 
-  let res = system("curl -s -i https://api.github.com/users/"
-    \ . user . " | awk '/email/ {print} /Limit-Remaining/ {print}'")
+  "let res = system("curl -s -i https://api.github.com/users/"
+  "  \ . user . " | awk '/email/ {print} /Limit-Remaining/ {print}'")
+  "let ress = split(res, "\n")
+  "if stridx(ress[1], "@") != -1
+  "  execute "normal! f}hi, " . strpart(ress[1], 2, len(ress[1]) - 1) . "\<Esc>xj_"
+  "else
+  "  execute "normal! f}hC, \"email\": null },\<Esc>j_"
+  "endif
+  "echo ress[0]
+
+  let res = system("curl -s -i https://api.github.com/repos/" .user . "/" . repo . "/languages"
+    \ . " | awk '/Limit-Remaining/ {print} /.*/ {if (NR > 16) print}'")
   let ress = split(res, "\n")
-  if stridx(ress[1], "@") != -1
-    execute "normal! f}hi, " . strpart(ress[1], 2, len(ress[1]) - 1) . "\<Esc>xj_"
-  else
-    execute "normal! f}hC, \"email\": null },\<Esc>j_"
+  let limit = ress[0]
+  let ress[0] = ''
+  let res = join(ress, '')
+  execute "normal! f}hi, tech: " . strpart(res, 2, len(ress[1]) - 1) . "\<Esc>xj_"
   endif
   echo ress[0]
 endfunction
