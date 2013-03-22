@@ -503,10 +503,11 @@ function! LineSeekToggle()
 endfunction
 
 nnoremap <Leader>c :Vimdow Chrome<CR>
-nnoremap <Leader>h :Vimdow Luakit<CR>
-nnoremap <Leader>s :Vimdow fish<CR>
+nnoremap <Leader>h :Vimdow http<CR>
+nnoremap <Leader>s :Vimdow @vitoria<CR>
 " and compass
 nnoremap <Leader>o :Vimdow coffee<CR>
+nnoremap <Leader>u :Vimdow sudo<CR>
 nnoremap <Leader>m :Vimdow meteor<CR>
 
 command! -nargs=0 Streamline call Streamline(v:count)
