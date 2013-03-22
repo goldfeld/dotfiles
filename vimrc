@@ -325,9 +325,9 @@ nnoremap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase
-noremap <Leader>u vb~ea
-" toggle capitalize first letter
-noremap <Leader>U bv~ea
+inoremap <C-B>t <Esc>vb~ea
+" toggle case of first letter
+inoremap <C-B>p <Esc>bv~ea
 
 " operator-pending
 onoremap in( :<C-U>normal! f(vi(<CR>
