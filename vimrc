@@ -28,6 +28,7 @@ Bundle 'goldfeld/vim-seek'
 
 " syntax
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'jb55/Vim-Roy'
 Bundle 'leafo/moonscript-vim'
 Bundle 'vim-scripts/Vim-R-plugin'
 Bundle 'goldfeld/criticmarkup-vim'
