@@ -180,7 +180,7 @@ function! CheckCurrentCommand()
   let g:currentCommand = ''
 endfunction
 
-inoremap <C-I> <C-O>:WriterMode<CR>
+"inoremap <C-I> <C-O>:WriterMode<CR>
 
 function! WriterTimestamp()
   let date = system('date +%s%N | cut -b1-13')
@@ -209,7 +209,7 @@ function! WriterModeEnd()
   echo 'hey'
   unmap <Esc>
   unmap <Backspace>
-  if g:writerModeStoreEsc | execute 'nnoremap
+  if g:writerModeStoreEsc | execute 'nnoremap | endif
   "echo 'Writing started at '.g:writerModeStart.', '.g:writerModeEnd.' elapsed; X words typed, 180wpm'
 endfunction
 
@@ -504,11 +504,10 @@ endfunction
 
 nnoremap <Leader>c :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow http<CR>
-nnoremap <Leader>s :Vimdow @vitoria<CR>
+nnoremap <Leader>s :Vimdow bash<CR>:Vimdow fish<CR>:Vimdow @vitoria<CR>
 " and compass
-nnoremap <Leader>o :Vimdow coffee<CR>
+nnoremap <Leader>o :Vimdow coffee<CR>:Vimdow grunt<CR>:Vimdow meteor<CR>
 nnoremap <Leader>u :Vimdow sudo<CR>
-nnoremap <Leader>m :Vimdow meteor<CR>
 
 command! -nargs=0 Streamline call Streamline(v:count)
 function! Streamline(target)
@@ -590,8 +589,8 @@ function! AutoReload()
   endif
   :let l:reloading = !l:reloading
 endfunction
-noremap <Leader>R :AutoReload<CR>
-noremap <Leader>r :w<CR>:ChromeReload<CR>
+noremap <Leader>R :w<CR>:ChromeReload<CR>
+noremap <Leader>r :ChromeReload<CR>
 
 " put all this in your .vimrc or a plugin file
 command! -nargs=* Stab call Stab()
