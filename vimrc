@@ -180,11 +180,12 @@ function! CheckCurrentCommand()
   let g:currentCommand = ''
 endfunction
 
+inoremap <C-I> <C-O>:WriterMode<CR>
+
 function! WriterTimestamp()
   let date = system('date +%s%N | cut -b1-13')
   return strpart(l:date, 0, len(l:date) - 1)
 endfunction
-"nnoremap <Leader>I :WriterMode<CR>
 command! -nargs=0 WriterMode call WriterMode()
 function! WriterMode()
   let g:writerModeStart = WriterTimestamp()
