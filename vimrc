@@ -113,6 +113,9 @@ nnoremap gi gi<Esc>
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap Y y$
 
+nnoremap yY ggyG
+nnoremap dD ggdG
+
 " insert two en-dashes (&#8211)
 inoremap <C-D> ––
 
