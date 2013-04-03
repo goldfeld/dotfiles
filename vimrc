@@ -302,6 +302,14 @@ nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
+nnoremap <Leader>m :call EditOtherExt('.html')<CR>
+nnoremap <Leader>e :call EditOtherExt('.coffee')<CR>
+nnoremap <Leader>a :call EditOtherExt('.scss')<CR>
+function! EditOtherExt(ext)
+  let filename = expand('%')
+  execute 'e ' split(filename, '\.')[0] . a:ext
+endfunction
+
 command! -nargs=0 Sum :5,12!awk '{num = substr($7, 2, length($7) - 4) + substr($8, 2, length($7) - 4); width += num; print} END {print width}'
 
 " common searches
