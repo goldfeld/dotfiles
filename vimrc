@@ -687,6 +687,9 @@ function! Inform(data)
   elseif match(['restart'], a:data) != -1
     let l:info = 'sudo service network-manager restart'
     call add(l:otherinfo, 'then toggle hardware wireless switch')
+  elseif match(['apache', 'stop'], a:data) != -1
+    let l:info = 'sudo /etc/init.d/apache2 stop'
+    call add(l:otherinfo, 'noop')
   elseif match(['chmod', 'permission', 'executable', 'exe'], a:data) != -1
     let l:info = 'chmod +x filename'
 
