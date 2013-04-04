@@ -19,7 +19,6 @@ Bundle 'tpope/vim-surround'
 
 " files
 Bundle 'tpope/vim-fugitive'
-Bundle 'airblade/vim-gitgutter'
 "Bundle 'spolu/dwm.vim'
 
 " moving
