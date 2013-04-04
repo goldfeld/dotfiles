@@ -679,6 +679,9 @@ function! Inform(data)
   if match(['wifi', 'pass'], a:data) != -1 | let l:info = '1251025655'
   elseif match(['phone', 'tel'], a:data) != -1 | let l:info = '3176-6107'
 
+  elseif match(['tar, gz'], a:data) != -1
+    let l:info = 'tar xvzf filename.tar.gz'
+    call add(l:otherinfo, 'tar it all')
   elseif match(['moon', 'moonc'], a:data) != -1
     let l:info = 'moonc -t "$HOME/.vim/bundle/hudmode-vim/core" .'
     call add(l:otherinfo, 'execute command from ~/goldfeld/hudmode/core')
@@ -687,8 +690,6 @@ function! Inform(data)
     call add(l:otherinfo, 'then toggle hardware wireless switch')
   elseif match(['chmod', 'permission', 'executable', 'exe'], a:data) != -1
     let l:info = 'chmod +x filename'
-  elseif match(['tar'], a:data) != -1
-    let l:info = 'tar xvzf filename.tar.gz'
 
   elseif match(['heroku', 'buildpack'], a:data) != -1
     let appname = input("enter your app's name: ")
