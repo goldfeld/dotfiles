@@ -102,6 +102,30 @@ let mapleader = ","
 
 let g:TNTWebBrowser = 'luakit'
 
+augroup DOW
+" autocmd BufRead,BufNewFile *.dow call ReadDow()
+  autocmd VimEnter * nested if argc() == 0 && filereadable(".dow") |
+    \ call ReadDowFile(".dow")
+augroup END
+function! ReadDowFile(path)
+  let lines = readfile(a:path)
+  let bufopen = []
+
+  for line in l:lines
+    let char = line[0]
+    if l:char == '$'
+      let exeline = line[1:]
+      call system(line[1:])
+    elseif l:char == '.' || l:char == '/'
+      call add(bufopen, line)
+    endif
+  endfor
+
+  for fname in l:bufopen
+    execute "badd" fname
+  endfor
+endfunction
+
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
