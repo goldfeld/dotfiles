@@ -408,7 +408,7 @@ function! CallGithub()
   echo limit
 endfunction
 
-nnoremap <silent> <Leader>e :call Sass()<CR>
+nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
   " get current column
   let cursor = getpos('.')[2]
