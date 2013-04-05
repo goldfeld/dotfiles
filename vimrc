@@ -104,8 +104,8 @@ let g:TNTWebBrowser = 'luakit'
 
 augroup DOW
 " autocmd BufRead,BufNewFile *.dow call ReadDow()
-  autocmd VimEnter * nested if argc() == 0 && filereadable(".dow") |
-    \ call ReadDowFile(".dow")
+  "autocmd VimEnter * nested if argc() == 0 && filereadable(".dow") |
+  "  \ call ReadDowFile(".dow")
 augroup END
 function! ReadDowFile(path)
   let lines = readfile(a:path)

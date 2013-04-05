@@ -8,6 +8,35 @@ set -o vi
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
 
+DOWEDITOR=gvim
+
+function dow() {
+  if [[ "$@" == '' ]]; then
+    declare -a arglist=()
+
+    while read line; do 
+      case $line in
+        # if it's a file, add it to the arglist
+        /*) arglist=( "${arglist[@]}" $line ) ;;
+        .*) arglist=( "${arglist[@]}" $line ) ;;
+        # if it's a bash command, execute the line (minus first char)
+        \$*) command ${line:1} ;;
+      esac
+    done < ".dow"
+
+    "${DOWEDITOR}" "${arglist[@]}"
+    #i=0
+    #i=$[i+1]
+  fi
+  return 1;
+  #for i in $*; do
+  #  echo $i
+  #done;
+  #echo "$@"
+  #echo "${DOWEDITOR}"
+  #echo "${EDITOR:-${VISUAL:-vi}}"
+}
+
 function git () {
 	case "$PWD": in
 		$HOME/goldfeld/*)
