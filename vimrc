@@ -371,6 +371,18 @@ onoremap in[ :<C-U>normal! f[vi[<CR>
 onoremap ih :<C-U>execute "normal! ?^==\\+$\r:noh\rkvg_"<CR>
 onoremap ah :<C-U>execute "normal! ?^==\\+$\r:noh\rg_vk0"<CR>
 
+onoremap aa :<C-U>call AttrTextObj()<CR>
+
+function! AttrTextObj()
+  let res = searchpair("\['\"\]", "", "\['\"\]")
+  if l:res == 0 || l:res == -1
+    normal! f=
+    let res = searchpair("\['\"\]", "", "\['\"\]")
+    echo res
+  endif
+  execute 'normal! v' 
+endfunction
+
 inoremap <A-C> <A-U>
 
 nnoremap <C-;> yl:execute "normal! f" . @"<CR>
@@ -401,36 +413,6 @@ let g:ctrlp_user_command =
 let g:seek_enable_jumps = 1
 let g:seek_char_aliases =
   \ "[{ ]} 9( 8* 7& 6^ 5% 4$ 3# 2@ 1! 0) \| ;: ,< .> `~ -_ /? =+ '" . '"'
-
-nnoremap <silent> <Leader>a :call CallGithub()<CR>
-function! CallGithub()
-  let line = getline('.')
-  let i1 = stridx(l:line, '"')
-  let i2 = stridx(l:line, '"', i1 + 1)
-  let i3 = stridx(l:line, '"', i2 + 1)
-  let i4 = stridx(l:line, '"', i3 + 1)
-  let user = strpart(l:line, i1 + 1, i2 - i1 - 1)
-  let repo = strpart(l:line, i3 + 1, i4 - i3 - 1)
-
-  "let res = system("curl -s -i https://api.github.com/users/"
-  "  \ . user . " | awk '/email/ {print} /Limit-Remaining/ {print}'")
-  "let ress = split(res, "\n")
-  "if stridx(ress[1], "@") != -1
-  "  execute "normal! f}hi, " . strpart(ress[1], 2, len(ress[1]) - 1) . "\<Esc>xj_"
-  "else
-  "  execute "normal! f}hC, \"email\": null },\<Esc>j_"
-  "endif
-  "echo ress[0]
-
-  let res = system("curl -s -i https://api.github.com/repos/" .user . "/" . repo . "/languages"
-    \ . " | awk '/Limit-Remaining/ {print} /.*/ {if (NR > 16) print}'")
-  let ress = split(res, "\n")
-  let limit = ress[0]
-  let ress[0] = ''
-  let res = join(ress, '')
-  execute "normal! f}hi, tech: " . strpart(res, 2, len(res) - 1) . "\<Esc>xj_"
-  echo limit
-endfunction
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
