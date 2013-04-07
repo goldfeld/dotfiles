@@ -23,8 +23,11 @@ function dow() {
         \$*) command ${line:1} ;;
       esac
     done < ".dow"
+    
+    if [ "${#arglist[@]}" -ne 0 ]; then
+      "${DOWEDITOR}" "${arglist[@]}"
+    fi
 
-    "${DOWEDITOR}" "${arglist[@]}"
     #i=0
     #i=$[i+1]
   fi
