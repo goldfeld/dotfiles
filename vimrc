@@ -103,11 +103,13 @@ let mapleader = ","
 
 let g:TNTWebBrowser = 'luakit'
 
+let g:Vimdow = {}
 augroup DOW
-" autocmd BufRead,BufNewFile *.dow call ReadDow()
-  "autocmd VimEnter * nested if argc() == 0 && filereadable(".dow") |
-  "  \ call ReadDowFile(".dow")
+  autocmd BufRead,BufNewFile *.dow call ReadDow()
+   autocmd VimEnter * nested if argc() == 0 && filereadable(".dow") |
+     \ call ReadDowFile(".dow")
 augroup END
+
 function! ReadDowFile(path)
   let lines = readfile(a:path)
   let bufopen = []
@@ -117,6 +119,10 @@ function! ReadDowFile(path)
     if l:char == '$'
       let exeline = line[1:]
       call system(line[1:])
+      if stridx(line, "grunt") != -1
+        let escline = substitute(line[1:], '"', '\\"', 'g')
+        execute 'nnoremap <Leader>o :call system("' l:escline '"' ")\<CR>"
+      endif
     elseif l:char == '.' || l:char == '/'
       call add(bufopen, line)
     endif
@@ -126,6 +132,17 @@ function! ReadDowFile(path)
     execute "badd" fname
   endfor
 endfunction
+
+nnoremap <Leader>c :Vimdow Chrome<CR>
+nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
+" working terminal
+nnoremap <Leader>s :Vimdow bash<CR>:Vimdow fish<CR>:Vimdow @vitoria<CR>
+" server task
+nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
+" compiler task
+if get(g:Vimdow, 'grunt', 1)
+  nnoremap <Leader>o :Vimdow coffee<CR>:Vimdow grunt<CR>:Vimdow compass<CR>
+endif
 
 " skip past big lines
 nnoremap gj j
@@ -518,15 +535,6 @@ function! LineSeekToggle()
     endwhile
   endif
 endfunction
-
-nnoremap <Leader>c :Vimdow Chrome<CR>
-nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
-" working terminal
-nnoremap <Leader>s :Vimdow bash<CR>:Vimdow fish<CR>:Vimdow @vitoria<CR>
-" compiler task
-nnoremap <Leader>o :Vimdow coffee<CR>:Vimdow grunt<CR>:Vimdow compass<CR>
-" server task
-nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
 
 command! -nargs=0 Streamline call Streamline(v:count)
 function! Streamline(target)
