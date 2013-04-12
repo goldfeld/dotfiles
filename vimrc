@@ -343,9 +343,9 @@ nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
-nnoremap <Leader>e :call EditOtherExt('.coffee')<CR>
-nnoremap <Leader>m :call EditOtherExt('.html')<CR>
-nnoremap <Leader>a :call EditOtherExt('.scss')<CR>
+nnoremap me :call EditOtherExt('.coffee')<CR>
+nnoremap mu :call EditOtherExt('.html')<CR>
+nnoremap ma :call EditOtherExt('.scss')<CR>
 function! EditOtherExt(ext)
   let filename = expand('%')
   execute 'e ' split(filename, '\.')[0] . a:ext
