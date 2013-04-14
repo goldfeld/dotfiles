@@ -10,6 +10,7 @@ Bundle 'lordm/vim-browser-reload-linux'
 Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
 Bundle 'mikewest/vimroom'
+Bundle 'goldfeld/vim-micro'
 
 " writing
 Bundle 'goldfeld/tnt'
@@ -343,42 +344,9 @@ nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
-nnoremap mi :call MarkJuggler()<CR>
-let g:MarkInsertions = []
-let g:MarkInsertionOrder = ['h', 't', 'n', 's', '-']
-function! MarkJuggler()
-  let lnum = line('.')
-  let markslen = len(g:MarkInsertions)
-  let mrk = g:MarkInsertionOrder[l:markslen]
-
-  if l:markslen
-    for idx in range(l:markslen)
-      let location = g:MarkInsertions[idx]
-      if l:lnum > location.lnum
-        "let transfer = g['mark']
-        " transfer the next location's mark to the current location.
-        execute "normal! m" . l:transfer
-        let g:MarkInsertions = g:MarkInsertions[: l:idx]
-          \ + [{ 'mark': l:transfer, 'lnum': l:lnum }]
-          \ + g:MarkInsertions[l:idx :]
-        for others in range(idx, l:markslen)
-          " get the next mark, in order to transfer it to the previous
-          " location; and the last location will get the new l:mrk.
-          let nextmark = get(g:MarkInsertions, others + 1, l:mrk)
-          " shift all marks back by one, relative to line numbers.
-          let g:MarkInsertions[others]['mark'] = l:nextmark['mark']
-        endfor
-        " end the parent loop, since we've done all work in the nested loop.
-        break
-      endif
-    endfor
-  else
-    call add(g:MarkInsertions, { 'mark': l:mrk, 'lnum': l:lnum })
-  endif
-
-  execute "normal! m" . l:mrk
-  "echo l:mrk
-endfunction
+let g:MicroMarks = ['h', 't', 'n', 's', 'l', 'r', 'c', 'g']
+nnoremap mi :MicroMark<CR>
+nnoremap md :MicroMarkClear<CR>
 
 nnoremap me :call EditOtherExt('.coffee')<CR>
 nnoremap mu :call EditOtherExt('.html')<CR>
