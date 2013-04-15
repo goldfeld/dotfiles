@@ -482,7 +482,7 @@ nnoremap gc :Gdiff<CR><C-W>h
 noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
 
-nnoremap <C-N> :LightBeam<CR>
+nnoremap <C-I> :LightBeam<CR>
 command! -nargs=0 LightBeam call LightBeam()
 let lightBeam = 0
 function! LightBeam()
