@@ -344,9 +344,10 @@ nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
-let g:MicroMarks = ['h', 't', 'n', 's', 'l', 'r', 'c', 'g']
+let g:MicroMarks = ['h', 't', 'n', 's', 'l', 'r' ]
 nnoremap mi :MicroMark<CR>
 nnoremap md :MicroMarkClear<CR>
+nnoremap mc :MicroMarkMatch<CR>
 
 nnoremap me :call EditOtherExt('.coffee')<CR>
 nnoremap mu :call EditOtherExt('.html')<CR>
