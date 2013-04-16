@@ -12,6 +12,14 @@ alias s='git status'
 
 DOWEDITOR=gvim
 
+function tnt() {
+  if [[ "$@" == '' ]]; then
+    command gvim --servername TNT
+    return 1;
+  fi
+  command gvim --servername TNT --remote "$@"
+}
+
 function dow() {
   if [[ "$@" == '' ]]; then
     declare -a arglist=()
