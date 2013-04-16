@@ -184,6 +184,9 @@ let g:SeekCutShortKey = '-'
 nnoremap <silent> _ :<C-U>call RestrainCommand('^', "", v:count)<CR>
 let g:SeekBackCutShortKey = '_'
 
+nnoremap <silent> \|
+  \ :<C-U>call RestrainCommand("\\|", 'LightBeam', v:count, 1)<CR>
+
 " step back one char so it doesn't include the newline character.
 vnoremap - $h
 
@@ -199,6 +202,7 @@ function! RestrainCommand(cmd, doublePressCmd, ...)
   " count to pass to the restrained command, and maybe
   " an integer saying at what minimum count we should
   " override the restrainment, that is, ignore it.
+  " a:0 represents how many optional arguments we got.
   if a:0 >= 1 | let cnt = a:1
   else | let cnt = ''
   endif
@@ -461,7 +465,8 @@ function! Sass()
   execute 'normal! gv"qp'
 endfunction
 
-noremap <Tab> :CtrlPBuffer<CR>
+" can't map <C-I> to anything else since it's the same as <Tab>.
+nnoremap <Tab> :CtrlPBuffer<CR>
 
 " vim-fugitive plugin
 nnoremap gs :Gstatus<CR>
@@ -482,7 +487,6 @@ nnoremap gc :Gdiff<CR><C-W>h
 noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
 
-nnoremap <C-I> :LightBeam<CR>
 command! -nargs=0 LightBeam call LightBeam()
 let lightBeam = 0
 function! LightBeam()
