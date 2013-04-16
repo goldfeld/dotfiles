@@ -98,7 +98,8 @@ endfunction
 set guioptions+=lrbmTLce
 set guioptions-=lrbmTLce
 set guioptions+=c
-" modelines could be exploited maliciously
+" modelines can execute arbitrary code in e.g. set foldexpr
+set modelines=0
 
 let mapleader = ","
 
