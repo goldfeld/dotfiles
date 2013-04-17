@@ -301,12 +301,35 @@ onoremap <Space> iw
 nnoremap mm :
 " w mark for quick saving;
 nnoremap mw :w<CR>
-" b mark for closing buffer;
-nnoremap mb :bd<CR>
 " v mark for vertical splits;
 nnoremap mv :vs<CR>
 " s mark for horizontal splits.
 nnoremap mz :sp<CR>
+
+" b mark for closing buffer.
+nnoremap mb :call CloseBuffer()<CR>
+function! CloseBuffer()
+  silent! bdelete
+  redir @q
+  silent! buffers
+  redir END
+  let buflist = split(@q, "\n")
+  let last = get(l:buflist, len(l:buflist) - 2, '')
+  if len(l:last)
+    let g:LastBuffer = split(l:last, '"')[1]
+  endif
+endfunction
+
+" equivalent to :b#
+nnoremap <silent> <Leader><Leader> :call LastBuffer()<CR>
+function! LastBuffer()
+  let last = get(g:, 'LastBuffer', '')
+  if len(l:last)
+    execute "edit " l:last
+    let g:LastBuffer = ''
+  else | b#
+  endif
+endfunction
 
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
@@ -322,9 +345,6 @@ noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 
 " paste from clipboard
 "set clipboard=unnamed
-
-" equivalent to :b#
-nnoremap <Leader><Leader> <C-^>
 
 nnoremap <Leader>[ {o
 nnoremap <Leader>] }O
