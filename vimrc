@@ -72,6 +72,7 @@ set autoread                    " auto reload changed files if there's no confli
 set number
 set autoindent
 set smartindent
+set autochdir                   " keep working dir relative to current file
 
 let &colorcolumn=join(range(81, 201), ",")
 augroup filetypeSettings
