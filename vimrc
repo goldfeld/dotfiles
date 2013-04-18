@@ -186,8 +186,8 @@ let g:SeekCutShortKey = '-'
 nnoremap <silent> _ :<C-U>call RestrainCommand('^', "", v:count)<CR>
 let g:SeekBackCutShortKey = '_'
 
-nnoremap <silent> \|
-  \ :<C-U>call RestrainCommand("\\|", 'LightBeam', v:count, 1)<CR>
+nnoremap <silent> \| :<C-U>call RestrainCommand("\\|", 'LightBeam',
+  \ v:count ? v:count : getpos('.')[2])<CR>
 
 " step back one char so it doesn't include the newline character.
 vnoremap - $h
