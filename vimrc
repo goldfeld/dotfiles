@@ -863,5 +863,5 @@ function! VisualSearch(direction) range
   let @" = l:saved_reg
 endfunction
 
-" fix vim-gitgutter for dark background.
-autocmd VimEnter * highlight clear SignColumn
+" don't mess up splits when resizing vim
+autocmd VimResized * wincmd =
