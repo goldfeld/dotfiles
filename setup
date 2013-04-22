@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# nodejs
+apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
+add-apt-repository -y ppa:mitya57
+apt-get update
+apt-get -y install libssl-dev git-core pkg-config build-essential curl gcc g++ checkinstall openssh-server
+
+ver="0.10.4"
+echo Installing node version $ver
+wget http://nodejs.org/dist/v$ver/node-v$ver.tar.gz
+tar -zxf node-v$ver.tar.gz
+cd node-v$ver
+sudo ./configure && make && checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
+
 # create symlinks (sudo ln -s /from/path /to/path)
 sudo ln -s ~/Dropbox/unix/.vimrc ~/
 sudo ln -s ~/Dropbox/unix/.bashrc ~/
