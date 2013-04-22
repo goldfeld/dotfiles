@@ -739,6 +739,10 @@ function! Inform(data)
     call add(l:otherinfo, 'noop')
   elseif match(['chmod', 'permission', 'executable', 'exe'], a:data) != -1
     let l:info = 'chmod +x filename'
+  elseif match(['nodejs', 'node'], a:data) != -1
+    let l:info = 'rm -r bin/node bin/node-waf include/node lib/node lib/pkgconfig/nodejs.pc share/man/man1/node.1'
+    call add(l:otherinfo, 'noop')
+
 
   elseif match(['heroku', 'buildpack'], a:data) != -1
     let appname = input("enter your app's name: ")
