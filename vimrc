@@ -381,6 +381,9 @@ let g:MicroMarks = ['h', 't', 'n', 's', 'l', 'r' ]
 nnoremap mi :MicroMark<CR>
 nnoremap md :MicroMarkClear<CR>
 nnoremap mc :MicroMarkMatch<CR>
+for micromark in g:MicroMarks
+  execute "nnoremap '" . micromark . " '" . micromark . "zz"
+endfor
 
 nnoremap me :call EditOtherExt('.coffee')<CR>
 nnoremap mu :call EditOtherExt('.html')<CR>
