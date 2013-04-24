@@ -147,6 +147,13 @@ if get(g:Vimdow, 'grunt', 1)
   nnoremap <Leader>o :Vimdow coffee<CR>:Vimdow grunt<CR>:Vimdow compass<CR>
 endif
 
+nnoremap <Leader>C :Vimdow Chrome o<CR>
+nnoremap <Leader>H :Vimdow Luakit o<CR>
+nnoremap <Leader>S :Vimdow fish o<CR>
+nnoremap <Leader>O :Vimdow coffee o<CR>
+nnoremap <Leader>M :Vimdow meteor o<CR>
+nnoremap <Leader>G :Vimdow gedit o<CR>
+
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
