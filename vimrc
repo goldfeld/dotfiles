@@ -177,8 +177,8 @@ nnoremap <silent> k
 
 " move a line of text using ALT-{j,k}
 " bind these to jk and kj (restrained)
-nnoremap <M-j> mz:m+<CR>`z
-nnoremap <M-k> mz:m-2<CR>`z
+nnoremap mj mz:m+<CR>`z
+nnoremap mk mz:m-2<CR>`z
 
 nnoremap <silent> h :<C-U>call RestrainCommand('h', "", v:count1)<CR>
 nnoremap <silent> l :<C-U>call RestrainCommand('l', "", v:count1)<CR>
