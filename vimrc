@@ -169,6 +169,9 @@ nnoremap dD ggdG
 
 " insert two en-dashes (&#8211)
 inoremap <C-D> ––
+" save my pinky
+inoremap <Backspace> <NOP>
+nnoremap ZZ <NOP>
 
 nnoremap <silent> j
   \ :<C-U>call RestrainCommand('j', "normal! }", v:count1, 2)<CR>
