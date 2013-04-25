@@ -385,9 +385,9 @@ for micromark in g:MicroMarks
   execute "nnoremap '" . micromark . " '" . micromark . "zz"
 endfor
 
-nnoremap me :call EditOtherExt('.coffee')<CR>
-nnoremap mu :call EditOtherExt('.html')<CR>
-nnoremap ma :call EditOtherExt('.scss')<CR>
+nnoremap <Leader>t :call EditOtherExt('.coffee')<CR>
+nnoremap <Leader>n :call EditOtherExt('.html')<CR>
+nnoremap <Leader>s :call EditOtherExt('.scss')<CR>
 function! EditOtherExt(ext)
   let filename = expand('%')
   execute 'e ' split(filename, '\.')[0] . a:ext
