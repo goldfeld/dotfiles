@@ -314,8 +314,14 @@ nnoremap mm :
 nnoremap mw :w<CR>
 " v mark for vertical splits;
 nnoremap mv :vs<CR>
-" s mark for horizontal splits.
+" s mark for horizontal splits:
 nnoremap mz :sp<CR>
+" other marks for my other pinky;
+nnoremap mo O
+nnoremap ma A
+nnoremap m. zz
+nnoremap m, zb
+nnoremap m' zt
 
 " b mark for closing buffer.
 nnoremap mb :call CloseBuffer()<CR>
