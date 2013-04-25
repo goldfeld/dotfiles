@@ -354,7 +354,7 @@ vnoremap < <gv
 vnoremap > >gv
 
  " save file opened without sudo after the fact
-cmap w!! w !sudo tee % >/dev/null
+cmap W w !sudo tee % >/dev/null
 
 noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
 
