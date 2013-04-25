@@ -306,8 +306,6 @@ function! Backspace()
   execute "normal! ".l:move."l"
 endfunction
 
-onoremap <Space> iw
-
 " sacrifice the m mark for my pinkies' sake;
 nnoremap mm :
 " w mark for quick saving;
