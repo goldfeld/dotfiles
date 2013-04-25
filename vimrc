@@ -139,7 +139,7 @@ endfunction
 nnoremap <Leader>c :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
 " working terminal
-nnoremap <Leader>s :Vimdow bash<CR>:Vimdow fish<CR>:Vimdow @vitoria<CR>
+nnoremap <Leader>b :Vimdow bash<CR>:Vimdow fish<CR>:Vimdow @vitoria<CR>
 " server task
 nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
 " compiler task
