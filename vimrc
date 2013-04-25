@@ -171,9 +171,9 @@ nnoremap dD ggdG
 inoremap <C-D> ––
 
 nnoremap <silent> j
-  \ :<C-U>call RestrainCommand('j', "Streamline", v:count1, 2)<CR>
+  \ :<C-U>call RestrainCommand('j', "normal! }", v:count1, 2)<CR>
 nnoremap <silent> k
-  \ :<C-U>call RestrainCommand('k', "StreamlineBack", v:count1, 2)<CR>
+  \ :<C-U>call RestrainCommand('k', "normal! {", v:count1, 2)<CR>
 
 " move a line of text using ALT-{j,k}
 " bind these to jk and kj (restrained)
