@@ -137,6 +137,17 @@ function! ReadDowFile(path)
   endfor
 endfunction
 
+function! FindGitPrj()
+  let dirs = split(expand('%:p:h'), '/')
+  let path = ''
+  for dir in dirs
+    let l:path = l:path . '/' . dir
+    if isdirectory(l:path . '/.git/')
+      return dir
+    endif
+  endfor
+endfunction
+
 nnoremap <Leader>c :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
 " working terminal
