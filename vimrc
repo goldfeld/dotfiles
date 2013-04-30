@@ -151,7 +151,9 @@ endfunction
 nnoremap <Leader>c :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
 " working terminal
-nnoremap <Leader>b :Vimdow bash<CR>:Vimdow fish<CR>:Vimdow @vitoria<CR>
+nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
+nnoremap <Leader>b :execute "Vimdow " . FindGitPrj()<CR>
+
 " server task
 nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
 " compiler task
