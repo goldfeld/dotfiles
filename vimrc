@@ -503,6 +503,10 @@ inoremap <C-G>~ <Plug>ISurround
 let g:ctrlp_extensions = ['commitdriven']
 let g:ctrlp_user_command =
   \ ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtBS()': ['<c-h>', '<c-]>'],
+  \ 'PrtCurLeft()': ['<left>'],
+  \ }
 
 let g:seek_enable_jumps = 1
 let g:seek_char_aliases =
