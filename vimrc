@@ -322,6 +322,33 @@ nnoremap m. zz
 nnoremap m, zb
 nnoremap m' zt
 
+nnoremap <silent> mp :call PurgeBuffers()<CR>
+function! PurgeBuffers()
+  let seq = ''
+  buffers
+  echo "Delete buffers by number: "
+  let char = getchar()
+
+  while l:char != 27 && l:char != 3
+    " if a number was entered, append it to our sequence.
+    if l:char >= 48 && l:char <= 57
+      let l:seq = l:seq . nr2char(l:char)
+    endif
+
+    " if we've already got two chars entered, or user explicitly presses enter.
+    if len(l:seq) > 1 || l:char == 13
+      execute "bdelete " l:seq
+      let l:seq = ''
+      redraw
+      buffers
+      echo "Delete buffers by number: "
+    endif
+
+    let l:char = getchar()
+  endwhile
+  redraw
+endfunction
+
 " b mark for closing buffer.
 nnoremap mb :call CloseBuffer()<CR>
 function! CloseBuffer()
