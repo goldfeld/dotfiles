@@ -8,6 +8,7 @@ set -o vi
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
 alias l=ls
+alias f='git diff'
 alias s='git status'
 
 DOWEDITOR=gvim
