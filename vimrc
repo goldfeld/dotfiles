@@ -84,6 +84,7 @@ augroup END
 set laststatus=2
 set statusline=
 set statusline+=%{fugitive#statusline()}
+set statusline+=\ %f 
 set statusline+=\ %m
 set statusline+=%h
 set statusline+=%{GetModifiedBuffers()}
