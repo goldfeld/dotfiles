@@ -172,12 +172,12 @@ nnoremap <Leader>G :Vimdow gedit o<CR>
 nnoremap gj j
 nnoremap gk k
 
- " go to last inserted but don't leave me in insert mode
+" go to last inserted but don't leave me in insert mode
 nnoremap gi gi<Esc>
 
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-nnoremap Y y$
 
+nnoremap Y y$
 nnoremap yY ggyG
 nnoremap dD ggdG
 
