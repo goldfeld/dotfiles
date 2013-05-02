@@ -176,6 +176,7 @@ nnoremap gk k
 nnoremap gi gi<Esc>
 
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+nnoremap 'm :TNTVisibleHeadingNext<CR>
 
 nnoremap Y y$
 nnoremap yY ggyG
