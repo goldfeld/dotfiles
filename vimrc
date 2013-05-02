@@ -34,6 +34,9 @@ Bundle 'leafo/moonscript-vim'
 Bundle 'vim-scripts/Vim-R-plugin'
 Bundle 'goldfeld/criticmarkup-vim'
 
+" other
+Bundle 'goldfeld/vim-pegword'
+
 " colorschemes
 Bundle 'croaker/mustang-vim'
 Bundle 'morhetz/gruvbox'
