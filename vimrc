@@ -370,8 +370,12 @@ function! PurgeBuffers()
   redraw
 endfunction
 
+nnoremap <Leader><Leader> :b#<CR>
 " b mark for closing buffer.
-nnoremap mb :call CloseBuffer()<CR>
+nnoremap mb :b#<CR>:bd #<CR>
+
+" b mark for closing buffer.
+"nnoremap mb :call CloseBuffer()<CR>
 function! CloseBuffer()
   silent! bdelete
   redir @q
@@ -385,7 +389,7 @@ function! CloseBuffer()
 endfunction
 
 " equivalent to :b#
-nnoremap <silent> <Leader><Leader> :call LastBuffer()<CR>
+"nnoremap <silent> <Leader><Leader> :call LastBuffer()<CR>
 function! LastBuffer()
   let last = get(g:, 'LastBuffer', '')
   if len(l:last)
