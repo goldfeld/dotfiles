@@ -440,7 +440,7 @@ nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H
 let g:MicroMarks = ['h', 't', 'n', 's', 'l', 'r' ]
 nnoremap mi :MicroMark<CR>
 nnoremap md :MicroMarkClear<CR>
-nnoremap mc :MicroMarkMatch<CR>
+nnoremap 'c :MicroMarkMatch<CR>
 for micromark in g:MicroMarks
   execute "nnoremap '" . micromark . " '" . micromark . "zz"
 endfor
