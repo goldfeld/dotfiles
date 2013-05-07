@@ -11,6 +11,8 @@ alias l=ls
 alias f='git diff'
 alias s='git status'
 
+alias ror="./ror"
+
 DOWEDITOR=gvim
 
 function tnt() {
