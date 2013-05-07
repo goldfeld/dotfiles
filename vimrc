@@ -38,6 +38,9 @@ Bundle 'vim-scripts/grep.vim'
 Bundle 'tpope/vim-fugitive'
 "Bundle 'spolu/dwm.vim'
 
+map <silent> 'e <Plug>CamelCaseMotion_e
+map <silent> 'b <Plug>CamelCaseMotion_b
+map <silent> 'w <Plug>CamelCaseMotion_w
 " moving
 Bundle 'bkad/CamelCaseMotion'
 Bundle 'goldfeld/vim-seek'
