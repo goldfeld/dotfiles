@@ -179,7 +179,6 @@ nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
 " working terminal
 nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
 nnoremap <Leader>b :execute "Vimdow " . FindGitPrj()<CR>
-
 " server task
 nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
 " compiler task
@@ -503,6 +502,7 @@ nnoremap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id
 nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase
 inoremap <C-B>t <Esc>vb~ea
+inoremap <C-B>- <Esc>vT_~ea
 " toggle case of first letter
 inoremap <C-B>p <Esc>bv~ea
 
