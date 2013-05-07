@@ -54,12 +54,6 @@ highlight CursorLine guibg=#373737 ctermbg=236
 highlight ColorColumn guibg=#373737 ctermbg=236
 highlight CursorColumn guibg=#373737 ctermbg=236
 
-if filereadable(expand("~/punchcard"))
-  autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,*.js,*/build/*
-else
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
-endif
 set hidden                      " allows switching buffer without saving and keeps undo history.
 set tabstop=2                   " number of spaces of tab character
 set shiftwidth=2                " number of spaces to (auto)indent
@@ -77,9 +71,20 @@ set autoindent
 set smartindent
 set autochdir                   " keep working dir relative to current file
 
+if filereadable(expand("~/punchcard"))
+  autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,*.js,*/build/*
+else
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
+endif
+
+" rust's conceal (replacing stuff with unicode) doesn't work in gvim
+let g:no_rust_conceal = 1
+
 let &colorcolumn=join(range(81, 201), ",")
 augroup filetypeSettings
   autocmd!
+  autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 | setlocal tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
