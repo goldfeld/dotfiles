@@ -954,3 +954,45 @@ endfunction
 
 " don't mess up splits when resizing vim
 autocmd VimResized * wincmd =
+
+"au! CursorHold *.[ch] nested call PreviewWord()
+" This will cause a ":ptag" to be executed for the keyword under the cursor,
+" when the cursor hasn't moved for the time set with 'updatetime'.  The "nested"
+" makes other autocommands be executed, so that syntax highlighting works in the
+" preview window.  The "silent!" avoids an error message when the tag could not
+" be found.
+" A nice addition is to highlight the found tag, avoid the ":ptag" when there
+" is no word under the cursor, and a few other things: >
+" (from vim documentation)
+function! PreviewWord()
+  " don't do this in the preview window
+  if &previewwindow | return | endif
+  let w = expand("<cword>")		" get the word under cursor
+  if w =~ '\a'			" if the word contains a letter
+
+    " Delete any existing highlight before showing another tag
+    silent! wincmd P			" jump to preview window
+    if &previewwindow			" if we really get there...
+      match none			" delete existing highlight
+      wincmd p			" back to old window
+    endif
+
+    " Try displaying a matching tag for the word under the cursor
+    try | exe "ptag " . w
+    catch | return
+    endtry
+
+    silent! wincmd P			" jump to preview window
+    if &previewwindow		" if we really get there...
+      " don't want a closed fold
+      if has("folding") | silent! .foldopen | endif
+      call search("$", "b")		" to end of previous line
+      let w = substitute(w, '\\', '\\\\', "")
+      call search('\<\V' . w . '\>')	" position cursor on match
+      " Add a match highlight to the word at this position
+      hi previewWord term=bold ctermbg=green guibg=green
+      exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
+      wincmd p			" back to old window
+    endif
+  endif
+endfunction
