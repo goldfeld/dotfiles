@@ -89,6 +89,7 @@ set number
 set autoindent
 set smartindent
 set autochdir                   " keep working dir relative to current file
+set viminfo+=!
 
 if filereadable(expand("~/punchcard"))
   autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
