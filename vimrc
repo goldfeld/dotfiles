@@ -51,6 +51,7 @@ Bundle 'jb55/Vim-Roy'
 Bundle 'leafo/moonscript-vim'
 Bundle 'vim-scripts/Vim-R-plugin'
 Bundle 'goldfeld/criticmarkup-vim'
+Bundle 'wting/rust.vim'
 
 " other
 Bundle 'goldfeld/vim-pegword'
