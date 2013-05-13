@@ -356,10 +356,13 @@ endfunction
 nnoremap mm :
 " w mark for quick saving;
 nnoremap mw :w<CR>
+" q mark for closing quick buffers;
+nnoremap mq :q<CR>
 " v mark for vertical splits;
 nnoremap mv :vs<CR>
 " s mark for horizontal splits:
 nnoremap mz :sp<CR>
+
 " other marks for my other pinky;
 nnoremap mo O
 nnoremap ma A
