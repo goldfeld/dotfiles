@@ -9,16 +9,19 @@ set -o vi
 alias gvim='UBUNTU_MENUPROXY= gvim'
 alias l=ls
 alias a='ls -a'
-alias b='git branch -v --all'
 alias f='git diff'
 alias c='git diff --cached'
 alias s='git status'
-
+alias g='git log --graph --decorate --oneline --all | less'
 alias cdg='cd ~/goldfeld/'
 
 alias ror="./ror"
 
 DOWEDITOR=gvim
+
+function b() {
+  command git branch -v --all | grep "$@"
+}
 
 function tnt() {
   if [[ "$@" == '' ]]; then
