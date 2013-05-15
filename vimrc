@@ -499,14 +499,20 @@ endfunction
 
 " quickly edit my tnt outline
 nnoremap <silent> <Leader>.t :e ~/goldfeld/.tnt/lifethreads.tnt.md<CR>
-" quickly edit my vimrc.
-nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
-" source vimrc to allow live reloading of changes.
-nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
 nnoremap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
 " grab ssh publickey to clipboard.
 nnoremap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
+
+" quickly edit my vimrc.
+nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
+" source vimrc to allow live reloading of changes.
+nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
+" quickly edit a vim bundle
+nnoremap <silent> <Leader>.b
+  \ :exe "e $HOME/.vim/bundle/vim-" . input('vim-bundle: ') . "/README.md"<CR>
+nnoremap <silent> <Leader>.B
+  \ :exe "e $HOME/.vim/bundle/" . input('bundle: ') . "/README.md"<CR>
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase
