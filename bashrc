@@ -8,8 +8,13 @@ set -o vi
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
 alias l=ls
+alias a='ls -a'
+alias b='git branch -v --all'
 alias f='git diff'
+alias c='git diff --cached'
 alias s='git status'
+
+alias cdg='cd ~/goldfeld/'
 
 alias ror="./ror"
 
