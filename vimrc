@@ -106,7 +106,11 @@ augroup filetypeSettings
   autocmd!
 
   autocmd BufEnter *
-    \ if &ft ==? 'vim' | color gruvbox | else | color mustang | endif
+    \ if &ft ==? 'vim' |
+      \ if g:colors_name != 'gruvbox' | color gruvbox | endif |
+    \ else |
+      \ if g:colors_name != 'mustang' | color mustang | endif |
+    \ endif
 
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 | setlocal tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
