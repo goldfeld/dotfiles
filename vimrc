@@ -104,6 +104,10 @@ let g:no_rust_conceal = 1
 let &colorcolumn=join(range(81, 201), ",")
 augroup filetypeSettings
   autocmd!
+
+  autocmd BufEnter *
+    \ if &ft ==? 'vim' | color gruvbox | else | color mustang | endif
+
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 | setlocal tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
