@@ -6,22 +6,27 @@ PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 
 set -o vi
 
-alias gvim='UBUNTU_MENUPROXY= gvim'
-alias l=ls
+# letters
 alias a='ls -a'
-alias f='git diff'
+function b() {
+  if [[ "$@" == '' ]]; then
+    command git branch -v --all
+    return 1;
+  fi
+  command git branch -v --all | grep "$@"
+}
 alias c='git diff --cached'
-alias s='git status'
+alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
+alias f='git diff'
 alias g='git log --graph --decorate --oneline --all | less'
-alias cdg='cd ~/goldfeld/'
+alias l=ls
+alias s='git status'
 
+alias gvim='UBUNTU_MENUPROXY= gvim'
+alias cdg='cd ~/goldfeld/'
 alias ror="./ror"
 
 DOWEDITOR=gvim
-
-function b() {
-  command git branch -v --all | grep "$@"
-}
 
 function tnt() {
   if [[ "$@" == '' ]]; then
