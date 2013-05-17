@@ -23,9 +23,20 @@ alias l=ls
 alias s='git status'
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
-alias cdg='cd ~/goldfeld/'
 alias ror="./ror"
 
+# goes to my personal projects folder without arguments,
+# or to it's first grep matching subfolder of an argument query.
+function cdg() {
+  if [[ "$@" == '' ]]; then
+    command cd ~/goldfeld/
+    return 1;
+  fi
+  declare -a target=( $(ls ~/goldfeld/ | grep "$@") )
+  command cd ~/goldfeld/"${target[0]}"
+  #command cd ~/goldfeld/"$@"
+}
+  
 DOWEDITOR=gvim
 
 function tnt() {
