@@ -441,7 +441,7 @@ nnoremap : ,
 vnoremap < <gv
 vnoremap > >gv
 
- " save file opened without sudo after the fact
+" save file opened without sudo after the fact
 cmap W w !sudo tee % >/dev/null
 
 noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
@@ -507,6 +507,9 @@ nnoremap <silent> <Leader>.t :e ~/goldfeld/.tnt/lifethreads.tnt.md<CR>
 nnoremap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
 " grab ssh publickey to clipboard.
 nnoremap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
+
+" remove swap files for current file.
+nnoremap <silent> <Leader>.r :silent! exe "!rm ." .expand('%'). ".sw*"<CR>
 
 " quickly edit my vimrc.
 nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
