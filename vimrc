@@ -522,10 +522,13 @@ nnoremap <silent> <Leader>.B
   \ :exe "e $HOME/.vim/bundle/" . input('bundle: ') . "/README.md"<CR>
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
-" toggle uppercase/lowercase
+" toggle uppercase/lowercase.
 inoremap <C-B>t <Esc>vb~ea
+" same as above but going over underscores.
 inoremap <C-B>- <Esc>vT_~ea
-" toggle case of first letter
+" toggle uppercase/lowercase of whole line.
+inoremap <C-B>l <Esc>v^~$a
+" toggle case of first letter.
 inoremap <C-B>p <Esc>bv~ea
 
 " operator-pending
