@@ -800,7 +800,23 @@ function! Stab()
   endtry
 endfunction
 
-command! -nargs=1 Day call Day(<f-args>)
+command! -nargs=1 -complete=customlist,DayOpt Day call Day(<f-args>)
+function! DayOpt(ArgLead, CmdLine, CursorPos)
+  if a:ArgLead == 't' | return ['tue', 'thu'] | endif
+  if a:ArgLead == 'tu' | return ['tue'] | endif
+  if a:ArgLead == 'th' | return ['thu'] | endif
+  if a:ArgLead == 's' | return ['sat', 'sun'] | endif
+  if a:ArgLead == 'sa' | return ['sat'] | endif
+  if a:ArgLead == 'su' | return ['sun'] | endif
+  if a:ArgLead == 'm' || a:ArgLead == 'mo' | return ['mon'] | endif
+  if a:ArgLead == 'w' || a:ArgLead == 'we' | return ['wed'] | endif
+  if a:ArgLead == 'f' || a:ArgLead == 'fr' | return ['fri'] | endif
+  if a:ArgLead == 'u' | return ['tue'] | endif
+  if a:ArgLead == 'h' | return ['thu'] | endif
+  if a:ArgLead == 'n' | return ['sun'] | endif
+  if a:ArgLead == 'a' | return ['sat'] | endif
+endfunction
+
 function! Day(date)
   if a:date > 31 && a:date < 1 && !match(
     \ ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'], '\c' . a:date)
