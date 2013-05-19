@@ -32,7 +32,7 @@ function cdg() {
     command cd ~/goldfeld/
     return 1;
   fi
-  declare -a target=( $(ls ~/goldfeld/ | grep "$@") )
+  declare -a target=( $(ls -a ~/goldfeld/ | grep "$@") )
   command cd ~/goldfeld/"${target[0]}"
   #command cd ~/goldfeld/"$@"
 }
