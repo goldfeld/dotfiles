@@ -106,7 +106,7 @@ augroup filetypeSettings
   autocmd!
 
   autocmd BufEnter *
-    \ if &ft ==? 'vim' |
+    \ if &ft ==? 'vim' || &ft ==? 'perl' |
       \ if g:colors_name != 'gruvbox' | color gruvbox | endif |
     \ else |
       \ if g:colors_name != 'mustang' | color mustang | endif |
