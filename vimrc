@@ -378,6 +378,9 @@ nnoremap m. zz
 nnoremap m, zb
 nnoremap m' zt
 
+" search for standalone word (no substring matches)
+nnoremap '/ /\<\><Left><Left>
+
 nnoremap <silent> mp :call PurgeBuffers()<CR>
 function! PurgeBuffers()
   let seq = ''
