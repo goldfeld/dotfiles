@@ -59,14 +59,14 @@ Bundle 'goldfeld/vim-pegword'
 " colorschemes
 Bundle 'croaker/mustang-vim'
 Bundle 'morhetz/gruvbox'
+Bundle 'jonathanfilip/vim-lucius'
+Bundle 'vim-scripts/candycode.vim'
 
 filetype plugin indent on
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 color slate
-"color gruvbox
-color mustang
 
 set cursorline
 highlight CursorLine guibg=#373737 ctermbg=236
@@ -90,6 +90,7 @@ set autoindent
 set smartindent
 set autochdir                   " keep working dir relative to current file
 set viminfo+=!
+let &colorcolumn=join(range(81, 201), ",")
 
 if filereadable(expand("~/punchcard"))
   autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
@@ -101,7 +102,6 @@ endif
 " rust's conceal (replacing stuff with unicode) doesn't work in gvim
 let g:no_rust_conceal = 1
 
-let &colorcolumn=join(range(81, 201), ",")
 augroup filetypeSettings
   autocmd!
 
