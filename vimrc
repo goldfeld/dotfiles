@@ -240,21 +240,30 @@ nnoremap mk mz:m-2<CR>`z
 nnoremap <silent> h :<C-U>call RestrainCommand('h', "", v:count1)<CR>
 nnoremap <silent> l :<C-U>call RestrainCommand('l', "", v:count1)<CR>
 
-" use minus to do an end of line seek on double press,
-" and to do a cut short seek in operator pending mode.
-nnoremap <silent> - :<C-U>call RestrainCommand('$', "", v:count)<CR>
-let g:SeekCutShortKey = '-'
-
-" use underscore to do a beginning of line seek on double press,
-" and to do a cut short back seek in operator pending mode.
-nnoremap <silent> _ :<C-U>call RestrainCommand('^', "", v:count)<CR>
-let g:SeekBackCutShortKey = '_'
-
 nnoremap <silent> \| :<C-U>call RestrainCommand("\\|", 'LightBeam',
   \ v:count ? v:count : getpos('.')[2])<CR>
 
+"nnoremap <silent> - :<C-U>call RestrainCommand('$', "", v:count)<CR>
+" map minus to do a cut short seek in operator pending mode.
+let g:SeekCutShortKey = '-'
+
+"nnoremap <silent> _ :<C-U>call RestrainCommand('^', "", v:count)<CR>
+" map underscore to do a cut short back seek in operator pending mode.
+let g:SeekBackCutShortKey = '_'
+
+nnoremap _ gE
+" e works as default , double e should do a end-of-word seek, '-e' should do '^'
+nnoremap <silent> e :<C-U>call RestrainCommandPair('e', 'e', "echo 'ee'", '-',
+  \ 'normal! ^')<CR>
+" - works as 'ge', double - should do a start-of-word seek, 'e-' should do '$'
+nnoremap <silent> - :<C-U>call RestrainCommandPair('ge', '-', "echo '--'", 'e',
+  \ 'normal! $')<CR>
+
 " step back one char so it doesn't include the newline character.
 vnoremap - $h
+
+" TODO map double ^ to do begin of line seek
+" TODO map double $ to do end of line seek
 
 augroup restrainCommand
   autocmd!
@@ -285,6 +294,14 @@ function! RestrainCommand(cmd, doublePressCmd, ...)
   else | execute 'normal! ' . l:cnt . a:cmd
   endif
   let g:currentCommand = a:cmd
+endfunction
+
+function! RestrainCommandPair(cmd, key, doubleCmd, pair, pairThenCmd)
+  if g:lastCommand == a:key | execute a:doubleCmd
+  elseif g:lastCommand == a:pair | execute a:pairThenCmd
+  else | execute "normal!" a:cmd
+  endif
+  let g:currentCommand = a:key
 endfunction
 
 function! CheckCurrentCommand()
