@@ -23,6 +23,12 @@ sudo ln -s ~/Dropbox/unix/hosts /etc/
 sudo ln -s ~/Dropbox/unix/now.sh ~/ && sudo chmod u+x ~/now.sh
 
 ### dependencies (create something to compile this to an .sh script)
+# jq json processor
+flex bison
+git clone https://github.com/stedolan/jq.git ~/
+cd ~/jq
+autoreconf
+./configure && make && sudo make install
 # ChucK
 build-essential bison flex libsndfile-dev libasound-dev libjack-dev
 make linux-alsa
