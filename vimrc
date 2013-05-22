@@ -61,6 +61,7 @@ Bundle 'croaker/mustang-vim'
 Bundle 'morhetz/gruvbox'
 Bundle 'jonathanfilip/vim-lucius'
 Bundle 'vim-scripts/candycode.vim'
+Bundle 'rainerborene/vim-heroku'
 
 filetype plugin indent on
 
@@ -69,9 +70,6 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 color slate
 
 set cursorline
-highlight CursorLine guibg=#373737 ctermbg=236
-highlight ColorColumn guibg=#373737 ctermbg=236
-highlight CursorColumn guibg=#373737 ctermbg=236
 
 set hidden                      " allows switching buffer without saving and keeps undo history.
 set tabstop=2                   " number of spaces of tab character
@@ -106,11 +104,16 @@ augroup filetypeSettings
   autocmd!
 
   autocmd BufEnter *
-    \ if &ft ==? 'vim' || &ft ==? 'perl' |
+    \ if match(['rust'], &ft) != -1 |
+    \   if g:colors_name != 'heroku' | color heroku | endif |
+    \ elseif match(['vim', 'perl', 'html'], &ft) != -1 |
       \ if g:colors_name != 'gruvbox' | color gruvbox | endif |
     \ else |
       \ if g:colors_name != 'mustang' | color mustang | endif |
-    \ endif
+    \ endif |
+    \ highlight ColorColumn guibg=#373737 ctermbg=236 |
+    "\ highlight CursorLine guibg=#373737 ctermbg=236 |
+    "\ highlight CursorColumn guibg=#373737 ctermbg=236
 
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 | setlocal tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
