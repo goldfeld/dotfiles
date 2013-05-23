@@ -64,37 +64,43 @@ Bundle 'vim-scripts/candycode.vim'
 Bundle 'rainerborene/vim-heroku'
 
 filetype plugin indent on
-
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-
 color slate
-
 set cursorline
+let &colorcolumn=join(range(81, 201), ",")
 
-set hidden                      " allows switching buffer without saving and keeps undo history.
 set tabstop=2                   " number of spaces of tab character
 set shiftwidth=2                " number of spaces to (auto)indent
+set smarttab                    " put tabs on BOL as per shiftwidth, not tabstop
 set expandtab
+set smartindent
+set autoindent
+
+set backspace=indent,eol,start  " allow <C-H> over everything in insert mode
 set scrolloff=3                 " keep 3 lines when scrolling
-set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set hlsearch                    " hightlight searches
 set incsearch                   " do incremental searching
 set ignorecase                 
 set smartcase                   " ignore case of search only if all lowercase
-set smarttab                    " insert tabs on start of line according to shiftwidth, not tabstop
-set autoread                    " auto reload changed files if there's no conflict
-set number
-set autoindent
-set smartindent
+
+set hidden                      " buffer switch w/o saving; keeps undo history
+set autoread                    " reload changed files if there's no conflict
 set autochdir                   " keep working dir relative to current file
 set viminfo+=!
-let &colorcolumn=join(range(81, 201), ",")
+
+"set wildmenu
+"set wildmode="full"
+"set wildcharm=<C-Z>
+set wildignorecase
 
 if filereadable(expand("~/punchcard"))
   autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,*.js,*/build/*
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,
+    \ *.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,
+    \ *.js,*/build/*
 else
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,
+    \ *.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
 endif
 
 " rust's conceal (replacing stuff with unicode) doesn't work in gvim
@@ -581,7 +587,10 @@ nnoremap <C-:> yl:execute "normal! F" . @"<CR>
 noremap [q :cprevious<CR>
 noremap ]q :cnext<CR>
 
-let g:ctrlp_extensions = ['commitdriven']
+"let g:ctrlp_extensions = ['commitdriven']
+"noremap <C-T> :CommitDriven<CR>
+":noremap <Leader><Leader> :CommitDrivenLeader<CR>
+
 let g:ctrlp_user_command =
   \ ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
 let g:ctrlp_prompt_mappings = {
@@ -635,9 +644,6 @@ nnoremap gx :Gread<CR>
 " leave me on the index version, so I can quickly check it and close it.
 nnoremap gc :Gdiff<CR><C-W>h
 " use 'help index' to see vim's built-in natively mapped keys
-
-noremap <C-T> :CommitDriven<CR>
-":noremap <Leader><Leader> :CommitDrivenLeader<CR>
 
 command! -nargs=0 LightBeam call LightBeam()
 let lightBeam = 0
