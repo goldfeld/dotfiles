@@ -96,11 +96,11 @@ set wildignorecase
 if filereadable(expand("~/punchcard"))
   autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,
-    \ *.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,
-    \ *.js,*/build/*
+    \*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,
+    \*.js,*/build/*
 else
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,
-    \ *.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
+    \*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
 endif
 
 " rust's conceal (replacing stuff with unicode) doesn't work in gvim
