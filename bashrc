@@ -39,6 +39,10 @@ function cdg() {
   
 DOWEDITOR=gvim
 
+function t() {
+  command gvim -c 'e +set\ lines=24\ \|\ set\ columns=80\ \|\ vs\ ~/todo ~/tada'
+}
+
 function tnt() {
   if [[ "$@" == '' ]]; then
     command gvim --servername TNT
