@@ -55,8 +55,9 @@ sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update
 sudo apt-get install nodejs npm
 
-# ruby
-sudo apt-get install ruby1.8-dev rubygems
+# chef
+sudo apt-get install ruby-dev rubygems
+sudo gem install chef compass
 
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
