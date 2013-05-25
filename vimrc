@@ -611,8 +611,8 @@ nnoremap gs :Gstatus<CR>
 nnoremap gb :Gblame<CR>
 nnoremap gB :Gbrowse<CR>
 nnoremap gl :Glog<CR>
-nnoremap gn :Ggrep "<cword>"<CR>
-vnoremap gn y:Ggrep <C-R>"<CR>
+nnoremap gn :Ggrep! "<cword>"<CR>
+vnoremap gn y:Ggrep! <C-R>"<CR>
 
 " same as git add the current file.
 nnoremap gt :Gwrite<CR>
