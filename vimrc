@@ -438,32 +438,7 @@ endfunction
 
 nnoremap <Leader><Leader> :b#<CR>
 " b mark for closing buffer.
-nnoremap mb :b#<CR>:bd #<CR>
-
-" b mark for closing buffer.
-"nnoremap mb :call CloseBuffer()<CR>
-function! CloseBuffer()
-  silent! bdelete
-  redir @q
-  silent! buffers
-  redir END
-  let buflist = split(@q, "\n")
-  let last = get(l:buflist, len(l:buflist) - 2, '')
-  if len(l:last)
-    let g:LastBuffer = split(l:last, '"')[1]
-  endif
-endfunction
-
-" equivalent to :b#
-"nnoremap <silent> <Leader><Leader> :call LastBuffer()<CR>
-function! LastBuffer()
-  let last = get(g:, 'LastBuffer', '')
-  if len(l:last)
-    execute "edit " l:last
-    let g:LastBuffer = ''
-  else | b#
-  endif
-endfunction
+nnoremap mb :keepalt bd<CR>
 
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
