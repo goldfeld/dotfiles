@@ -122,6 +122,7 @@ augroup filetypeSettings
     "\ highlight CursorLine guibg=#373737 ctermbg=236 |
     "\ highlight CursorColumn guibg=#373737 ctermbg=236
 
+  autocmd BufRead,BufNewFile *.vim setlocal foldmethod=marker
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 | setlocal tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
