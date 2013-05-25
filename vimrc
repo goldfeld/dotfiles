@@ -520,7 +520,7 @@ nnoremap <silent> <Leader>.r :silent! exe "!rm ." .expand('%'). ".sw*"<CR>
 " quickly edit my vimrc.
 nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
-nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>
+nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>:color gruvbox<CR>
 " quickly edit a vim bundle
 nnoremap <silent> <Leader>.b
   \ :exe "e $HOME/.vim/bundle/vim-" . input('vim-bundle: ') . "/README.md"<CR>
