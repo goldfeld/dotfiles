@@ -75,6 +75,7 @@ set smarttab                    " put tabs on BOL as per shiftwidth, not tabstop
 set expandtab
 set smartindent
 set autoindent
+set fillchars=vert:\ ,fold:\ 
 
 set backspace=indent,eol,start  " allow <C-H> over everything in insert mode
 set scrolloff=3                 " keep 3 lines when scrolling
