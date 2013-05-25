@@ -561,9 +561,6 @@ inoremap <A-C> <A-U>
 nnoremap <C-;> yl:execute "normal! f" . @"<CR>
 nnoremap <C-:> yl:execute "normal! F" . @"<CR>
 
-noremap [q :cprevious<CR>
-noremap ]q :cnext<CR>
-
 "let g:ctrlp_extensions = ['commitdriven']
 "noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
@@ -605,6 +602,12 @@ endfunction
 
 " can't map <C-I> to anything else since it's the same as <Tab>.
 nnoremap <Tab> :CtrlPBuffer<CR>
+
+nnoremap qf :copen<CR>
+nnoremap qg :cfirst<CR>
+nnoremap qc :cn<CR>
+nnoremap qr :cN<CR>
+nnoremap ql :cclose<CR>
 
 " vim-fugitive plugin
 nnoremap gs :Gstatus<CR>
