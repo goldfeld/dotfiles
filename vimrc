@@ -218,8 +218,8 @@ nnoremap <Leader>G :Vimdow gedit o<CR>
 nnoremap gj j
 nnoremap gk k
 
-" go to last inserted but don't leave me in insert mode
-nnoremap gi gi<Esc>
+" go to last inserted 
+nnoremap gi '^
 
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap 'm :TNTVisibleHeadingNext<CR>
