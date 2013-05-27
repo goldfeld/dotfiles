@@ -437,7 +437,7 @@ function! PurgeBuffers()
 endfunction
 
 " b mark for closing buffer.
-nnoremap mb :call BufAway()<CR>
+nnoremap <silent> mb :call BufAway()<CR>
 function! BufAway()
   let buf = bufnr('%')
   let result = Dmenu("keepalt edit", "bufaway", { 'query': GetBufList() })
@@ -464,7 +464,7 @@ function! GetBufList(...)
   let b8  = "awk 'BEGIN {c=0}        " " stitch the two args together, then sort
   let b9  = "/^[0-9]+$/ {arr[++c]=$0} "
   let b10 = "/swp$/ { print arr[NR - c] \" \" $0 }' | sort | "
-  let b11 = "awk '{ sub(/\.swp/, \"\"); print substr($2, 4) }'"
+  let b11 = "awk '{ sub(/\\.swp/, \"\");sub(/\\.\\/\\.?/,\"\");sub(/\\/\\./,\"/\");print $2}'"
 
   let query = b1.b2.b3.b4.b5.b6.b7.b8.b9.b10.b11
   if l:execute | return split(system(l:query), "\n") | endif
