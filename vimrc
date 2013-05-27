@@ -631,6 +631,7 @@ function! Dmenu(cmd, ...)
 endfunction
 
 let g:seek_enable_jumps = 1
+let g:seek_use_vanilla_binds_in_diffmode = 1
 let g:seek_char_aliases =
   \ "[{ ]} 9( 8* 7& 6^ 5% 4$ 3# 2@ 1! 0) \| ;: ,< .> `~ -_ /? =+ '" . '"'
 
