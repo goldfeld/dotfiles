@@ -436,9 +436,47 @@ function! PurgeBuffers()
   redraw
 endfunction
 
-nnoremap <Leader><Leader> :b#<CR>
 " b mark for closing buffer.
-nnoremap mb :keepalt bd<CR>
+nnoremap mb :call BufAway()<CR>
+function! BufAway()
+  let buf = bufnr('%')
+  let result = Dmenu("keepalt edit", "bufaway", { 'query': GetBufList() })
+  if l:result | execute "bdelete" l:buf | endif
+endfunction
+
+" http://stackoverflow.com/questions/845863/how-to-use-in-an-xargs-command
+" http://www.softpanorama.org/Tools/xargs.shtml
+" http://www.softpanorama.org/Tools/tee.shtml
+" http://www.linuxjournal.com/article/2156?page=0,1
+
+function! GetBufList(...)
+  let execute = a:0 && a:1 == 1
+  " can be simplified using getftime(); then sort() the array of dicts
+  " also look into shellescape()
+
+  let b1  = "find . -name .\\*.swp | " " find all swap files
+  let b2  = "tee buflst            | " " save a temporary copy of the filenames
+  let b3  = "xargs -l stat         | " " get file stats (-l means pipe linewise)
+  let b4  = "(awk -F '[-:. ]'        " " awk will get the file's last access
+  let b5  = "'/^Access: 2/ { print $3 $4 $5 $6 $7 $8; }'; "
+  let b6  = "awk '{print}' buflst) | " " a 2nd awk retrieves filename temp copy
+  let b7  = "xargs -0 -n 2         | " " pipe results 2 by 2 (one for each awk)
+  let b8  = "awk 'BEGIN {c=0}        " " stitch the two args together, then sort
+  let b9  = "/^[0-9]+$/ {arr[++c]=$0} "
+  let b10 = "/swp$/ { print arr[NR - c] \" \" $0 }' | sort | "
+  let b11 = "awk '{ sub(/\.swp/, \"\"); print substr($2, 4) }'"
+
+  let query = b1.b2.b3.b4.b5.b6.b7.b8.b9.b10.b11
+  if l:execute | return split(system(l:query), "\n") | endif
+  "return map(l:arr, "strpart(v:val, 0, stridx(v:val, '.swp'))")
+  return l:query
+endfunction
+" credit: ctrlp.vim by kien
+"	let ids = filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
+"		\ .' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))')
+"	retu a:0 && a:1 == 'id' ? ids : map(ids, 'fnamemodify(bufname(v:val), ":.")')
+
+nnoremap <Leader><Leader> :b#<CR>
 
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
@@ -522,10 +560,9 @@ nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
 nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>:color gruvbox<CR>
 " quickly edit a vim bundle
-nnoremap <silent> <Leader>.b
-  \ :exe "e $HOME/.vim/bundle/vim-" . input('vim-bundle: ') . "/README.md"<CR>
-nnoremap <silent> <Leader>.B
-  \ :exe "e $HOME/.vim/bundle/" . input('bundle: ') . "/README.md"<CR>
+nnoremap <silent> <Leader>.b :call Dmenu("edit", "bundle", {
+  \ 'query': 'ls $HOME/.vim/bundle/', 'prepend': '$HOME/.vim/bundle/',
+  \ 'append': "/README.md" })<CR>
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase.
@@ -571,6 +608,27 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtBS()': ['<c-h>', '<c-]>'],
   \ 'PrtCurLeft()': ['<left>'],
   \ }
+
+nnoremap <C-T> :call Dmenu("edit")<CR>
+nnoremap <C-F> :call Dmenu("keepalt edit", "swap")<CR>
+
+" strip the newline from the end of a string
+function! Chomp(str)
+  return substitute(a:str, '\n$', '', '')
+endfunction
+" find a file and pass it to cmd; credit: leafo (initial idea and code)
+function! Dmenu(cmd, ...)
+  if a:0 | let prompt = a:1 | else | let prompt = a:cmd | endif
+  if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
+  let query = get(l:opts, 'query', 'git ls-files')
+  let prepend = get(l:opts, 'prepend', '')
+  let append = get(l:opts, 'append', '')
+
+  let choice = Chomp(system(l:query." | dmenu -b -i -l 8 -p " . l:prompt))
+  if empty(l:choice) | return 0 | endif
+  execute a:cmd l:prepend.l:choice.l:append
+  return 1
+endfunction
 
 let g:seek_enable_jumps = 1
 let g:seek_char_aliases =
@@ -700,6 +758,7 @@ function! Streamline(target)
 endfunction
 
 command! -nargs=0 StreamlineBack call StreamlineBack(v:count)
+
 function! StreamlineBack(target)
   let lnum = line('.')
   let lenlnum = len(l:lnum)
