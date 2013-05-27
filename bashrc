@@ -22,6 +22,10 @@ alias g='git log --graph --decorate --oneline --all | less'
 alias l=ls
 alias s='git status'
 
+function B() {
+  command git branch | grep "$@" | xargs git cherry -v | awk '{a = ""; for (i=3; i<=NF; i++) { a = a " " $i }; print a}'
+}
+
 alias gvim='UBUNTU_MENUPROXY= gvim'
 alias ror="./ror"
 
