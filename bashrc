@@ -15,9 +15,9 @@ function b() {
   fi
   command git branch -v --all | grep "$@"
 }
-alias c='git diff --cached'
+alias c='clear && git diff --cached'
 alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
-alias f='git diff'
+alias f='clear && git diff'
 alias g='git log --graph --decorate --oneline --all | less'
 alias l=ls
 alias s='git status'
