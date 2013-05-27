@@ -440,7 +440,7 @@ endfunction
 nnoremap <silent> mb :call BufAway()<CR>
 function! BufAway()
   let buf = bufnr('%')
-  let result = Dmenu("keepalt edit", "bufaway", { 'query': GetBufList() })
+  let result = Dmenu("keepalt edit", "bufaway", 0, { 'query': GetLocalBufList() })
   if l:result | execute "bdelete" l:buf | endif
 endfunction
 
@@ -449,7 +449,7 @@ endfunction
 " http://www.softpanorama.org/Tools/tee.shtml
 " http://www.linuxjournal.com/article/2156?page=0,1
 
-function! GetBufList(...)
+function! GetLocalBufList(...)
   let execute = a:0 && a:1 == 1
   " can be simplified using getftime(); then sort() the array of dicts
   " also look into shellescape()
@@ -464,19 +464,23 @@ function! GetBufList(...)
   let b8  = "awk 'BEGIN {c=0}        " " stitch the two args together, then sort
   let b9  = "/^[0-9]+$/ {arr[++c]=$0} "
   let b10 = "/swp$/ { print arr[NR - c] \" \" $0 }' | sort | "
-  let b11 = "awk '{ sub(/\\.swp/, \"\");sub(/\\.\\/\\.?/,\"\");sub(/\\/\\./,\"/\");print $2}'"
+  let b11 = "awk '{ sub(/\\.swp/, \"\"); sub(/\\.\\/\\.?/,\"\"); "
+    \. "sub(/\\/\\./,\"/\"); print }'"
+  let b12 = " | awk '{a=\"\"; for (i=2; i<=NF; i++) { a=a \" \" $i }; print a }'"
 
-  let query = b1.b2.b3.b4.b5.b6.b7.b8.b9.b10.b11
+  let query = b1.b2.b3.b4.b5.b6.b7.b8.b9.b10.b11.b12
   if l:execute | return split(system(l:query), "\n") | endif
-  "return map(l:arr, "strpart(v:val, 0, stridx(v:val, '.swp'))")
   return l:query
 endfunction
-" credit: ctrlp.vim by kien
-"	let ids = filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
-"		\ .' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))')
-"	retu a:0 && a:1 == 'id' ? ids : map(ids, 'fnamemodify(bufname(v:val), ":.")')
 
-nnoremap <Leader><Leader> :b#<CR>
+" credit: ctrlp.vim by kien
+function! GetBufList(...)
+  let ids = filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
+    \ . ' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))')
+  retu a:0 && a:1 == 'id' ? ids : map(ids, 'fnamemodify(bufname(v:val), ":.")')
+endfunction
+
+nnoremap <Leader><Leader> <C-^>
 
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
@@ -609,8 +613,11 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurLeft()': ['<left>'],
   \ }
 
-nnoremap <C-T> :call Dmenu("edit")<CR>
-nnoremap <C-F> :call Dmenu("keepalt edit", "swap")<CR>
+nnoremap <silent> <C-P><C-P> :call Dmenu("edit", "edit", 8)<CR>
+"nnoremap <silent> <C-P><C-F> " global mru
+nnoremap <silent> <C-P><C-T> :call Dmenu("keepalt edit", "swap prj", 8)<CR>
+nnoremap <silent> <C-T> :call Dmenu("keepalt edit", "swap buf", 0, 
+  \ { 'farray': GetBufList() })<CR>
 
 " strip the newline from the end of a string
 function! Chomp(str)
@@ -619,12 +626,18 @@ endfunction
 " find a file and pass it to cmd; credit: leafo (initial idea and code)
 function! Dmenu(cmd, ...)
   if a:0 | let prompt = a:1 | else | let prompt = a:cmd | endif
-  if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
-  let query = get(l:opts, 'query', 'git ls-files')
+  if a:0 >= 2 && a:2 | let list = ' -l '.a:2.' ' | else | let list = '' | endif
+  if a:0 >= 3 | let opts = a:3 | else | let opts = { } | endif
+
+  let fnames = get(l:opts, 'farray', [])
+  if !empty(l:fnames) | let query = 'printf %"s\n" ' . join(l:fnames, " ")
+  else | let query = get(l:opts, 'query', 'git ls-files')
+  endif
+
   let prepend = get(l:opts, 'prepend', '')
   let append = get(l:opts, 'append', '')
 
-  let choice = Chomp(system(l:query." | dmenu -b -i -l 8 -p " . l:prompt))
+  let choice = Chomp(system(l:query." | dmenu -i -b -p " . l:prompt . l:list))
   if empty(l:choice) | return 0 | endif
   execute a:cmd l:prepend.l:choice.l:append
   return 1
@@ -662,11 +675,21 @@ endfunction
 " can't map <C-I> to anything else since it's the same as <Tab>.
 nnoremap <Tab> :CtrlPBuffer<CR>
 
-nnoremap qf :copen<CR>
+nnoremap qf :cwindow<CR>
+"nnoremap qg :let b:qfbufs = cfirst<CR>
 nnoremap qg :cfirst<CR>
 nnoremap qc :cn<CR>
 nnoremap qr :cN<CR>
-nnoremap ql :cclose<CR>
+nnoremap <silent> ql :call CloseQFBufs()<CR>
+function! CloseQFBufs()
+  " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
+  let bufs = filter(map(getqflist(), 'v:val.bufnr'), 'getbufvar(v:val, "&bl")')
+  let chosenbuf = bufnr('%')
+  for listedbuf in l:bufs
+    " don't close the quickfix buffer if it's the one we're on.
+    if listedbuf != l:chosenbuf | silent! execute "bdelete" listedbuf | endif
+  endfor
+endfunction
 
 " vim-fugitive plugin
 nnoremap gs :Gstatus<CR>
