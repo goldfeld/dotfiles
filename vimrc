@@ -847,7 +847,7 @@ function! AutoReload()
   endif
   :let l:reloading = !l:reloading
 endfunction
-noremap <Leader>R :w<CR>:ChromeReload<CR>
+noremap <Leader>R :w<CR>:ChromeReload<CR>:Vimdow Chrome<CR>
 noremap <Leader>r :ChromeReload<CR>
 
 " put all this in your .vimrc or a plugin file
