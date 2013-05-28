@@ -578,6 +578,14 @@ inoremap <C-B>l <Esc>v^~$a
 " toggle case of first letter.
 inoremap <C-B>p <Esc>bv~ea
 
+" make C-U and C-W undoable by using <C-G>u (signal a new change to vim.)
+inoremap <C-U> <C-G>u<C-U>
+inoremap <C-W> <C-G>u<C-W>
+
+" use register 'u' for emulating terminal C-U & C-Y on vim command line.
+cnoremap <C-U> <C-\>e(setreg("u", getcmdline())?"":"")<CR>
+cnoremap <C-Y> <C-R>u
+
 " operator-pending
 onoremap in( :<C-U>normal! f(vi(<CR>
 onoremap in< :<C-U>normal! f<vi<<CR>
