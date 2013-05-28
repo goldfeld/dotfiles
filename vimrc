@@ -564,13 +564,13 @@ nnoremap <silent> <Leader>.b :call Dmenu("edit", "bundle", {
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 " toggle uppercase/lowercase.
-inoremap <C-B>t <Esc>vb~ea
+inoremap <C-B>t <Esc>vb~gvova
 " same as above but going over underscores.
-inoremap <C-B>- <Esc>vT_~ea
+inoremap <C-B><C-T> <Esc>vB~gvova
 " toggle uppercase/lowercase of whole line.
-inoremap <C-B>l <Esc>v^~$a
+inoremap <C-B><C-L> <Esc>v^~gvova
 " toggle case of first letter.
-inoremap <C-B>p <Esc>bv~ea
+inoremap <C-B><C-P> <Esc>bv~ea
 
 " make C-U and C-W undoable by using <C-G>u (signal a new change to vim.)
 inoremap <C-U> <C-G>u<C-U>
