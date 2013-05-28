@@ -385,18 +385,15 @@ function! Backspace()
   execute "normal! ".l:move."l"
 endfunction
 
-" sacrifice the m mark for my pinkies' sake;
+" sacrifice some marks for my pinkies' sake
 nnoremap mm :
-" w mark for quick saving;
 nnoremap mw :w<CR>
-" q mark for closing quick buffers;
 nnoremap mq :q<CR>
-" v mark for vertical splits;
 nnoremap mv :vs<CR>
-" s mark for horizontal splits:
 nnoremap mz :sp<CR>
+nnoremap mh :help 
 
-" other marks for my other pinky;
+" other marks for my other pinky
 nnoremap mo O
 nnoremap ma A
 nnoremap m. zz
