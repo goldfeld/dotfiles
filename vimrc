@@ -251,9 +251,6 @@ nnoremap mk mz:m-2<CR>`z
 nnoremap <silent> h :<C-U>call RestrainCommand('h', "", v:count1)<CR>
 nnoremap <silent> l :<C-U>call RestrainCommand('l', "", v:count1)<CR>
 
-nnoremap <silent> \| :<C-U>call RestrainCommand("\\|", 'LightBeam',
-  \ v:count ? v:count : getpos('.')[2])<CR>
-
 "nnoremap <silent> - :<C-U>call RestrainCommand('$', "", v:count)<CR>
 " map minus to do a cut short seek in operator pending mode.
 let g:SeekCutShortKey = '-'
@@ -513,8 +510,8 @@ execute "nnoremap <Leader>f ?".expr."<CR>"
 
 nnoremap <Leader>v :call LoadSession()<CR>
 
-" toggle showing hidden characters
-nnoremap <Leader>l :set list!<CR>
+" toggle show hidden characters and cursorcolumn
+nnoremap <Leader>l :set list!<CR>:set cursorcolumn!<CR>
 " useful for uncommenting lines
 nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
@@ -714,18 +711,6 @@ nnoremap gx :Gread<CR>
 " leave me on the index version, so I can quickly check it and close it.
 nnoremap gc :Gdiff<CR><C-W>h
 " use 'help index' to see vim's built-in natively mapped keys
-
-command! -nargs=0 LightBeam call LightBeam()
-let lightBeam = 0
-function! LightBeam()
-  if g:lightBeam == 0
-    set cursorcolumn
-    let g:lightBeam = 1
-  else
-    set cursorcolumn!
-    let g:lightBeam = 0
-  endif
-endfunction
 
 nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
 command! -nargs=0 AutoHighlightToggle call AutoHighlightToggle()
