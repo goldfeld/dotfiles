@@ -438,11 +438,6 @@ function! BufAway()
   if l:result | execute "bdelete" l:buf | endif
 endfunction
 
-" http://stackoverflow.com/questions/845863/how-to-use-in-an-xargs-command
-" http://www.softpanorama.org/Tools/xargs.shtml
-" http://www.softpanorama.org/Tools/tee.shtml
-" http://www.linuxjournal.com/article/2156?page=0,1
-
 function! GetLocalBufList(...)
   let execute = a:0 && a:1 == 1
   " can be simplified using getftime(); then sort() the array of dicts
