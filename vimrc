@@ -514,7 +514,7 @@ nnoremap mi :MicroMark<CR>
 nnoremap md :MicroMarkClear<CR>
 nnoremap 'c :MicroMarkMatch<CR>
 for micromark in g:MicroMarks
-  execute "nnoremap '" . micromark . " `" . micromark . "zz"
+  execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
 endfor
 
 nnoremap <Leader>t :call EditOtherExt('.coffee')<CR>
