@@ -435,12 +435,8 @@ function! PurgeBuffers()
 endfunction
 
 " b mark for closing buffer.
-nnoremap <silent> mb :call BufAway()<CR>
-function! BufAway()
-  let buf = bufnr('%')
-  let result = Dmenu("keepalt edit", "bufaway", 0, { 'query': GetLocalBufList() })
-  if l:result | execute "bdelete" l:buf | endif
-endfunction
+nnoremap <silent> mb :call BufAway("keepalt edit", "bufaway", 0, {
+  \ 'query': GetLocalBufList() })<CR>
 
 function! GetLocalBufList(...)
   let execute = a:0 && a:1 == 1
@@ -470,7 +466,12 @@ endfunction
 function! GetBufList(...)
   let ids = filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
     \ . ' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))')
-  retu a:0 && a:1 == 'id' ? ids : map(ids, 'fnamemodify(bufname(v:val), ":.")')
+  if !a:0 | return map(ids, 'fnamemodify(bufname(v:val), ":.")')
+  elseif a:1 == 'id' | return ids
+  elseif a:1 == 'short' | return map(ids, 'fnamemodify(bufname(v:val), ":t")')
+  elseif a:1 == 'idshort'
+    return map(ids, 'v:val. " " .fnamemodify(bufname(v:val), ":t")')
+  endif
 endfunction
 
 nnoremap <Leader><Leader> <C-^>
@@ -614,31 +615,42 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurLeft()': ['<left>'],
   \ }
 
-nnoremap <silent> <C-P><C-P> :call Dmenu("edit", "edit", 8)<CR>
+nnoremap <silent> <C-P><C-P> :call Dmenu("edit", "edit-prj", 0)<CR>
 "nnoremap <silent> <C-P><C-F> " global mru
-nnoremap <silent> <C-P><C-T> :call Dmenu("keepalt edit", "swap prj", 8)<CR>
-nnoremap <silent> <C-T> :call Dmenu("keepalt edit", "swap buf", 0, 
+nnoremap <silent> <C-P><C-T> :call BufAway("keepalt edit", "swap-prj", 0)<CR>
+nnoremap <silent> <C-T> :call BufAway("keepalt edit", "swap-buf", 0, 
   \ { 'farray': GetBufList() })<CR>
+
+command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
+
+function! BufAway(cmd, prompt, ...)
+  if a:0 && a:1 | let list = ' -l '.a:1.' ' | else | let list = '' | endif
+  if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
+
+  let buf = bufnr('%')
+  let result = Dmenu(a:cmd, a:prompt, l:list, l:opts)
+  if l:result | execute "bdelete" l:buf | endif
+endfunction
 
 " strip the newline from the end of a string
 function! Chomp(str)
   return substitute(a:str, '\n$', '', '')
 endfunction
+
 " find a file and pass it to cmd; credit: leafo (initial idea and code)
-function! Dmenu(cmd, ...)
-  if a:0 | let prompt = a:1 | else | let prompt = a:cmd | endif
-  if a:0 >= 2 && a:2 | let list = ' -l '.a:2.' ' | else | let list = '' | endif
-  if a:0 >= 3 | let opts = a:3 | else | let opts = { } | endif
+function! Dmenu(cmd, prompt, ...)
+  if a:0 && a:1 | let list = ' -l '.a:1.' ' | else | let list = '' | endif
+  if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
 
   let fnames = get(l:opts, 'farray', [])
-  if !empty(l:fnames) | let query = 'printf %"s\n" ' . join(l:fnames, " ")
-  else | let query = get(l:opts, 'query', 'git ls-files')
+  if !empty(l:fnames) | let q = 'printf %"s\n" ' . join(l:fnames, " ")
+  else | let q = get(l:opts, 'query', 'git ls-files --others '.FindGitPrj('absolute'))
   endif
 
   let prepend = get(l:opts, 'prepend', '')
   let append = get(l:opts, 'append', '')
 
-  let choice = Chomp(system(l:query." | dmenu -i -b -p " . l:prompt . l:list))
+  let choice = Chomp(system(l:q." | dmenu -i -b -p " . a:prompt . l:list))
   if empty(l:choice) | return 0 | endif
   execute a:cmd l:prepend.l:choice.l:append
   return 1
