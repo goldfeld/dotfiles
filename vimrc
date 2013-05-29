@@ -184,13 +184,17 @@ function! ReadDowFile(path)
   endfor
 endfunction
 
-function! FindGitPrj()
+function! FindGitPrj(...)
+  let full = a:0 && a:1 == 'absolute'
   let dirs = split(expand('%:p:h'), '/')
   let path = ''
   for dir in dirs
     let l:path = l:path . '/' . dir
+
     if isdirectory(l:path . '/.git/')
-      return dir
+      if l:full | return l:path
+      else | return dir 
+      endif
     endif
   endfor
 endfunction
