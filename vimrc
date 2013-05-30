@@ -615,10 +615,10 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurLeft()': ['<left>'],
   \ }
 
-nnoremap <silent> <C-P><C-P> :call Dmenu("edit", "edit-prj", 0)<CR>
+nnoremap <silent> <C-T><C-P> :call Dmenu('edit', 'edit-prj', 0)<CR>
 "nnoremap <silent> <C-P><C-F> " global mru
-nnoremap <silent> <C-P><C-T> :call BufAway("keepalt edit", "swap-prj", 0)<CR>
-nnoremap <silent> <C-T> :call BufAway("keepalt edit", "swap-buf", 0, 
+nnoremap <silent> <C-T><C-T> :call BufAway("keepalt edit", "swap-prj", 0)<CR>
+nnoremap <silent> <C-T><C-B> :call BufAway("keepalt edit", "swap-buf", 0, 
   \ { 'farray': GetBufList() })<CR>
 
 command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
