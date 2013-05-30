@@ -17,6 +17,7 @@ function c() {
   if [ -z `git diff --cached` ]; then command git whatchanged --oneline
   else command git diff --cached; fi
 }
+alias C='clear && git show $commit'
 alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
 alias f='clear && git diff'
 alias g='git log --graph --decorate --oneline --all | less'
