@@ -9,13 +9,14 @@ set -o vi
 # letters
 alias a='ls -a'
 function b() {
-  if [[ "$@" == '' ]]; then
-    command git branch -v --all
-    return 1;
-  fi
-  command git branch -v --all | grep "$@"
+  if [[ "$@" == '' ]]; then command git branch -v --all
+  else command git branch -v --all | grep "$@"; fi
 }
-alias c='clear && git diff --cached'
+function c() {
+  command clear
+  if [ -z `git diff --cached` ]; then command git whatchanged --oneline
+  else command git diff --cached; fi
+}
 alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
 alias f='clear && git diff'
 alias g='git log --graph --decorate --oneline --all | less'
@@ -50,11 +51,8 @@ function t() {
 }
 
 function tnt() {
-  if [[ "$@" == '' ]]; then
-    command gvim --servername TNT
-    return 1;
-  fi
-  command gvim --servername TNT --remote "$@"
+  if [[ "$@" == '' ]]; then command gvim --servername TNT
+  else command gvim --servername TNT --remote "$@"; fi
 }
 
 function dow() {
