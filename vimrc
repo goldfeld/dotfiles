@@ -644,7 +644,7 @@ function! Dmenu(cmd, prompt, ...)
 
   let fnames = get(l:opts, 'farray', [])
   if !empty(l:fnames) | let q = 'printf %"s\n" ' . join(l:fnames, " ")
-  else | let q = get(l:opts, 'query', 'git ls-files --others '.FindGitPrj('absolute'))
+  else | let q = get(l:opts, 'query', 'git ls-files '.FindGitPrj('absolute'))
   endif
 
   let prepend = get(l:opts, 'prepend', '')
