@@ -690,10 +690,12 @@ nnoremap <Tab> :CtrlPBuffer<CR>
 
 nnoremap qf :cwindow<CR>
 "nnoremap qg :let b:qfbufs = cfirst<CR>
-nnoremap qg :cfirst<CR>
-nnoremap qc :cn<CR>
-nnoremap qr :cN<CR>
-nnoremap <silent> ql :call CloseQFBufs()<CR>
+nnoremap <silent> qg @=(&diff?"gg]c":":cfirst\r")<CR>
+nnoremap <silent> qc @=(&diff?"]c":":cn\r")<CR>
+vnoremap <silent> qc @=(&diff?":diffget\r":"")<CR>
+nnoremap <silent> qr @=(&diff?"[c":":cN\r")<CR>
+nnoremap <silent> ql @=(&diff?":diffupdate\r":":call CloseQFBufs()\r")<CR>
+
 function! CloseQFBufs()
   " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
   let bufs = filter(map(getqflist(), 'v:val.bufnr'), 'getbufvar(v:val, "&bl")')
