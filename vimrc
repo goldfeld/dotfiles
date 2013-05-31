@@ -110,24 +110,24 @@ let g:no_rust_conceal = 1
 
 augroup filetypeSettings
   autocmd!
-
-  autocmd BufEnter *
-    \ if match(['rust'], &ft) != -1 |
-    \   if g:colors_name != 'heroku' | color heroku | endif |
-    \ elseif match(['vim', 'perl', 'html'], &ft) != -1 || &diff |
-      \ if g:colors_name != 'gruvbox' | color gruvbox | endif |
-    \ else |
-      \ if g:colors_name != 'mustang' | color mustang | endif |
-    \ endif |
-    \ highlight ColorColumn guibg=#373737 ctermbg=236 |
-    "\ highlight CursorLine guibg=#373737 ctermbg=236 |
-    "\ highlight CursorColumn guibg=#373737 ctermbg=236
-
+  autocmd BufEnter * call FtColors()
   autocmd BufRead,BufNewFile *.vim setlocal foldmethod=marker
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 | setlocal tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
+
+function! FtColors()
+  if match(['rust'], &ft) != -1
+    if g:colors_name != 'heroku' | color heroku | endif
+  elseif &diff || match(['vim', 'perl', 'html', 'diff'], &ft) != -1
+    if g:colors_name != 'gruvbox' | color gruvbox | endif
+  else | if g:colors_name != 'mustang' | color mustang | endif
+  endif
+  highlight ColorColumn guibg=#373737 ctermbg=236 |
+  highlight CursorLine guibg=#373737 ctermbg=236 |
+  highlight CursorColumn guibg=#373737 ctermbg=236
+endfunction
 
 set laststatus=2
 set statusline=
