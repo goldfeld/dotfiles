@@ -394,6 +394,7 @@ endfunction
 nnoremap mm :
 nnoremap mw :w<CR>
 nnoremap mq :q<CR>
+nnoremap mx :x<CR>
 nnoremap mv :vs<CR>
 nnoremap mz :sp<CR>
 nnoremap mh :help 
