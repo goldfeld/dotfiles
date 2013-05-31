@@ -112,7 +112,7 @@ augroup filetypeSettings
   autocmd!
   autocmd BufEnter * call FtColors()
   autocmd BufRead,BufNewFile *.vim setlocal foldmethod=marker
-  autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 | setlocal tabstop=4
+  autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
