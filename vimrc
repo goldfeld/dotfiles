@@ -88,6 +88,7 @@ set hidden                      " buffer switch w/o saving; keeps undo history
 set autoread                    " reload changed files if there's no conflict
 set autochdir                   " keep working dir relative to current file
 set viminfo+=!
+set previewheight=20            " height of the preview window
 
 "set wildmenu
 "set wildmode="full"
