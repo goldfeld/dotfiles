@@ -707,7 +707,19 @@ function! CloseQFBufs()
 endfunction
 
 " vim-fugitive plugin
-nnoremap gs :Gstatus<CR>
+nnoremap gs :call Gcached()<CR>
+
+function! Gcached()
+  let cached = system('git diff --cached')
+  if len(l:cached)
+    let temp = resolve(tempname())
+    call writefile(l:temp, )
+    silent execute "pedit" temp
+    "wincmd P goes to preview window, wincmd p comes back from it
+  else | Gstatus
+  endif
+endfunction
+
 nnoremap gb :Gblame<CR>
 nnoremap gB :Gbrowse<CR>
 nnoremap gl :Glog<CR>
