@@ -712,13 +712,16 @@ endfunction
 nnoremap gs :call Gcached()<CR>
 
 function! Gcached()
-  let cached = system('git diff --cached')
-  if len(l:cached)
+  let cached = split(system('git diff --cached'), "\n")
+  let changed = filter(l:cached, 'v:val[0] =~# "[+-]"')
+  if empty(l:changed) | Gstatus
+  else
     let temp = resolve(tempname())
-    call writefile(l:temp, )
+    call writefile(l:changed, l:temp)
     silent execute "pedit" temp
-    "wincmd P goes to preview window, wincmd p comes back from it
-  else | Gstatus
+    wincmd P
+    setlocal buftype=nowrite nomodified foldmarker=<<<<<<<,>>>>>>>
+    nnoremap <buffer> <silent> C :wincmd p<CR>:pclose<CR><C-U>:Gcommit<CR>i
   endif
 endfunction
 
