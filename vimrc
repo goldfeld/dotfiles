@@ -113,7 +113,7 @@ augroup filetypeSettings
   autocmd BufEnter *
     \ if match(['rust'], &ft) != -1 |
     \   if g:colors_name != 'heroku' | color heroku | endif |
-    \ elseif match(['vim', 'perl', 'html'], &ft) != -1 |
+    \ elseif match(['vim', 'perl', 'html'], &ft) != -1 || &diff |
       \ if g:colors_name != 'gruvbox' | color gruvbox | endif |
     \ else |
       \ if g:colors_name != 'mustang' | color mustang | endif |
