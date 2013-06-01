@@ -690,11 +690,16 @@ endfunction
 " can't map <C-I> to anything else since it's the same as <Tab>.
 nnoremap <Tab> :CtrlPBuffer<CR>
 
+" give up single d visual delete so I can emulate a diff buffer's normal
+" mode mappings in visual mode too with linewise control.
+vnoremap <silent> dd :delete<CR>
+vnoremap <silent> do :diffget<CR>
+vnoremap <silent> dp :diffput<CR>
+
 nnoremap qf :cwindow<CR>
 "nnoremap qg :let b:qfbufs = cfirst<CR>
 nnoremap <silent> qg @=(&diff?"gg]c":":cfirst\r")<CR>
 nnoremap <silent> qc @=(&diff?"]c":":cn\r")<CR>
-vnoremap <silent> qc @=(&diff?":diffget\r":"")<CR>
 nnoremap <silent> qr @=(&diff?"[c":":cN\r")<CR>
 nnoremap <silent> ql @=(&diff?":diffupdate\r":":call CloseQFBufs()\r")<CR>
 
