@@ -651,11 +651,26 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurLeft()': ['<left>'],
   \ }
 
-nnoremap <silent> <C-T><C-P> :call Dmenu('edit', 'edit-prj', 0)<CR>
-"nnoremap <silent> <C-P><C-F> " global mru
-nnoremap <silent> <C-T><C-T> :call BufAway("keepalt edit", "swap-prj", 0)<CR>
-nnoremap <silent> <C-T><C-B> :call BufAway("keepalt edit", "swap-buf", 0, 
-  \ { 'farray': GetBufList() })<CR>
+function! NemoMaps()
+  let nemobuf = [
+    \ ['<C-P>', 'BufAway', 'edit', 'prjaway', "8"],
+    \ ['<C-N>', 'Dmenu',   'edit', 'prjopen', "8"],
+    \ ['<C-T>', 'Dmenu', 'buffer', 'bufcycle', "0, { 'farray':
+      \ GetBufList('ls'), 'process': 'split(v:val, \":\")[0]' }"],
+    \ ['<C-B>', 'BufAway', 'buffer', 'bufaway', "0, { 'farray':
+      \ GetBufList('ls'), 'process': 'split(v:val, \":\")[0]' }"],
+    \ ['<C-C>', 'Dmenu', 'buffer', 'loccycle', "0, { 'farray':
+      \ GetBufList('local'), 'process': 'split(v:val, \":\")[0]' }"],
+    \ ['<C-R>', 'BufAway', 'buffer', 'locaway', "0, { 'farray':
+      \ GetBufList('local'), 'process': 'split(v:val, \":\")[0]' }"]
+    \]
+
+  for c in l:nemobuf
+    execute "nnoremap <silent> <C-T>" . l:c[0] ":call" l:c[1] . "('"
+      \ l:c[2] "','" . l:c[3] . "'," l:c[4] . ")\<CR>"
+  endfor
+endfunction
+call NemoMaps()
 
 command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 
