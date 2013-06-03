@@ -32,6 +32,7 @@ inoremap <C-G>~ <Plug>ISurround
 
 " editing
 Bundle 'tpope/vim-surround'
+Bundle 'paradigm/TextObjectify'
 
 " files
 Bundle 'vim-scripts/grep.vim'
@@ -719,6 +720,8 @@ function! Dmenu(cmd, prompt, ...)
   execute a:cmd l:prepend . map([l:choice], l:process)[0] . l:append
   return 1
 endfunction
+
+let g:textobjectify_onthefly_same = 1
 
 let g:seek_enable_jumps = 1
 let g:seek_use_vanilla_binds_in_diffmode = 1
