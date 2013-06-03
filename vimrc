@@ -737,6 +737,8 @@ nnoremap <silent> qg @=(&diff?"gg]c":":cfirst\r")<CR>
 nnoremap <silent> qc @=(&diff?"]c":":cn\r")<CR>
 nnoremap <silent> qr @=(&diff?"[c":":cN\r")<CR>
 nnoremap <silent> ql @=(&diff?":diffupdate\r":":call CloseQFBufs()\r")<CR>
+" double q to make sure recording stops.
+nnoremap qq q
 
 function! CloseQFBufs()
   " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
