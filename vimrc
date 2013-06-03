@@ -487,15 +487,26 @@ function! GetLocalBufList(...)
   return l:query
 endfunction
 
-" credit: ctrlp.vim by kien
 function! GetBufList(...)
   let ids = filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
     \ . ' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))')
-  if !a:0 | return map(ids, 'fnamemodify(bufname(v:val), ":.")')
+  if !a:0 | return map(ids, 'fnamemodify(bufname(v:val), ":p")')
   elseif a:1 == 'id' | return ids
-  elseif a:1 == 'short' | return map(ids, 'fnamemodify(bufname(v:val), ":t")')
-  elseif a:1 == 'idshort'
-    return map(ids, 'v:val. " " .fnamemodify(bufname(v:val), ":t")')
+
+  else
+    let buflist= []
+    let currentgit = FindGitPrj()
+    if a:1 == 'ls' | for id in ids
+      call add(l:buflist, id . ':' .
+        \ FindGitPrj('relative', fnamemodify(bufname(id), ':p')) )
+    endfor
+    elseif a:1 == 'local' | for id in ids
+      let git = FindGitPrj('relative,folder', fnamemodify(bufname(id), ':p'))
+      " skip this id if the buffer's git folder isn't our current git folder.
+      if l:currentgit !=# l:git[1] | continue | endif
+      call add(l:buflist, id . ':' . l:git[0])
+    endfor | endif
+    return l:buflist
   endif
 endfunction
 
