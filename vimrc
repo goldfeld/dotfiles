@@ -550,8 +550,8 @@ nnoremap <Leader>v :call LoadSession()<CR>
 
 " toggle show hidden characters and cursorcolumn
 nnoremap <Leader>l :set list!<CR>:set cursorcolumn!<CR>
-" useful for uncommenting lines
-nnoremap <Leader>i _wi
+" go to next trailing whitespace
+nnoremap <Leader>i /\s$<CR>:noh<CR>a
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
