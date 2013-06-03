@@ -750,23 +750,37 @@ function! CloseQFBufs()
   endfor
 endfunction
 
-" vim-fugitive plugin
 nnoremap gs :call Gcached()<CR>
-
 function! Gcached()
   let cached = split(system('git diff --cached'), "\n")
-  let changed = filter(l:cached, 'v:val[0] =~# "[+-]"')
+  let changed = []
+  let lastWasDiff = 0
+
+  for line in l:cached
+    if line =~# '\v^(\+[^+]|\-[^-])'
+      if !lastWasDiff | call add(l:changed, "") | endif
+      call add(l:changed, line)
+      let lastWasDiff = 1
+    elseif line =~# '\v^(\+|\-)'
+      call add(l:changed, line)
+    else | let lastWasDiff = 0
+    endif
+  endfor
+
+  "let l:changed = filter(l:cached, 'v:val[0] =~# "[+-]"')
   if empty(l:changed) | Gstatus
   else
-    let temp = resolve(tempname())
-    call writefile(l:changed, l:temp)
-    silent execute "pedit" temp
+    let g:changedtemp = resolve(tempname())
+    call writefile(l:changed, g:changedtemp)
+    silent execute
+      \ "pedit +setlocal\\ bt=nowrite\\ ft=diff\\ nomodified" g:changedtemp
     wincmd P
-    setlocal buftype=nowrite nomodified foldmarker=<<<<<<<,>>>>>>>
-    nnoremap <buffer> <silent> C :wincmd p<CR>:pclose<CR><C-U>:Gcommit<CR>i
+    nnoremap <buffer> <silent> C :wincmd p<CR>:pclose<CR>
+      \:sleep 100m<CR><C-U>:Gcommit<CR>:exe "vsplit" g:changedtemp<CR><C-W>li
   endif
 endfunction
 
+" vim-fugitive plugin mappings
 nnoremap gb :Gblame<CR>
 nnoremap gB :Gbrowse<CR>
 nnoremap gl :Glog<CR>
