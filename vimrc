@@ -496,11 +496,12 @@ function! GetBufList(...)
   else
     let buflist= []
     let currentgit = FindGitPrj()
-    if a:1 == 'ls' | for id in ids
-      call add(l:buflist, id . ':' .
-        \ FindGitPrj('relative', fnamemodify(bufname(id), ':p')) )
+    if l:opt == 'ls' | for id in ids
+      call add(l:buflist, id . ':' . fnamemodify(
+        \ FindGitPrj('relative', fnamemodify(bufname(id), ':p')), l:modify))
     endfor
-    elseif a:1 == 'local' | for id in ids
+
+    elseif l:opt == 'local' | for id in ids
       let git = FindGitPrj('relative,folder', fnamemodify(bufname(id), ':p'))
       " skip this id if the buffer's git folder isn't our current git folder.
       if l:currentgit !=# l:git[1] | continue | endif
