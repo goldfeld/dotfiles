@@ -673,6 +673,17 @@ function! NemoMaps()
 endfunction
 call NemoMaps()
 
+nnoremap <silent> <C-T><C-L> :execute 'set title titlestring='
+  \ . 'buffers\ ––\ ' . join(GetBufList('ls:t'), '\ ––\ ')<CR>
+
+"nnoremap <C-T><C-L> echo 'buffers ––' . join(GetBufList('ls:t'), " –– ")<CR>
+"nnoremap <C-T><C-L> :<C-\>eNemoBufList()<CR>
+function! NemoBufList()
+  call setcmdpos(3)
+  return "B  " . join(GetBufList('ls:t'), " –– ")
+endfunction
+
+command! -nargs=1 B execute "buffer" (<q-args>)[0]
 command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 
 function! BufAway(cmd, prompt, ...)
