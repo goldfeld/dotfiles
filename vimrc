@@ -186,18 +186,41 @@ function! ReadDowFile(path)
 endfunction
 
 function! FindGitPrj(...)
-  let full = a:0 && a:1 == 'absolute'
-  let dirs = split(expand('%:p:h'), '/')
+  let returnoptions = a:0 ? split(a:1, ',') : ['folder']
+  let originalpath = a:0 >= 2 ? a:2 : expand('%:p:h')
+  let dirs = split(l:originalpath, '/')
   let path = ''
-  for dir in dirs
-    let l:path = l:path . '/' . dir
+  for idx in range(len(l:dirs))
+    let dir = l:dirs[idx]
+    let l:path = l:path . '/' . l:dir
 
     if isdirectory(l:path . '/.git/')
-      if l:full | return l:path
-      else | return dir 
+      let returnpaths = []
+      for returnoption in returnoptions
+        if returnoption ==? 'absolute' | call add(returnpaths, l:path)
+        elseif returnoption ==? 'relative'
+          call add(returnpaths, join(l:dirs[idx : -1], '/'))
+        else | call add(returnpaths, l:dir)
+        endif
+      endfor
+
+      if len(returnoptions) == 1 | return returnpaths[0]
+      else | return returnpaths
       endif
+
     endif
   endfor
+
+  let l:originalpath = fnamemodify(l:originalpath, ':~')
+  let returnpaths = []
+  for returnoption in returnoptions
+    if returnoption ==? 'absolute' | call add(returnpaths, l:originalpath)
+    elseif returnoption ==? 'relative' | call add(returnpaths, l:originalpath)
+    else | call add(returnpaths, '')
+    endif
+  endfor
+  if len(returnoptions) == 1 | return returnpaths[0]
+  else | return returnpaths
 endfunction
 
 nnoremap <Leader>c :Vimdow Chrome<CR>
