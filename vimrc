@@ -660,11 +660,11 @@ nnoremap <silent> <C-T><C-B> :call BufAway("keepalt edit", "swap-buf", 0,
 command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 
 function! BufAway(cmd, prompt, ...)
-  if a:0 && a:1 | let list = ' -l '.a:1.' ' | else | let list = '' | endif
+  if a:0 && a:1 | let list = a:1 | else | let list = 0 | endif
   if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
 
   let buf = bufnr('%')
-  let result = Dmenu(a:cmd, a:prompt, l:list, l:opts)
+  let result = Dmenu('keepalt ' . a:cmd, a:prompt, l:list, l:opts)
   if l:result | execute "bdelete" l:buf | endif
 endfunction
 
@@ -679,6 +679,7 @@ function! Dmenu(cmd, prompt, ...)
   if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
 
   let fnames = get(l:opts, 'farray', [])
+  let process = get(l:opts, 'process', 'v:val')
   if !empty(l:fnames) | let q = 'printf %"s\n" ' . join(l:fnames, " ")
   else | let q = get(l:opts, 'query', 'git ls-files '.FindGitPrj('absolute'))
   endif
@@ -686,9 +687,9 @@ function! Dmenu(cmd, prompt, ...)
   let prepend = get(l:opts, 'prepend', '')
   let append = get(l:opts, 'append', '')
 
-  let choice = Chomp(system(l:q." | dmenu -i -b -p " . a:prompt . l:list))
+  let choice = Chomp(system(l:q." | dmenu -i -p " . a:prompt . l:list))
   if empty(l:choice) | return 0 | endif
-  execute a:cmd l:prepend.l:choice.l:append
+  execute a:cmd l:prepend . map([l:choice], l:process)[0] . l:append
   return 1
 endfunction
 
