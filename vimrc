@@ -495,10 +495,16 @@ function! GetBufList(...)
   elseif a:1 == 'id' | return ids
 
   else
-    let buflist= []
+    let buflist = []
     let modifyidx = stridx(a:1, ':')
-    let modify = strpart(a:1, l:modifyidx)
-    let opt = strpart(a:1, 0, l:modifyidx)
+    if modifyidx == -1
+      let modify = ''
+      let opt = a:1
+    else
+      let modify = strpart(a:1, l:modifyidx)
+      let opt = strpart(a:1, 0, l:modifyidx)
+    endif
+
     let currentgit = FindGitPrj()
     if l:opt == 'ls' | for id in ids
       call add(l:buflist, id . ':' . fnamemodify(
