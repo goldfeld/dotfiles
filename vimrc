@@ -685,10 +685,10 @@ function! NemoMaps()
 endfunction
 call NemoMaps()
 
-nnoremap <silent> <C-T><C-L> :execute 'set title titlestring='
-  \ . 'buffers\ ––\ ' . join(GetBufList('ls:t'), '\ ––\ ')<CR>
+"nnoremap <silent> <C-T><C-L> :execute 'set title titlestring='
+"  \ . 'buffers\ ––\ ' . join(GetBufList('ls:t'), '\ ––\ ')<CR>
+nnoremap <C-T><C-L> :echo 'buffers ––' join(GetBufList('ls:t'), " –– ")<CR>
 
-"nnoremap <C-T><C-L> echo 'buffers ––' . join(GetBufList('ls:t'), " –– ")<CR>
 "nnoremap <C-T><C-L> :<C-\>eNemoBufList()<CR>
 function! NemoBufList()
   call setcmdpos(3)
