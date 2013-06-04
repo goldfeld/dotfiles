@@ -561,10 +561,10 @@ nnoremap <Leader>i /\s$<CR>:noh<CR>a
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
-let g:MicroMarks = ['h', 't', 'n', 's', 'l', 'r' ]
+let g:MicroMarks = ['h', 't', 'n', 's', '-']
 nnoremap mi :MicroMark<CR>
 nnoremap md :MicroMarkClear<CR>
-nnoremap 'c :MicroMarkMatch<CR>
+"nnoremap 'c :MicroMarkMatch<CR>
 for micromark in g:MicroMarks
   execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
 endfor
@@ -770,14 +770,12 @@ vnoremap <silent> dd :delete<CR>
 vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
 
-nnoremap qf :cwindow<CR>
+nnoremap 'f :cwindow<CR>
 "nnoremap qg :let b:qfbufs = cfirst<CR>
-nnoremap <silent> qg @=(&diff?"gg]c":":cfirst\r")<CR>
-nnoremap <silent> qc @=(&diff?"]c":":cn\r")<CR>
-nnoremap <silent> qr @=(&diff?"[c":":cN\r")<CR>
-nnoremap <silent> ql @=(&diff?":diffupdate\r":":call CloseQFBufs()\r")<CR>
-" double q to make sure recording stops.
-nnoremap qq q
+nnoremap <silent> 'g @=(&diff?"gg]c":":cfirst\r")<CR>
+nnoremap <silent> 'c @=(&diff?"]c":":cn\r")<CR>
+nnoremap <silent> 'r @=(&diff?"[c":":cN\r")<CR>
+nnoremap <silent> 'l @=(&diff?":diffupdate\r":":call CloseQFBufs()\r")<CR>
 
 function! CloseQFBufs()
   " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
