@@ -704,9 +704,8 @@ function! NemoMaps()
 endfunction
 call NemoMaps()
 
-"nnoremap <silent> <C-T><C-L> :execute 'set title titlestring='
-"  \ . 'buffers\ ––\ ' . join(GetBufList('ls:t'), '\ ––\ ')<CR>
-nnoremap <C-T><C-L> :echo 'buffers ––' join(GetBufList('ls:t'), " –– ")<CR>
+nnoremap <C-T><C-L> :echo join(values(map(GetBufList('group:t'),
+  \ '"(" .v:key . " " . join(v:val, " ") . ")"' )), ' –– ')<CR>
 
 "nnoremap <C-T><C-L> :<C-\>eNemoBufList()<CR>
 function! NemoBufList()
