@@ -34,8 +34,8 @@ alias ror="./ror"
 # goes to the supplied folder without arguments,
 # or to it's first grep matching subfolder of an argument query.
 function cdgrep() {
-  if [[ "$1" == '' ]]; then
-    command cd "$2"
+  if [[ "$2" == '' ]]; then
+    command cd "$1"
     return 1;
   fi
   declare -a target=( $(ls -a "$2" | grep "$1") )
