@@ -423,10 +423,13 @@ endfunction
 nnoremap mm :
 nnoremap mw :w<CR>
 nnoremap mq :q<CR>
-nnoremap mx :x<CR>
 nnoremap mv :vs<CR>
 nnoremap mz :sp<CR>
 nnoremap mh :help 
+
+nnoremap mx :x<CR>:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
+" quick map to run a bash command from the git root directory 
+nnoremap m; :<C-\>e("!cd " . FindGitPrj('absolute') . " && ")<CR>
 
 " other marks for my other pinky
 nnoremap mo O
