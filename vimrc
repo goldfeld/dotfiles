@@ -156,6 +156,13 @@ let mapleader = ","
 
 let g:TNTWebBrowser = 'luakit'
 
+let g:char_aliases = { '[': '{' , ']': '}' , '9': '(' , '8': '*' , '7': '&'
+  \ , '6': '^' , '5': '%' , '4': '$' , '3': '#' , '2': '@' , '1': '!'
+  \ , '0': ')' , '\': '|' , ';': ':' , ',': '<' , '.': '>' , '`': '~'
+  \ , '-': '_' , '/': '?' , '=': '+' , "'": '"' } 
+let g:char_aliases_str = join(map(
+  \ keys(g:char_aliases), 'v:val . g:char_aliases[v:val]'), " ")
+
 let g:Vimdow = {}
 augroup DOW
   autocmd BufRead,BufNewFile *.dow call ReadDow()
@@ -620,6 +627,14 @@ inoremap <C-B><C-T> <Esc>vB~gvova
 inoremap <C-B><C-L> <Esc>v^~gvova
 " toggle case of first letter.
 inoremap <C-B><C-P> <Esc>bv~ea
+" insert a pair of anything and position in-between
+inoremap <C-B><C-B> <Esc>:call InsertPair()<CR>
+function! InsertPair()
+  let char = nr2char(getchar())
+  let l:char = get(g:char_aliases, l:char, l:char)
+  execute "normal! a" . repeat(l:char, 2)
+  startinsert
+endfunction
 
 " make C-U and C-W undoable by using <C-G>u (signal a new change to vim.)
 inoremap <C-U> <C-G>u<C-U>
@@ -736,8 +751,7 @@ let g:textobjectify_onthefly_same = 1
 
 let g:seek_enable_jumps = 1
 let g:seek_use_vanilla_binds_in_diffmode = 1
-let g:seek_char_aliases =
-  \ "[{ ]} 9( 8* 7& 6^ 5% 4$ 3# 2@ 1! 0) \| ;: ,< .> `~ -_ /? =+ '" . '"'
+let g:seek_char_aliases = g:char_aliases_str
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
