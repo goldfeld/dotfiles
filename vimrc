@@ -264,8 +264,6 @@ nnoremap Y y$
 nnoremap yY ggyG
 nnoremap dD ggdG
 
-" insert two en-dashes (&#8211)
-inoremap <C-D> ––
 " save my pinky
 inoremap <Backspace> <NOP>
 nnoremap ZZ <NOP>
@@ -619,6 +617,7 @@ nnoremap <silent> <Leader>.b :call Dmenu("edit", "bundle", {
   \ 'append': "/README.md" })<CR>
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
+
 " toggle uppercase/lowercase.
 inoremap <C-B>t <Esc>vb~gvova
 " same as above but going over underscores.
@@ -627,6 +626,9 @@ inoremap <C-B><C-T> <Esc>vB~gvova
 inoremap <C-B><C-L> <Esc>v^~gvova
 " toggle case of first letter.
 inoremap <C-B><C-P> <Esc>bv~ea
+
+" insert two en-dashes (&#8211)
+inoremap <C-B><C-D> ––
 " insert a pair of anything and position in-between
 inoremap <C-B><C-B> <Esc>:call InsertPair()<CR>
 function! InsertPair()
