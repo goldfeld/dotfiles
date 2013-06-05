@@ -466,8 +466,7 @@ function! PurgeBuffers()
 endfunction
 
 " b mark for closing buffer.
-nnoremap <silent> mb :call BufAway("keepalt edit", "bufaway", 0, {
-  \ 'query': GetLocalBufList() })<CR>
+nnoremap <silent> mb :execute "keepalt b#\\| bdelete" bufnr('%')<CR>
 
 function! GetLocalBufList(...)
   let execute = a:0 && a:1 == 1
