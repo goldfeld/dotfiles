@@ -683,23 +683,23 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurLeft()': ['<left>'],
   \ }
 
+" B to close a buffer by bufnr (pegword), <C-B> enter purge repl (currently mp)
+" G to kill group (git repo), <C-G> for repl
+" L list local (git repo), <C-L> list all (as currently)
 function! NemoMaps()
   let nemobuf = [
-    \ ['<C-P>', 'BufAway', 'edit', 'prjaway', "8"],
-    \ ['<C-N>', 'Dmenu',   'edit', 'prjopen', "8"],
-    \ ['<C-T>', 'Dmenu', 'buffer', 'bufcycle', "0, { 'farray':
+    \ ['p', 'edit', 'prj', "8"],
+    \ ['t', 'buffer', 'buf', "0, { 'farray':
       \ GetBufList('ls'), 'process': 'split(v:val, \":\")[0]' }"],
-    \ ['<C-B>', 'BufAway', 'buffer', 'bufaway', "0, { 'farray':
-      \ GetBufList('ls'), 'process': 'split(v:val, \":\")[0]' }"],
-    \ ['<C-C>', 'Dmenu', 'buffer', 'loccycle', "0, { 'farray':
+    \ ['c', 'buffer', 'loc', "0, { 'farray':
       \ GetBufList('local'), 'process': 'split(v:val, \":\")[0]' }"],
-    \ ['<C-R>', 'BufAway', 'buffer', 'locaway', "0, { 'farray':
-      \ GetBufList('local'), 'process': 'split(v:val, \":\")[0]' }"]
     \]
 
   for c in l:nemobuf
-    execute "nnoremap <silent> <C-T>" . l:c[0] ":call" l:c[1] . "('"
-      \ l:c[2] "','" . l:c[3] . "'," l:c[4] . ")\<CR>"
+    execute "nnoremap <silent> <C-T><C-" . l:c[0] . "> :call Dmenu('"
+      \ l:c[1] "','" . l:c[2] . "keep'," l:c[3] . ")\<CR>"
+    execute "nnoremap <silent> <C-T>" . l:c[0] ":call BufAway('"
+      \ l:c[1] "','" . l:c[2] . "away'," l:c[3] . ")\<CR>"
   endfor
 endfunction
 call NemoMaps()
