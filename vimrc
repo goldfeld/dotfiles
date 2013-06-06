@@ -502,7 +502,6 @@ function! GetBufList(...)
   elseif a:1 == 'id' | return ids
 
   else
-    let buflist = []
     let modifyidx = stridx(a:1, ':')
     if modifyidx == -1
       let modify = ''
@@ -513,17 +512,32 @@ function! GetBufList(...)
     endif
 
     let currentgit = FindGitPrj()
-    if l:opt == 'ls' | for id in ids
-      call add(l:buflist, id . ':' . fnamemodify(
-        \ FindGitPrj('relative', fnamemodify(bufname(id), ':p')), l:modify))
-    endfor
+    if l:opt == 'ls'
+      let buflist = []
+      for id in ids
+        call add(l:buflist, id . ':' . fnamemodify(
+          \ FindGitPrj('relative', fnamemodify(bufname(id), ':p')), l:modify))
+      endfor
 
-    elseif l:opt == 'local' | for id in ids
-      let git = FindGitPrj('relative,folder', fnamemodify(bufname(id), ':p'))
-      " skip this id if the buffer's git folder isn't our current git folder.
-      if l:currentgit !=# l:git[1] | continue | endif
-      call add(l:buflist, id . ':' . l:git[0])
-    endfor | endif
+    elseif l:opt == 'group'
+      let buflist = {}
+      for id in ids
+        let git = FindGitPrj('relative,folder', fnamemodify(bufname(id), ':p'))
+        let group = l:git[1]
+        let l:buflist[l:group] = get(buflist, l:group, [])
+          \ + [id . ':' . fnamemodify(l:git[0], l:modify)]
+      endfor
+
+    elseif l:opt == 'local'
+      let buflist = []
+      for id in ids
+        let git = FindGitPrj('relative,folder', fnamemodify(bufname(id), ':p'))
+        " skip this id if the buffer's git folder isn't our current git folder.
+        if l:currentgit !=# l:git[1] | continue | endif
+        call add(l:buflist, id . ':' . fnamemodify(l:git[0]), l:modify)
+      endfor
+
+    endif
     return l:buflist
   endif
 endfunction
