@@ -56,6 +56,7 @@ Bundle 'wting/rust.vim'
 
 " other
 Bundle 'goldfeld/vim-pegword'
+Bundle 'goldfeld/ctrlr.vim'
 
 " colorschemes
 Bundle 'croaker/mustang-vim'
