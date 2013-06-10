@@ -4,13 +4,13 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'lordm/vim-browser-reload-linux'
 
 " workflow
 Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
 Bundle 'mikewest/vimroom'
 Bundle 'goldfeld/vim-micro'
+Bundle 'lordm/vim-browser-reload-linux'
 
 " writing
 Bundle 'goldfeld/tnt'
