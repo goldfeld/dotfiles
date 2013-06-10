@@ -35,7 +35,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'paradigm/TextObjectify'
 
 " files
-Bundle 'vim-scripts/grep.vim'
+Bundle 'grep.vim'
 Bundle 'tpope/vim-fugitive'
 "Bundle 'spolu/dwm.vim'
 
@@ -50,7 +50,7 @@ Bundle 'goldfeld/vim-seek'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'jb55/Vim-Roy'
 Bundle 'leafo/moonscript-vim'
-Bundle 'vim-scripts/Vim-R-plugin'
+Bundle 'Vim-R-plugin'
 Bundle 'goldfeld/criticmarkup-vim'
 Bundle 'wting/rust.vim'
 
@@ -62,8 +62,11 @@ Bundle 'goldfeld/ctrlr.vim'
 Bundle 'croaker/mustang-vim'
 Bundle 'morhetz/gruvbox'
 Bundle 'jonathanfilip/vim-lucius'
-Bundle 'vim-scripts/candycode.vim'
+Bundle 'candycode.vim'
 Bundle 'rainerborene/vim-heroku'
+Bundle 'Guardian'
+Bundle 'Lokaltog/vim-distinguished'
+Bundle 'noahfrederick/Hemisu'
 
 filetype plugin indent on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -120,8 +123,10 @@ augroup filetypeSettings
 augroup END
 
 function! FtColors()
-  if &diff || match(['vim', 'perl', 'html', 'diff'], &ft) != -1
+  if &diff || match(['vim', 'perl', 'diff'], &ft) != -1
     if g:colors_name != 'gruvbox' | color gruvbox | endif
+  elseif match(['html'], &ft) != -1
+    if g:colors_name != 'distinguished' | color distinguished | endif
   else | if g:colors_name != 'mustang' | color mustang | endif
   endif
   highlight ColorColumn guibg=#373737 ctermbg=236 |
