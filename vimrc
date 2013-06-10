@@ -119,9 +119,7 @@ augroup filetypeSettings
 augroup END
 
 function! FtColors()
-  if match(['rust'], &ft) != -1
-    if g:colors_name != 'heroku' | color heroku | endif
-  elseif &diff || match(['vim', 'perl', 'html', 'diff'], &ft) != -1
+  if &diff || match(['vim', 'perl', 'html', 'diff'], &ft) != -1
     if g:colors_name != 'gruvbox' | color gruvbox | endif
   else | if g:colors_name != 'mustang' | color mustang | endif
   endif
