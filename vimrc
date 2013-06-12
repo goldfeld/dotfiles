@@ -272,10 +272,6 @@ nnoremap dD ggdG
 inoremap <Backspace> <NOP>
 nnoremap ZZ <NOP>
 
-" temporary crutches
-nmap O <NOP>
-autocmd BufRead *.tnt.* nnoremap "* :echo "use ^R"<CR>
-
 nnoremap <silent> j
   \ :<C-U>call RestrainCommand('j', "normal! }", v:count1, 2)<CR>
 nnoremap <silent> k
