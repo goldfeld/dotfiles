@@ -863,6 +863,8 @@ nnoremap gt :Gwrite<CR>
 nnoremap gx :Gread<CR>
 " leave me on the index version, so I can quickly check it and close it.
 nnoremap gc :Gdiff<CR><C-W>h
+" easy git checkout wrapper
+nnoremap go :Git checkout 
 " use 'help index' to see vim's built-in natively mapped keys
 
 nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
