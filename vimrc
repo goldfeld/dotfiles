@@ -438,6 +438,9 @@ nnoremap m. zz
 nnoremap m, zb
 nnoremap m' zt
 
+" save file opened without sudo after the fact
+nnoremap mW :!sudo tee % >/dev/null
+
 " search for standalone word (no substring matches)
 nnoremap '/ /\<\><Left><Left>
 
@@ -550,14 +553,6 @@ nnoremap : ,
 " visual shifting (relect after shift).
 vnoremap < <gv
 vnoremap > >gv
-
-" save file opened without sudo after the fact
-cmap W w !sudo tee % >/dev/null
-
-noremap <silent> K :execute "normal i".nr2char(getchar())<CR>
-
-" paste from clipboard
-"set clipboard=unnamed
 
 nnoremap <Leader>[ {o
 nnoremap <Leader>] }O
