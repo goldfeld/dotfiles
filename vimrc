@@ -686,6 +686,28 @@ inoremap <A-C> <A-U>
 nnoremap <C-;> yl:execute "normal! f" . @"<CR>
 nnoremap <C-:> yl:execute "normal! F" . @"<CR>
 
+function! WordFreqList(access)
+  let words = {}
+  let lines = getbufline(bufname('%'), 1, '$') 
+  for line in l:lines
+    let pattern = "[\-\"'.,_?!:()/{}><+*=#$0-9]"
+    let tokens = split(substitute(line, l:pattern, ' ', 'g'), ' ')
+    for word in l:tokens
+      let word = matchstr(word, '\v(^\s*)@<=\S.*\S(\s*$)@=')
+      if len(word) < 2 | continue | endif
+      let l:words[l:word] = get(l:words, l:word, 0) + 1
+    endfor
+  endfor
+
+  if type(a:access) == type(0)
+    return sort(items(l:words), 'WordFreqListSorter')[a:access]
+  else | return get(l:words, a:access, 0)
+  endif
+endfunction
+function! WordFreqListSorter(arr1, arr2)
+  return a:arr1[1] == a:arr2[1] ? 0 : a:arr1[1] < a:arr2[1] ? 1 : -1
+endfunction
+
 "let g:ctrlp_extensions = ['commitdriven']
 "noremap <C-T> :CommitDriven<CR>
 ":noremap <Leader><Leader> :CommitDrivenLeader<CR>
