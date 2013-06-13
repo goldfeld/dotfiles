@@ -499,8 +499,10 @@ function! GetLocalBufList(...)
 endfunction
 
 function! GetBufList(...)
+  let currentbuf = bufnr('%')
   let ids = filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
-    \ . ' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))')
+    \ . ' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))'
+    \ . ' && v:val != ' . currentbuf)
   if !a:0 | return map(ids, 'fnamemodify(bufname(v:val), ":p")')
   elseif a:1 == 'id' | return ids
 
