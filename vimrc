@@ -15,21 +15,6 @@ Bundle 'lordm/vim-browser-reload-linux'
 " writing
 Bundle 'goldfeld/tnt'
 
-let g:surround_no_mappings = 1
-let g:surround_no_insert_mappings = 1
-nnoremap d`  <Plug>Dsurround
-nnoremap c`  <Plug>Csurround
-nnoremap y`  <Plug>Ysurround
-nnoremap y~  <Plug>YSurround
-nnoremap y`` <Plug>Yssurround
-nnoremap y~` <Plug>YSsurround
-nnoremap r~~ <Plug>YSsurround
-xnoremap ~   <Plug>VSurround
-xnoremap g~  <Plug>VgSurround
-inoremap <C-S>   <Plug>Isurround
-inoremap <C-G>` <Plug>Isurround
-inoremap <C-G>~ <Plug>ISurround
-
 " editing
 Bundle 'tpope/vim-surround'
 Bundle 'paradigm/TextObjectify'
@@ -788,6 +773,20 @@ let g:textobjectify_onthefly_same = 1
 let g:seek_enable_jumps = 1
 let g:seek_use_vanilla_binds_in_diffmode = 1
 let g:seek_char_aliases = g:char_aliases_str
+
+let g:surround_no_mappings = 1
+let g:surround_no_insert_mappings = 1
+nmap dx  <Plug>Dsurround
+nmap cx  <Plug>Csurround
+nmap yx  <Plug>Ysurround
+nmap yx  <Plug>YSurround
+nmap yxx <Plug>Yssurround
+nmap yXx <Plug>YSsurround
+nmap rXX <Plug>YSsurround
+xmap X   <Plug>VSurround
+xmap gX  <Plug>VgSurround
+imap <C-G>t <Plug>Isurround
+imap <C-G>T <Plug>ISurround
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
