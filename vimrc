@@ -143,6 +143,17 @@ set modelines=0
 
 let mapleader = ","
 
+" try out programmer dvorak
+" ~/$ %/&  [   {   }   (   =   *   )   +   ]   !  `/#
+" tab  :/; </, >/.  p   y   f   g   c   r   l  ?//  ^/@
+for progdv in split('`$ !% 1& 2[ 3{ 4} 5( 6= 7* 8) 9+ 0] [! }` ]# +^ =@', ' ')
+  execute "inoremap" progdv[0] progdv[1]
+endfor
+" break the old ways (and tell me where the new key is.)
+for oldway in split('@= #] $` %@ ^+ &1 *7 (5 )8 {3', ' ')
+  execute "inoremap" oldway[0] "<Esc>:echo '" oldway[1]."'<CR>"
+endfor
+
 let g:TNTWebBrowser = 'luakit'
 
 let g:char_aliases = { '[': '{' , ']': '}' , '9': '(' , '8': '*' , '7': '&'
