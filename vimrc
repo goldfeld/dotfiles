@@ -52,6 +52,7 @@ Bundle 'rainerborene/vim-heroku'
 Bundle 'Guardian'
 Bundle 'Lokaltog/vim-distinguished'
 Bundle 'noahfrederick/Hemisu'
+Bundle 'Pychimp/vim-luna'
 
 filetype plugin indent on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
