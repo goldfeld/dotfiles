@@ -147,7 +147,8 @@ let mapleader = ","
 " try out programmer dvorak
 " ~/$ %/&  [   {   }   (   =   *   )   +   ]   !  `/#
 " tab  :/; </, >/.  p   y   f   g   c   r   l  ?//  ^/@
-for progdv in split('`$ !% 1& 2[ 3{ 4} 5( 6= 7* 8) 9+ 0] [! }` ]# +^ =@', ' ')
+let g:progdv_chars = '`$ !% 1& 2[ 3{ 4} 5( 6= 7* 8) 9+ 0] [! }` ]# +^ =@'
+for progdv in split(g:progdv_chars, ' ')
   execute "inoremap" progdv[0] progdv[1]
 endfor
 " break the old ways (and tell me where the new key is.)
@@ -157,12 +158,31 @@ endfor
 
 let g:TNTWebBrowser = 'luakit'
 
-let g:char_aliases = { '[': '{' , ']': '}' , '9': '(' , '8': '*' , '7': '&'
-  \ , '6': '^' , '5': '%' , '4': '$' , '3': '#' , '2': '@' , '1': '!'
-  \ , '0': ')' , '\': '|' , ';': ':' , ',': '<' , '.': '>' , '`': '~'
-  \ , '-': '_' , '/': '?' , '=': '+' , "'": '"' } 
-let g:char_aliases_str = join(map(
-  \ keys(g:char_aliases), 'v:val . g:char_aliases[v:val]'), " ")
+let g:insert_pair_chars = {}
+for char_alias in split(g:progdv_chars, ' ')
+  let g:insert_pair_chars[char_alias[0]] = char_alias[1]
+endfor
+
+let g:seek_char_aliases = g:progdv_chars . ' ' .
+  \ '&% $~ #` @^ \| ;: ,< .> -_ /? ' . "'" . '"'
+let g:seek_enable_jumps = 1
+let g:seek_use_vanilla_binds_in_diffmode = 1
+
+let g:textobjectify_onthefly_same = 1
+
+let g:surround_no_mappings = 1
+let g:surround_no_insert_mappings = 1
+nmap dx  <Plug>Dsurround
+nmap cx  <Plug>Csurround
+nmap yx  <Plug>Ysurround
+nmap yx  <Plug>YSurround
+nmap yxx <Plug>Yssurround
+nmap yXx <Plug>YSsurround
+nmap rXX <Plug>YSsurround
+xmap X   <Plug>VSurround
+xmap gX  <Plug>VgSurround
+imap <C-G>t <Plug>Isurround
+imap <C-G>T <Plug>ISurround
 
 let g:Vimdow = {}
 augroup DOW
@@ -643,7 +663,7 @@ inoremap <C-B><C-D> ––
 inoremap <C-B><C-B> <Esc>:call InsertPair()<CR>
 function! InsertPair()
   let char = nr2char(getchar())
-  let l:char = get(g:char_aliases, l:char, l:char)
+  let l:char = get(g:insert_pair_chars, l:char, l:char)
   execute "normal! a" . repeat(l:char, 2)
   startinsert
 endfunction
@@ -779,26 +799,6 @@ function! Dmenu(cmd, prompt, ...)
   execute a:cmd l:prepend . map([l:choice], l:process)[0] . l:append
   return 1
 endfunction
-
-let g:textobjectify_onthefly_same = 1
-
-let g:seek_enable_jumps = 1
-let g:seek_use_vanilla_binds_in_diffmode = 1
-let g:seek_char_aliases = g:char_aliases_str
-
-let g:surround_no_mappings = 1
-let g:surround_no_insert_mappings = 1
-nmap dx  <Plug>Dsurround
-nmap cx  <Plug>Csurround
-nmap yx  <Plug>Ysurround
-nmap yx  <Plug>YSurround
-nmap yxx <Plug>Yssurround
-nmap yXx <Plug>YSsurround
-nmap rXX <Plug>YSsurround
-xmap X   <Plug>VSurround
-xmap gX  <Plug>VgSurround
-imap <C-G>t <Plug>Isurround
-imap <C-G>T <Plug>ISurround
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
