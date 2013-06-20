@@ -458,8 +458,22 @@ nnoremap m' zt
 " save file opened without sudo after the fact
 nnoremap mW :!sudo tee % >/dev/null
 
-" search for standalone word (no substring matches)
-nnoremap '/ /\<\><Left><Left>
+" search for words (no substring matches) in sequence.
+nnoremap '/ :SearchWords 
+command! -nargs=* SearchWords call SearchWords(<f-args>)
+let s:lastSearchWords = ''
+function! SearchWords(...)
+  if a:0
+    let searchexpr = ''
+    for word in a:000
+      let l:searchexpr = l:searchexpr . '.*\<' . word . '\>'
+    endfor
+    let s:lastSearchWords = strpart(l:searchexpr, 2)
+  elseif len(s:lastSearchWords) == 0 | return
+  endif
+  let @/ = s:lastSearchWords
+  execute "normal! n"
+endfunction
 
 nnoremap <silent> mp :call PurgeBuffers()<CR>
 function! PurgeBuffers()
