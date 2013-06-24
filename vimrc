@@ -1276,6 +1276,28 @@ function! VisualSearch(direction) range
   let @" = l:saved_reg
 endfunction
 
+" meta-vim
+augroup HELP
+  autocmd!
+  autocmd filetype help nnoremap <buffer><C-M> <C-]>
+  autocmd filetype help nnoremap <buffer>H <C-T>
+  autocmd filetype help nnoremap <buffer>L :tag<CR>
+  autocmd filetype help nnoremap <buffer>q :q!<CR>
+  autocmd filetype help setlocal nonumber
+augroup END
+function! ListLeaders()
+  silent! redir @r
+  silent! nmap <Leader>
+  silent! redir END
+  silent! new
+  silent! put! a
+  silent! g/^s*$/d
+  silent! %s/^.*,//
+  silent! normal ggVg
+  silent! sort
+  silent! let lines = getline(1,"$")
+endfunction
+
 " don't mess up splits when resizing vim
 autocmd VimResized * wincmd =
 
