@@ -157,6 +157,46 @@ for oldway in split('@= #] $` %@ ^+ &1 *7 (5 )8 {3', ' ')
   execute "inoremap" oldway[0] "<Esc>:echo '" oldway[1]."'<CR>"
 endfor
 
+" vim-coma - use the comma as a dead key.
+inoremap ,, <Esc>
+inoremap ,a <Esc>A
+inoremap ,i <Esc>I
+inoremap ,x <Esc>l1s
+inoremap ,e <Esc>ea
+inoremap ,E <Esc>Ea
+inoremap ,- <Esc>gea
+inoremap ,_ <Esc>gEa
+inoremap ,c <C-O>D
+inoremap ,d <Esc>D
+for deadmap in split('w W b B h l', ' ')
+  execute "inoremap ,".deadmap "<C-O>".deadmap
+endfor
+
+" use custom mapping for number insertion.
+let g:pegword_remap_digits = 0
+inoremap ,s <Esc>:Pegword 0<CR>
+inoremap ,t <Esc>:Pegword 1<CR>
+inoremap ,n <Esc>:Pegword 2<CR>
+inoremap ,m <Esc>:Pegword 3<CR>
+inoremap ,r <Esc>:Pegword 4<CR>
+
+inoremap ,f <Esc>:call IndentGuideFind(1)<CR>
+inoremap ,F <Esc>:call IndentGuideFind(2)<CR>
+function! IndentGuideFind(linesUp)
+  let line = line('.')
+  let text = getline('.') | let trim = matchstr(l:text, '\S.*$')
+  let first = matchstr(l:text, '\S') | let empty = empty(l:first)
+  if l:empty | let find = nr2char(getchar()) | let repos = 2
+  else       | let find = l:first            | let repos = 1 | endif
+
+  let above = line('.') - a:linesUp | if l:above < 1 | return | endif
+  let pos = stridx(getline(l:above), l:find) | if l:pos == -1 | return | endif
+  call setline(l:line, repeat(' ', l:pos) . l:trim)
+  call cursor(l:line, l:pos + l:repos)
+  if !l:empty | execute "normal! A\<Space>" | startinsert
+  else | startinsert | call cursor(l:line, col('.') + 1) | endif
+endfunction
+
 let g:TNTWebBrowser = 'luakit'
 
 let g:insert_pair_chars = {}
