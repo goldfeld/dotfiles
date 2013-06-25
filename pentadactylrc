@@ -1,0 +1,54 @@
+nmap , <Leader>
+
+nmap -builtin <Leader><Leader> <C-^>
+
+command! -nargs=* stack open stack-overflow <args>
+
+nmap mm :
+
+" expand current search to select whole line (good for copying web code.)
+cmap <C-L> <C-A>^.*<C-E>.*$
+
+nmap d <NOP>
+nmap dd d
+nmap -builtin j 5j
+nmap -builtin k 5k
+
+nmap >> :tabmove +1<CR>
+nmap << :tabmove -1<CR>
+
+javascript <<EOF
+  var duck = function(open) {
+    let sel = content.getSelection().toString();
+    dactyl.execute(':' + open + ' duckduckgo ' + sel);
+  };
+  dactyl.duckIt = duck.bind('open');
+  dactyl.duckItOut = duck.bind('tabopen');
+EOF
+
+map <Leader>g -js dactyl.duckIt();
+map <Leader>G -js dactyl.duckItOut();
+
+set defsearch=duckduckgo
+set passkeys+=duckduckgo.com:jk<CR>
+set passkeys+=mail.google.com:jkyo<CR>,gi
+set showtabline=never
+set! browser.tabs.closeWindowWithLastTab=false
+
+hi Hint font-family: Verdana; font-size: 15px !important; bold; color: white;
+  \ background-color: red; border-color: ButtonShadow; border-width: 0px;
+  \ border-style: solid; padding: 0px 1px 0px 1px;
+
+
+" gt/gT -> ^N/^P; :ls -> B
+" tabde to detach current tab into new window
+" tabm $; tabm 0; tabm! +N/-N moves offset N wrapping around tabstrip
+" :bufdo cmd
+" :buffer url/pattern; gb/gB repeat last (useful for navigating tab 'groups')
+" use :buffer! pat to select first when there are multiple matches
+" useful submodes of extended hints (; and g; which is hint-repl)
+" ? shows html; O/T generate prompt; V to view dest source in ext. editor;
+" y to yank destination; c to open context menu; i to open an image
+
+" plugins: aardvark, http header, jquery
+" [Plugins — Pentadactyl — Dactyl Home][http://5digits.org/pentadactyl/plugins]
