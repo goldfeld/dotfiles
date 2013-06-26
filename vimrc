@@ -312,6 +312,9 @@ nnoremap <Leader>O :Vimdow coffee o<CR>
 nnoremap <Leader>M :Vimdow meteor o<CR>
 nnoremap <Leader>G :Vimdow gedit o<CR>
 
+nnoremap <C-H> <NOP>
+nnoremap <C-L> <NOP>
+
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
