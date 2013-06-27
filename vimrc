@@ -24,9 +24,6 @@ Bundle 'grep.vim'
 Bundle 'tpope/vim-fugitive'
 "Bundle 'spolu/dwm.vim'
 
-map <silent> 'e <Plug>CamelCaseMotion_e
-map <silent> 'b <Plug>CamelCaseMotion_b
-map <silent> 'w <Plug>CamelCaseMotion_w
 " moving
 Bundle 'bkad/CamelCaseMotion'
 Bundle 'goldfeld/vim-seek'
@@ -284,11 +281,11 @@ function! FindGitPrj(...)
   else | return returnpaths
 endfunction
 
-nnoremap <Leader>w :Vimdow Chrome<CR>
+nnoremap <Leader>C :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
 " working terminal
-nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
-nnoremap <Leader>b :execute "Vimdow " . FindGitPrj()<CR>
+"nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
+nnoremap <Leader>B :execute "Vimdow " . FindGitPrj()<CR>
 " server task
 nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
 " compiler task
@@ -296,7 +293,7 @@ if get(g:Vimdow, 'grunt', 1)
   nnoremap <Leader>o :Vimdow coffee<CR>:Vimdow grunt<CR>:Vimdow compass<CR>
 endif
 
-nnoremap <Leader>W :Vimdow Chrome o<CR>
+"nnoremap <Leader>W :Vimdow Chrome o<CR>
 nnoremap <Leader>H :Vimdow Luakit o<CR>
 nnoremap <Leader>S :Vimdow fish o<CR>
 nnoremap <Leader>O :Vimdow coffee o<CR>
@@ -605,6 +602,7 @@ function! GetBufList(...)
 endfunction
 
 nnoremap <Leader><Leader> <C-^>
+" <Leader>w, <Leader>b and <Leader>e are taken by the CamelCaseMotion plugin.
 
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
