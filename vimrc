@@ -148,13 +148,10 @@ let mapleader = ","
 " try out programmer dvorak
 " ~/$ %/&  [   {   }   (   =   *   )   +   ]   !  `/#
 " tab  :/; </, >/.  p   y   f   g   c   r   l  ?//  ^/@
-let g:progdv_chars = '`$ !% 1& 2[ 3{ 4} 5( 6= 7* 8) 9+ 0] [! }` ]# +^ =@'
-for progdv in split(g:progdv_chars, ' ')
-  execute "inoremap" progdv[0] progdv[1]
-endfor
 " break the old ways (and tell me where the new key is.)
-for oldway in split('@= #] $` %@ ^+ &1 *7 (5 )8 {3', ' ')
+for oldway in split('7= 5] 3` 1! 9+ 01 27 45 68 83', ' ')
   execute "inoremap" oldway[0] "<Esc>:echo '" oldway[1]."'<CR>"
+  execute "nnoremap" oldway[0] ":echo '" oldway[1]."'<CR>"
 endfor
 
 " vim-coma - use the comma as a dead key.
@@ -199,13 +196,7 @@ endfunction
 
 let g:TNTWebBrowser = 'luakit'
 
-let g:insert_pair_chars = {}
-for char_alias in split(g:progdv_chars, ' ')
-  let g:insert_pair_chars[char_alias[0]] = char_alias[1]
-endfor
-
-let g:seek_char_aliases = g:progdv_chars . ' ' .
-  \ '&% $~ #` @^ \| ;: ,< .> -_ /? ' . "'" . '"'
+let g:seek_char_aliases = '&% $~ #` @^ \| ;: ,< .> -_ /? ' . "'" . '"'
 let g:seek_enable_jumps = 1
 let g:seek_use_vanilla_binds_in_diffmode = 1
 
@@ -739,7 +730,6 @@ inoremap <C-B><C-D> ––
 inoremap <C-B><C-B> <Esc>:call InsertPair()<CR>
 function! InsertPair()
   let char = nr2char(getchar())
-  let l:char = get(g:insert_pair_chars, l:char, l:char)
   execute "normal! a" . repeat(l:char, 2)
   startinsert
 endfunction
