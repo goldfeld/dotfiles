@@ -293,7 +293,7 @@ function! FindGitPrj(...)
   else | return returnpaths
 endfunction
 
-nnoremap <Leader>c :Vimdow Chrome<CR>
+nnoremap <Leader>w :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
 " working terminal
 nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
@@ -305,7 +305,7 @@ if get(g:Vimdow, 'grunt', 1)
   nnoremap <Leader>o :Vimdow coffee<CR>:Vimdow grunt<CR>:Vimdow compass<CR>
 endif
 
-nnoremap <Leader>C :Vimdow Chrome o<CR>
+nnoremap <Leader>W :Vimdow Chrome o<CR>
 nnoremap <Leader>H :Vimdow Luakit o<CR>
 nnoremap <Leader>S :Vimdow fish o<CR>
 nnoremap <Leader>O :Vimdow coffee o<CR>
@@ -323,7 +323,6 @@ nnoremap gk k
 nnoremap gi '^
 
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-nnoremap 'm :TNTVisibleHeadingNext<CR>
 
 nnoremap Y y$
 nnoremap yY ggyG
@@ -489,8 +488,6 @@ nnoremap mz :sp<CR>
 nnoremap mh :help 
 
 nnoremap mx :x<CR>:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
-" quick map to run a bash command from the git root directory 
-nnoremap m; :<C-\>e("!cd " . FindGitPrj('absolute') . " && ")<CR>
 
 " other marks for my other pinky
 nnoremap mo O
@@ -501,23 +498,6 @@ nnoremap m' zt
 
 " save file opened without sudo after the fact
 nnoremap mW :!sudo tee % >/dev/null
-
-" search for words (no substring matches) in sequence.
-nnoremap '/ :SearchWords 
-command! -nargs=* SearchWords call SearchWords(<f-args>)
-let s:lastSearchWords = ''
-function! SearchWords(...)
-  if a:0
-    let searchexpr = ''
-    for word in a:000
-      let l:searchexpr = l:searchexpr . '.*\<' . word . '\>'
-    endfor
-    let s:lastSearchWords = strpart(l:searchexpr, 2)
-  elseif len(s:lastSearchWords) == 0 | return
-  endif
-  let @/ = s:lastSearchWords
-  execute "normal! n"
-endfunction
 
 nnoremap <silent> mp :call PurgeBuffers()<CR>
 function! PurgeBuffers()
@@ -545,6 +525,17 @@ function! PurgeBuffers()
   endwhile
   redraw
 endfunction
+
+let reloading = 0
+command! -nargs=* AutoReload call AutoReload()
+function! AutoReload()
+  if l:reloading | ChromeReloadStart<CR>
+  else | ChromeReloadStop<CR>
+  endif
+  :let l:reloading = !l:reloading
+endfunction
+noremap mr :ChromeReload<CR>
+noremap mR :w<CR>:ChromeReload<CR>:Vimdow Chrome<CR>
 
 " b mark for closing buffer.
 nnoremap <silent> mb :execute "keepalt b#\\| bdelete" bufnr('%')<CR>
@@ -641,14 +632,8 @@ nnoremap <Leader>J Jldw
 " delete to first char in line, including current char.
 nnoremap <Leader>D d^x
 
-" go to the function name from within a function
-let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
-execute "nnoremap <Leader>f ?".expr."<CR>"
-
 nnoremap <Leader>v :call LoadSession()<CR>
 
-" toggle show hidden characters and cursorcolumn
-nnoremap <Leader>l :set list!<CR>:set cursorcolumn!<CR>
 " go to next trailing whitespace
 nnoremap <Leader>I /\s$<CR>:noh<CR>a
 " useful for uncommenting lines
@@ -656,13 +641,10 @@ nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%W] %b %-e %a <%H:%M>'\")"<CR>
 
-let g:MicroMarks = ['h', 't', 'n', 's', '-']
-nnoremap mi :MicroMark<CR>
-nnoremap md :MicroMarkClear<CR>
-"nnoremap 'c :MicroMarkMatch<CR>
-for micromark in g:MicroMarks
-  execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
-endfor
+" run a bash command from the git root directory 
+nnoremap <silent> <Leader>; :<C-\>e("!cd " . FindGitPrj('absolute') . " && ")<CR>
+
+nnoremap <leader>m :TNTVisibleHeadingNext<CR>
 
 nnoremap <Leader>t :call EditOtherExt('.coffee')<CR>
 nnoremap <Leader>n :call EditOtherExt('.html')<CR>
@@ -674,15 +656,45 @@ endfunction
 
 command! -nargs=0 Sum :5,12!awk '{num = substr($7, 2, length($7) - 4) + substr($8, 2, length($7) - 4); width += num; print} END {print width}'
 
-" common searches
-nnoremap <Leader>/h /HEAD<CR>
-nnoremap <Leader>/c /console<CR>
-
 " convert time since epoch under cursor to readable time.
 nnoremap <Leader>.m :echo FromEpoch(expand("<cword>"))<CR>
 function! FromEpoch(date)
   let date = strpart(a:date, 0, len(a:date) - 3)
   return system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
+endfunction
+
+" search for words (no substring matches) in sequence.
+nnoremap <Leader>/ :SearchWords 
+command! -nargs=* SearchWords call SearchWords(<f-args>)
+let s:lastSearchWords = ''
+function! SearchWords(...)
+  if a:0
+    let searchexpr = ''
+    for word in a:000
+      let l:searchexpr = l:searchexpr . '.*\<' . word . '\>'
+    endfor
+    let s:lastSearchWords = strpart(l:searchexpr, 2)
+  elseif len(s:lastSearchWords) == 0 | return
+  endif
+  let @/ = s:lastSearchWords
+  execute "normal! n"
+endfunction
+
+nnoremap <silent> <Leader>f :cwindow<CR>
+"nnoremap qg :let b:qfbufs = cfirst<CR>
+nnoremap <silent> <Leader>g @=(&diff?"gg]c":":cfirst\r")<CR>
+nnoremap <silent> <Leader>c @=(&diff?"]c":":cn\r")<CR>
+nnoremap <silent> <Leader>r @=(&diff?"[c":":cN\r")<CR>
+nnoremap <silent> <Leader>l @=(&diff?":diffupd\r":":call CloseQFBufs()\r")<CR>
+
+function! CloseQFBufs()
+  " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
+  let bufs = filter(map(getqflist(), 'v:val.bufnr'), 'getbufvar(v:val, "&bl")')
+  let chosenbuf = bufnr('%')
+  for listedbuf in l:bufs
+    " don't close the quickfix buffer if it's the one we're on.
+    if listedbuf != l:chosenbuf | silent! execute "bdelete" listedbuf | endif
+  endfor
 endfunction
 
 " quickly edit my tnt outline
@@ -694,6 +706,12 @@ nnoremap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id
 
 " remove swap files for current file.
 nnoremap <silent> <Leader>.r :silent! exe "!rm ." .expand('%'). ".sw*"<CR>
+" toggle show hidden characters and cursorcolumn
+nnoremap <silent> <Leader>.l :set list!<CR>:set cursorcolumn!<CR>
+
+" common searches
+nnoremap <Leader>./h /HEAD<CR>
+nnoremap <Leader>./c /console<CR>
 
 " quickly edit my vimrc.
 nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
@@ -790,6 +808,18 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtBS()': ['<c-h>', '<c-]>'],
   \ 'PrtCurLeft()': ['<left>'],
   \ }
+
+let g:MicroMarks = ['h', 't', 'n', 's', '-']
+nnoremap mi :MicroMark<CR>
+nnoremap md :MicroMarkClear<CR>
+"nnoremap 'c :MicroMarkMatch<CR>
+for micromark in g:MicroMarks
+  execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
+endfor
+
+" go to the function name from within a function
+let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
+execute "nnoremap <C-F> ?".expr."<CR>"
 
 " B to close a buffer by bufnr (pegword), <C-B> enter purge repl (currently mp)
 " G to kill group (git repo), <C-G> for repl
@@ -890,23 +920,6 @@ nnoremap <Tab> :CtrlPBuffer<CR>
 vnoremap <silent> dd :delete<CR>
 vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
-
-nnoremap 'f :cwindow<CR>
-"nnoremap qg :let b:qfbufs = cfirst<CR>
-nnoremap <silent> 'g @=(&diff?"gg]c":":cfirst\r")<CR>
-nnoremap <silent> 'c @=(&diff?"]c":":cn\r")<CR>
-nnoremap <silent> 'r @=(&diff?"[c":":cN\r")<CR>
-nnoremap <silent> 'l @=(&diff?":diffupdate\r":":call CloseQFBufs()\r")<CR>
-
-function! CloseQFBufs()
-  " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
-  let bufs = filter(map(getqflist(), 'v:val.bufnr'), 'getbufvar(v:val, "&bl")')
-  let chosenbuf = bufnr('%')
-  for listedbuf in l:bufs
-    " don't close the quickfix buffer if it's the one we're on.
-    if listedbuf != l:chosenbuf | silent! execute "bdelete" listedbuf | endif
-  endfor
-endfunction
 
 nnoremap gs :call Gcached()<CR>
 function! Gcached()
@@ -1074,17 +1087,6 @@ function! LineSeekBack(num)
   let dest = l:base . l:num
   execute ":".dest
 endfunction
-
-let reloading = 0
-command! -nargs=* AutoReload call AutoReload()
-function! AutoReload()
-  if l:reloading | ChromeReloadStart<CR>
-  else | ChromeReloadStop<CR>
-  endif
-  :let l:reloading = !l:reloading
-endfunction
-noremap <Leader>R :w<CR>:ChromeReload<CR>:Vimdow Chrome<CR>
-noremap <Leader>r :ChromeReload<CR>
 
 " put all this in your .vimrc or a plugin file
 command! -nargs=* Stab call Stab()
