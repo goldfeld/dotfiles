@@ -17,6 +17,10 @@ nmap -builtin k 5k
 nmap >> :tabmove +1<CR>
 nmap << :tabmove -1<CR>
 
+nmap <C-N> gt
+nmap <C-P> gT
+nmap <C-T> :b! 
+
 javascript <<EOF
   var duck = function(open) {
     let sel = content.getSelection().toString();
@@ -31,16 +35,16 @@ map <Leader>G -js dactyl.duckItOut();
 
 set defsearch=duckduckgo
 set passkeys+=duckduckgo.com:jk<CR>
-set passkeys+=mail.google.com:jkyo<CR>,gi
+set passkeys+=mail.google.com:jkeou<CR>,gi
 set showtabline=never
 set! browser.tabs.closeWindowWithLastTab=false
 
+set hintkeys=aoeuidhtns-
 hi Hint font-family: Verdana; font-size: 15px !important; bold; color: white;
   \ background-color: red; border-color: ButtonShadow; border-width: 0px;
   \ border-style: solid; padding: 0px 1px 0px 1px;
 
-
-" gt/gT -> ^N/^P; :ls -> B
+" :ls -> B
 " tabde to detach current tab into new window
 " tabm $; tabm 0; tabm! +N/-N moves offset N wrapping around tabstrip
 " :bufdo cmd
