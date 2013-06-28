@@ -10,11 +10,11 @@ nmap mm :
 cmap <C-L> <C-A>^.*<C-E>.*$
 
 nmap d <NOP>
-nmap dd d
+nmap -builtin dd d
 nmap -builtin j 5j
 nmap -builtin k 5k
-nmap -builtin h gt
-nmap -builtin l gT
+nmap -builtin h gT
+nmap -builtin l gt
 
 nmap -builtin <C-H> 3h
 nmap -builtin <C-L> 3l
