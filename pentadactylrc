@@ -13,12 +13,17 @@ nmap d <NOP>
 nmap dd d
 nmap -builtin j 5j
 nmap -builtin k 5k
+nmap -builtin h gt
+nmap -builtin l gT
+
+nmap -builtin <C-H> 3h
+nmap -builtin <C-L> 3l
+" history side bar.
+nmap -builtin <C-S-H> <C-H>
 
 nmap >> :tabmove +1<CR>
 nmap << :tabmove -1<CR>
 
-nmap <C-N> gt
-nmap <C-P> gT
 nmap <C-T> :b! 
 
 javascript <<EOF
