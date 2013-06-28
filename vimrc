@@ -99,7 +99,7 @@ let g:no_rust_conceal = 1
 augroup filetypeSettings
   autocmd!
   autocmd BufEnter * call FtColors()
-  autocmd BufRead .pentadactylrc setlocal filetype=vim
+  autocmd BufRead *pentadactylrc setlocal filetype=vim
   autocmd BufRead,BufNewFile *.vim setlocal foldmethod=marker
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 tabstop=4
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
@@ -109,7 +109,7 @@ augroup END
 function! FtColors()
   if &diff || match(['vim', 'perl', 'diff'], &ft) != -1
     if g:colors_name != 'gruvbox' | color gruvbox | endif
-  elseif match(['html'], &ft) != -1
+  elseif match(['html', 'css'], &ft) != -1
     if g:colors_name != 'distinguished' | color distinguished | endif
   else | if g:colors_name != 'mustang' | color mustang | endif
   endif
