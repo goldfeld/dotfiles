@@ -34,8 +34,8 @@ map <Leader>g -js dactyl.duckIt();
 map <Leader>G -js dactyl.duckItOut();
 
 set defsearch=duckduckgo
-set passkeys+=duckduckgo.com:jk<CR>
-set passkeys+=mail.google.com:jkeou<CR>,gi
+
+set passkeys+=mail.google.com:jknpeyoumxvz#*sar<CR>{},gi
 set showtabline=never
 set! browser.tabs.closeWindowWithLastTab=false
 
