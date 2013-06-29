@@ -53,8 +53,10 @@ Bundle 'Pychimp/vim-luna'
 
 filetype plugin indent on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+runtime macros/matchit.vim
 color slate
 set cursorline
+" create a different color area beyond 80 columns.
 let &colorcolumn=join(range(81, 201), ",")
 
 set tabstop=2                   " number of spaces of tab character
