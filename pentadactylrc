@@ -26,6 +26,8 @@ nmap << :tabmove -1<CR>
 
 nmap <C-T> :b! 
 
+map <Leader>x :set fullscreen!<CR>
+
 javascript <<EOF
   var duck = function(open) {
     let sel = content.getSelection().toString();
