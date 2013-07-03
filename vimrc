@@ -343,6 +343,11 @@ let g:SeekCutShortKey = '-'
 " map underscore to do a cut short back seek in operator pending mode.
 let g:SeekBackCutShortKey = '_'
 
+nnoremap <silent> b :<C-U>call RestrainCommandPair('b', 'b', '', 'h',
+  \ 'normal! 2b')<CR>
+nnoremap <silent> w :<C-U>call RestrainCommandPair('w', 'w', '', 'l',
+  \ 'normal! 2w')<CR>
+
 nnoremap _ gE
 " e works as default , double e should do a end-of-word seek, '-e' should do '^'
 nnoremap <silent> e :<C-U>call RestrainCommandPair('e', 'e', "echo 'ee'", '-',
