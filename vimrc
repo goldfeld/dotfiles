@@ -911,6 +911,8 @@ vnoremap <silent> dd :delete<CR>
 vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
 
+" gS will always get status while gs depends on the current repo situation.
+nnoremap gS :Gstatus<CR>
 nnoremap gs :call Gcached()<CR>
 function! Gcached()
   let cached = split(system('git diff --cached'), "\n")
