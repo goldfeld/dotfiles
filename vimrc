@@ -104,6 +104,7 @@ augroup filetypeSettings
   autocmd BufEnter * call FtColors()
   autocmd BufRead *pentadactylrc setlocal filetype=vim
   autocmd BufRead,BufNewFile *.vim setlocal foldmethod=marker
+  autocmd BufRead,BufNewFile Makefile* setlocal shiftwidth=8 tabstop=8
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 tabstop=4
   autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
