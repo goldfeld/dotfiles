@@ -35,6 +35,7 @@ Bundle 'leafo/moonscript-vim'
 Bundle 'Vim-R-plugin'
 Bundle 'goldfeld/criticmarkup-vim'
 Bundle 'wting/rust.vim'
+Bundle 'unc0/vim-gorilla-script'
 
 " other
 Bundle 'goldfeld/vim-pegword'
@@ -104,6 +105,7 @@ augroup filetypeSettings
   autocmd BufRead *pentadactylrc setlocal filetype=vim
   autocmd BufRead,BufNewFile *.vim setlocal foldmethod=marker
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 tabstop=4
+  autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
