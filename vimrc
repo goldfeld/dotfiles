@@ -852,7 +852,7 @@ endfunction
 command! -nargs=1 B execute "buffer" (<q-args>)[0]
 command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 " 'V' is for viewing, when my intent is to quickly view a file then bdelete it.
-command! -nargs=1 -complete=file V keepalt edit <f-args>
+command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 
 function! BufAway(cmd, prompt, ...)
   if a:0 && a:1 | let list = a:1 | else | let list = 0 | endif
