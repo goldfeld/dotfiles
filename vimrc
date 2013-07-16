@@ -953,10 +953,26 @@ function! Gcached()
   endif
 endfunction
 
+nnoremap gl :execute "!git log \\| head -n" (PegArg() * 6)<CR>
+function! PegArg()
+  let char = getchar()
+  if l:char >= 48 && l:char <= 57 | return l:char - 48
+  else
+    let peg = nr2char(l:char)
+    if l:peg == 's' | return 0
+    elseif l:peg == 't' | return 1
+    elseif l:peg == 'n' | return 2
+    elseif l:peg == 'm' | return 3
+    elseif l:peg == 'r' | return 4
+    elseif l:peg == 'l' | return 5
+    endif
+  endif
+endfunction
+
 " vim-fugitive plugin mappings
 nnoremap gb :Gblame<CR>
 nnoremap gB :Gbrowse<CR>
-nnoremap gl :Glog<CR>
+nnoremap gL :Glog<CR>
 nnoremap gn :Ggrep! "<cword>"<CR>
 vnoremap gn y:Ggrep! <C-R>"<CR>
 
