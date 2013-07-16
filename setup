@@ -1,10 +1,12 @@
 #!/bin/bash
 
+apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall
+
 # nodejs
 apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
 add-apt-repository -y ppa:mitya57
 apt-get update
-apt-get -y install libssl-dev git-core pkg-config build-essential curl gcc g++ checkinstall openssh-server
+apt-get -y install libssl-dev git-core openssh-server
 
 ver="0.10.4"
 echo Installing node version $ver
@@ -24,14 +26,12 @@ sudo ln -s ~/Dropbox/unix/now.sh ~/ && sudo chmod u+x ~/now.sh
 
 ### dependencies (create something to compile this to an .sh script)
 # jq json processor
-flex bison
 git clone https://github.com/stedolan/jq.git ~/
 cd ~/jq
 autoreconf
 ./configure && make && sudo make install
 # ChucK
-build-essential bison flex libsndfile-dev libasound-dev libjack-dev
-make linux-alsa
+libsndfile-dev libasound-dev libjack-dev linux-alsa
 sudo cp chuck /usr/bin/chuck
 # nodejs
 python-software-properties
