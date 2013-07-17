@@ -1,0 +1,9 @@
+!map left alt as additional left ctrl
+remove Mod1 = Alt_L
+keycode 64 = Control_L
+add Control = Control_L
+
+!map caps lock as additional left ctrl
+clear Lock
+keycode 66 = Control_L
+add Control = Control_L
