@@ -824,7 +824,7 @@ execute "nnoremap <C-F> ?".expr."<CR>"
 " L list local (git repo), <C-L> list all (as currently)
 function! NemoMaps()
   let nemobuf = [
-    \ ['p', 'edit', 'prj', "8"],
+    \ ['n', 'edit', 'prj', "8"],
     \ ['t', 'buffer', 'buf', "0, { 'farray':
       \ GetBufList('ls'), 'process': 'split(v:val, \":\")[0]' }"],
     \ ['c', 'buffer', 'loc', "0, { 'farray':
