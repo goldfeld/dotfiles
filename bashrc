@@ -6,6 +6,9 @@ PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 
 set -o vi
 
+# create script from vimdow code parsing xrandr resolutions
+# xrandr --output DP2 --primary --mode 1920x1080 --output LVDS1 --mode 1600x900 --right-of DP2 --auto
+
 # letters
 alias a='ls -a'
 function b() {
