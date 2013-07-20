@@ -840,6 +840,9 @@ function! NemoMaps()
 endfunction
 call NemoMaps()
 
+" set split to double-width, so it can de diffed w/o affecting other splits.
+nnoremap <C-T><C-D> :vertical resize 160<CR>
+" show buffer list as single echo line, grouped by git repo.
 nnoremap <C-T><C-L> :echo join(values(map(GetBufList('group:t'),
   \ '"(" .v:key . " " . join(v:val, " ") . ")"' )), ' –– ')<CR>
 
