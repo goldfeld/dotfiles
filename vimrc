@@ -774,7 +774,7 @@ inoremap <A-C> <A-U>
 nnoremap <C-;> yl:execute "normal! f" . @"<CR>
 nnoremap <C-:> yl:execute "normal! F" . @"<CR>
 
-function! WordFreqList(access)
+function! WordFreqList(...)
   let words = {}
   let lines = getbufline(bufname('%'), 1, '$') 
   for line in l:lines
@@ -787,9 +787,10 @@ function! WordFreqList(access)
     endfor
   endfor
 
-  if type(a:access) == type(0)
-    return sort(items(l:words), 'WordFreqListSorter')[a:access]
-  else | return get(l:words, a:access, 0)
+  if a:0 == 0 | return sort(items(l:words), 'WordFreqListSorter')
+  elseif type(a:1) == type(0)
+    return sort(items(l:words), 'WordFreqListSorter')[a:1]
+  else | return get(l:words, a:1, 0)
   endif
 endfunction
 function! WordFreqListSorter(arr1, arr2)
