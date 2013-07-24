@@ -1,6 +1,24 @@
 #!/bin/bash
 
-apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall
+sudo apt-get update
+sudo apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall
+# battery info
+acpi
+
+# vim with racket
+cd vim73
+./configure
+make
+sudo make install
+sudo make install clean
+
+# gvim
+sudo apt-get install libncurses-dev libgnome2-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
+cd ~/vim73/src/
+make distclean
+./configure --with-features=huge --enable-gui=gnome2
+make
+sudo make install
 
 # nodejs
 apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
@@ -14,15 +32,6 @@ wget http://nodejs.org/dist/v$ver/node-v$ver.tar.gz
 tar -zxf node-v$ver.tar.gz
 cd node-v$ver
 sudo ./configure && make && checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
-
-# create symlinks (sudo ln -s /from/path /to/path)
-sudo ln -s ~/Dropbox/unix/.vimrc ~/
-sudo ln -s ~/Dropbox/unix/.bashrc ~/
-sudo ln -s ~/Dropbox/unix/hosts /etc/
-
-# todo: sites-enabled and mods-enabled
-
-sudo ln -s ~/Dropbox/unix/now.sh ~/ && sudo chmod u+x ~/now.sh
 
 ### dependencies (create something to compile this to an .sh script)
 # jq json processor
@@ -45,9 +54,6 @@ xdotool
 wmctrl 
 # tnt.vim
 recode
-
-### other
-apache2
 
 ### afterwards
 # node
