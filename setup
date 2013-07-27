@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall
+sudo apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall git-core
 # battery info
 acpi
 
@@ -21,17 +21,19 @@ make
 sudo make install
 
 # nodejs
-apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
-add-apt-repository -y ppa:mitya57
-apt-get update
-apt-get -y install libssl-dev git-core openssh-server
+sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
+sudo add-apt-repository -y ppa:mitya57
+sudo apt-get update
+sudo apt-get -y install libssl-dev openssh-server
 
 ver="0.10.4"
 echo Installing node version $ver
 wget http://nodejs.org/dist/v$ver/node-v$ver.tar.gz
 tar -zxf node-v$ver.tar.gz
 cd node-v$ver
-sudo ./configure && make && checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
+sudo ./configure
+sudo make
+sudo checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
 
 ### dependencies (create something to compile this to an .sh script)
 # jq json processor
@@ -45,7 +47,7 @@ sudo cp chuck /usr/bin/chuck
 # nodejs
 python-software-properties
 # luakit
-git-core curl ruby vim-gnome git gcc make libx11-dev libxtst-dev pkg-config rake autoconf sqlite3 webkit-1.0 dmenu socat glib-2.0 liblua5.1-0-dev liblua5.1-filesystem0 libsqlite3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev unique-1.0 libunique-dev libncurses5-dev libncursesw5-dev luarocks
+ruby vim-gnome git libx11-dev libxtst-dev pkg-config rake autoconf sqlite3 webkit-1.0 socat glib-2.0 liblua5.1-0-dev liblua5.1-filesystem0 libsqlite3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev unique-1.0 libunique-dev libncurses5-dev libncursesw5-dev luarocks
 # github ssh
 xclip
 # vim-reload-linux
@@ -80,7 +82,7 @@ sudo apt-get install devscripts
 
 # Install mongo dependencies (http://www.mongodb.org/display/DOCS/Building+for+Linux) 
 # ------------------------------ 
-sudo apt-get -y install tcsh git-core scons g++ 
+sudo apt-get -y install tcsh scons
 sudo apt-get -y install libpcre++-dev libboost-dev libreadline-dev xulrunner-dev 
 sudo apt-get -y install libboost-program-options-dev libboost-thread-dev libboost-filesystem-dev libboost-date-time-dev 
 wget http://archive.ubuntu.com/ubuntu/pool/universe/m/mongodb/mongodb_1.6.3-1ubuntu1.dsc 
