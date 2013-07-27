@@ -3,12 +3,11 @@
 sudo apt-get update
 sudo apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall git-core
 # battery info
-acpi
+sudo apt-get install acpi
 
 # vim with racket
-cd vim73
-./configure
-make
+cd ~/vim73
+./configure && make
 sudo make install
 sudo make install clean
 
@@ -35,7 +34,13 @@ sudo ./configure
 sudo make
 sudo checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
 
-### dependencies (create something to compile this to an .sh script)
+# meteor
+curl https://install.meteor.com | /bin/sh
+sudo -H npm install -g meteorite
+
+sudo npm install -g grunt
+
+### dependencies (create something to compile this to a .sh script)
 # jq json processor
 git clone https://github.com/stedolan/jq.git ~/
 cd ~/jq
@@ -57,19 +62,12 @@ wmctrl
 # tnt.vim
 recode
 
-### afterwards
-# node
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs npm
-
 # chef
 sudo apt-get install ruby-dev rubygems
 sudo gem install chef compass
 
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
 
 ### luamongo1
 # Install mongodb 1.6.3 
@@ -106,7 +104,6 @@ sudo apt-get install liblua5.1-dev
 debuild 
 # continue anyway:  Y 
 sudo dpkg -i ../liblua5.1-mongo_0.4-1_amd64.deb 
-
 
 ### luamongo2
 mkdir ~/mongo
