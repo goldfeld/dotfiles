@@ -712,10 +712,22 @@ nnoremap <silent> <Leader>.l :set list!<CR>:set cursorcolumn!<CR>
 nnoremap <Leader>./h /HEAD<CR>
 nnoremap <Leader>./c /console<CR>
 
+" workaround glitchy redimensioning of gvim when sourcing my vimrc.
+function! SaveDimensions()
+  let g:RESETLINES = &lines
+  let g:RESETCOLUMNS = &columns
+  wviminfo
+endfunction
+function! ResetDimensions()
+  execute "set lines=" . g:RESETLINES
+  execute "set columns=" . g:RESETCOLUMNS
+endfunction
+
 " quickly edit my vimrc.
 nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
-nnoremap <silent> <Leader>.V :w<CR>:so $MYVIMRC<CR>:color gruvbox<CR>
+nnoremap <silent> <Leader>.V :w<CR>:call SaveDimensions()<CR>:so $MYVIMRC<CR>
+  \:color gruvbox<CR>:call ResetDimensions()<CR>
 " quickly edit a vim bundle
 nnoremap <silent> <Leader>.b :call Dmenu("edit", "bundle", {
   \ 'query': 'ls $HOME/.vim/bundle/', 'prepend': '$HOME/.vim/bundle/',
