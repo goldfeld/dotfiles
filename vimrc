@@ -699,7 +699,7 @@ endfunction
 " quickly edit my tnt outline
 nnoremap <silent> <Leader>.t :e ~/goldfeld/.tnt/lifethreads.tnt.md<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
-nnoremap <silent> <Leader>.x :execute "call system(\"~/./xcape -e 'Control_L=Escape'\")"<CR>
+nnoremap <silent> <Leader>.x :execute "call system(\"xcape -e 'Control_L=Escape'\")"<CR>
 " grab ssh publickey to clipboard.
 nnoremap <silent> <Leader>.k :execute "call system(\"xclip -sel clip < ~/.ssh/id_rsa.pub\")"<CR>
 
