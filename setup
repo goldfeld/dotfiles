@@ -1,7 +1,11 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall git-core
+sudo apt-get install git-core
+git config --global user.name "Vic Goldfeld"
+git config --global user.email "vic@longstorm.org"
+
+sudo apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall
 # battery info
 sudo apt-get install acpi
 
