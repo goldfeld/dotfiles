@@ -638,7 +638,12 @@ nnoremap <Leader>I /\s$<CR>:noh<CR>a
 " useful for uncommenting lines
 nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
-nnoremap <silent> <Leader>d :execute "echo system(\"date +'[%Yw%V] %b %-e %a <%H:%M>'\")"<CR>
+nnoremap <silent> <Leader>d :echo DateAndBattery()<CR>
+function! DateAndBattery()
+  let date = system("date +'[%Yw%V] %b %-e %a <%H:%M>'")
+  let battery = system("acpi")
+  return l:date . ' ' . l:battery
+endfunction
 
 " run a bash command from the git root directory 
 nnoremap <silent> <Leader>; :<C-\>e("!cd " . FindGitPrj('absolute') . " && ")<CR>
