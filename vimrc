@@ -996,8 +996,12 @@ endfunction
 nnoremap gb :Gblame<CR>
 nnoremap gB :Gbrowse<CR>
 nnoremap gL :Glog<CR>
-nnoremap gn :Ggrep! "<cword>"<CR>
-vnoremap gn y:Ggrep! <C-R>"<CR>
+
+nnoremap gn :execute "Ggrep!" expand('<cword>') " -- '*." . &ft . "'"<CR>
+vnoremap gn y:execute "Ggrep!" getreg('"') " -- '*." . &ft . "'"<CR>
+
+nnoremap gN :Ggrep! 
+vnoremap gN y:Ggrep! 
 
 " same as git add the current file.
 nnoremap gt :Gwrite<CR>
