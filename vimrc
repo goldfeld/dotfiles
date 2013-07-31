@@ -68,7 +68,6 @@ set smartindent
 set autoindent
 set fillchars=vert:\ ,fold:\ 
 
-set linespace=-1
 set backspace=indent,eol,start  " allow <C-H> over everything in insert mode
 set scrolloff=3                 " keep 3 lines when scrolling
 set hlsearch                    " hightlight searches
