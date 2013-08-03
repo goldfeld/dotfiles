@@ -56,6 +56,7 @@ curl https://install.meteor.com | /bin/sh
 sudo -H npm install -g meteorite
 
 sudo npm install -g grunt
+sudo npm install -g dustjs-linkedin
 
 ### dependencies (create something to compile this to a .sh script)
 # jq json processor
