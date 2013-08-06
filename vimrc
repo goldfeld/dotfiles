@@ -18,6 +18,7 @@ Bundle 'goldfeld/tnt'
 " editing
 Bundle 'tpope/vim-surround'
 Bundle 'paradigm/TextObjectify'
+Bundle 'michaeljsmith/vim-indent-object'
 
 " files
 Bundle 'grep.vim'
