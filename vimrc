@@ -352,15 +352,10 @@ nnoremap <silent> w :<C-U>call RestrainCommandPair('w', 'w', '', 'l',
   \ 'normal! 2w')<CR>
 
 nnoremap _ gE
-" e works as default , double e should do a end-of-word seek, '-e' should do '^'
-nnoremap <silent> e :<C-U>call RestrainCommandPair('e', 'e', "echo 'ee'", '-',
-  \ 'normal! ^')<CR>
-" - works as 'ge', double - should do a start-of-word seek, 'e-' should do '$'
-nnoremap <silent> - :<C-U>call RestrainCommandPair('ge', '-', "echo '--'", 'e',
-  \ 'normal! $')<CR>
+nnoremap - ge
 
 " step back one char so it doesn't include the newline character.
-vnoremap - $h
+vnoremap $ $h
 
 " TODO map double ^ to do begin of line seek
 " TODO map double $ to do end of line seek
