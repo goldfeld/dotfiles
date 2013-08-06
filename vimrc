@@ -147,15 +147,6 @@ set modelines=0
 
 let mapleader = ","
 
-" try out programmer dvorak
-" ~/$ %/&  [   {   }   (   =   *   )   +   ]   !  `/#
-" tab  :/; </, >/.  p   y   f   g   c   r   l  ?//  ^/@
-" break the old ways (and tell me where the new key is.)
-for oldway in split('7= 5] 3` 1! 9+ 01 27 45 68 83', ' ')
-  execute "inoremap" oldway[0] "<Esc>:echo '" oldway[1]."'<CR>"
-  execute "nnoremap" oldway[0] ":echo '" oldway[1]."'<CR>"
-endfor
-
 " vim-coma - use the comma as a dead key.
 inoremap ,, <Esc>
 inoremap ,a <Esc>A
