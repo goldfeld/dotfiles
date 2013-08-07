@@ -22,7 +22,7 @@ Bundle 'michaeljsmith/vim-indent-object'
 
 " files
 Bundle 'grep.vim'
-Bundle 'tpope/vim-fugitive'
+Bundle 'goldfeld/vim-fugitive'
 "Bundle 'spolu/dwm.vim'
 
 " moving
