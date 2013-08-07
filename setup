@@ -5,23 +5,9 @@ sudo apt-get install git-core
 git config --global user.name "Vic Goldfeld"
 git config --global user.email "vic@longstorm.org"
 
-sudo apt-get install automake autoconf libtools pkg-config bison flex build-essential curl gcc g++ checkinstall
+sudo apt-get install automake autoconf pkg-config bison flex build-essential curl gcc g++ checkinstall
 # battery info
 sudo apt-get install acpi
-
-# vim with racket
-#cd ~/vim73
-#./configure && make
-#sudo make install
-#sudo make install clean
-
-# gvim
-#sudo apt-get install libncurses-dev libgnome2-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
-#cd ~/vim73/src/
-#make distclean
-#./configure --with-features=huge --enable-gui=gnome2
-#make
-#sudo make install
 
 # vundle
 mkdir -p ~/.vim/bundle
@@ -31,9 +17,6 @@ git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
 sudo apt-get install libxtst-dev
 git clone https://github.com/alols/xcape ~/xcape
 cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
-
-# tnt.vim
-sudo apt-get install recode
 
 # nodejs
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
@@ -58,87 +41,12 @@ sudo -H npm install -g meteorite
 sudo npm install -g grunt
 sudo npm install -g dustjs-linkedin
 
-### dependencies (create something to compile this to a .sh script)
-# jq json processor
-git clone https://github.com/stedolan/jq.git ~/
-cd ~/jq
-autoreconf
-./configure && make && sudo make install
-# ChucK
-libsndfile-dev libasound-dev libjack-dev linux-alsa
-sudo cp chuck /usr/bin/chuck
-# nodejs
-python-software-properties
-# luakit
-ruby vim-gnome git libx11-dev libxtst-dev pkg-config rake autoconf sqlite3 webkit-1.0 socat glib-2.0 liblua5.1-0-dev liblua5.1-filesystem0 libsqlite3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev unique-1.0 libunique-dev libncurses5-dev libncursesw5-dev luarocks
-# github ssh
-xclip
-# vim-reload-linux
-xdotool
-# vimdow
-wmctrl 
-
-# chef
-sudo apt-get install ruby-dev rubygems
-sudo gem install chef compass
-
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
-### luamongo1
-# Install mongodb 1.6.3 
-# ------------------------------ 
-mkdir ~/tmp 
-cd ~/tmp 
-sudo apt-get install devscripts 
-# OK 
-# No configuration, OK 
-
-# Install mongo dependencies (http://www.mongodb.org/display/DOCS/Building+for+Linux) 
-# ------------------------------ 
-sudo apt-get -y install tcsh scons
-sudo apt-get -y install libpcre++-dev libboost-dev libreadline-dev xulrunner-dev 
-sudo apt-get -y install libboost-program-options-dev libboost-thread-dev libboost-filesystem-dev libboost-date-time-dev 
-wget http://archive.ubuntu.com/ubuntu/pool/universe/m/mongodb/mongodb_1.6.3-1ubuntu1.dsc 
-wget http://archive.ubuntu.com/ubuntu/pool/universe/m/mongodb/mongodb_1.6.3.orig.tar.gz 
-wget http://archive.ubuntu.com/ubuntu/pool/universe/m/mongodb/mongodb_1.6.3-1ubuntu1.debian.tar.gz 
-dpkg-source -x mongodb_1.6.3-1ubuntu1.dsc 
-cd mongodb-1.6.3/ 
-debuild
-
-# NOTE:  You can ignore the code signing error that is spewed at the end of the build. 
-cd .. 
-sudo dpkg -i *.deb 
-
-# Install luamongo db driver 
-# ------------------------------------- 
-cd ~/tmp 
-sudo apt-get install subversion 
-svn checkout http://luamongo.googlecode.com/svn/trunk/ luamongo 
-cd luamongo 
-sudo apt-get install liblua5.1-dev 
-debuild 
-# continue anyway:  Y 
-sudo dpkg -i ../liblua5.1-mongo_0.4-1_amd64.deb 
-
-### luamongo2
-mkdir ~/mongo
-cd ~/mongo
-# Download mongodb and driver
-wget http://downloads.mongodb.org/cxx-driver/mongodb-linux-x86_64-v2.0-latest.tgz
-wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.0.2.tgz
-# Extract each
-tar xvzf mongodb-linux-x86_64-2.0.2.tgz
-tar xvzf mongodb-linux-x86_64-v2.0-latest.tgz
-# Add mongo bin to PATH
-PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
-# Grab dev tools and dependencies (May need to run apt-get update to download all)
-sudo apt-get -y install tcsh scons libpcre++-dev libboost-dev libreadline-dev libboost-program-options-dev libboost-thread-dev libboost-filesystem-dev libboost-date-time-dev gcc g++ git lua5.1-dev make
-# Grab latest luamongo (will need to add your github ssh key)
-git clone https://github.com/moai/luamongo
-# Compile mongo driver
-cd mongo-cxx-driver-v2.0
-sudo scons install
-# Install where lua can load it
-sudo cp libmongoclient.* /usr/lib
-cd ~
+# github ssh
+sudo apt-get install xclip
+# vim-reload-linux
+sudo apt-get install xdotool
+# tnt.vim
+sudo apt-get install recode
