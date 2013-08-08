@@ -104,7 +104,7 @@ augroup filetypeSettings
   autocmd!
   autocmd BufEnter * call FtColors()
   autocmd BufRead *pentadactylrc setlocal filetype=vim
-  autocmd BufRead,BufNewFile *.vim setlocal foldmethod=marker
+  autocmd BufRead,BufNewFile *.vim setlocal fdm=marker kp=:help
   autocmd BufRead,BufNewFile Makefile* setlocal shiftwidth=8 tabstop=8
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 tabstop=4
   autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
@@ -1013,6 +1013,33 @@ nnoremap gc :Gdiff<CR><C-W>h
 " easy git checkout wrapper
 nnoremap go :Git checkout 
 " use 'help index' to see vim's built-in natively mapped keys
+
+nnoremap ge :Sgit 
+command! -complete=shellcmd -nargs=+ Sgit call s:Bash('git ' . <q-args>, 'git')
+
+command! -complete=shellcmd -nargs=+ S call s:Bash(<q-args>)
+function! s:Bash(cmdline, ...)
+  echo a:cmdline
+  let expanded_cmdline = a:cmdline
+  for part in split(a:cmdline, ' ')
+    if part[0] =~ '\v[%#<]'
+      let expanded_part = shellescape(expand(part))
+      let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
+    endif
+  endfor
+
+  keepalt split new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  if a:0
+    execute "setlocal ft=".a:1
+  endif
+
+  call setline(1, '$ ' . expanded_cmdline)
+  call setline(2,substitute(getline(1),'.','=','g'))
+  silent! execute '$read !'. expanded_cmdline
+  setlocal nomodifiable
+  1
+endfunction
 
 nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
 command! -nargs=0 AutoHighlightToggle call AutoHighlightToggle()
