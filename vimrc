@@ -962,12 +962,27 @@ function! Gcached()
   endif
 endfunction
 
-nnoremap gl :execute "!git log \\| head -n" (PegArg() * 6)<CR>
-function! PegArg()
+nnoremap gl :call PegLog()<CR>
+function! PegLog()
   let char = getchar()
-  if l:char >= 48 && l:char <= 57 | return l:char - 48
+  let c = nr2char(l:char)
+  let cmd = '!'
+
+  if l:c == 'e'|| l:c == 'o'
+    let l:char = getchar()
+    let branch = nr2char(getchar()) . nr2char(getchar()) . nr2char(getchar())
+    if l:c == 'o' | let rmt = "-r \| grep -P '(?<\\!HEAD -> )origin/"
+    else | let rmt = "\| grep -P '" | endif
+
+    let l:cmd = l:cmd ."git branch ". l:rmt . l:branch ."' \| xargs "
+  endif
+  execute l:cmd . "git log \| head -n" (PegChar(l:char) * 6)
+endfunction
+
+function! PegChar(char)
+  if a:char >= 48 && a:char <= 57 | return a:char - 48
   else
-    let peg = nr2char(l:char)
+    let peg = nr2char(a:char)
     if l:peg == 's' | return 0
     elseif l:peg == 't' | return 1
     elseif l:peg == 'n' | return 2
