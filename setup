@@ -1,27 +1,27 @@
 #!/bin/bash
 
-sudo apt-get update
-sudo apt-get install git-core
+sudo apt-get -y update
+sudo apt-get -y install git-core
 git config --global user.name "Vic Goldfeld"
 git config --global user.email "vic@longstorm.org"
 
-sudo apt-get install automake autoconf pkg-config bison flex build-essential curl gcc g++ checkinstall
+sudo apt-get -y install automake autoconf pkg-config bison flex build-essential curl gcc g++ checkinstall
 # battery info
-sudo apt-get install acpi
+sudo apt-get -y install acpi
 
 # vundle
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
 
 # xcape
-sudo apt-get install libxtst-dev
+sudo apt-get -y install libxtst-dev
 git clone https://github.com/alols/xcape ~/xcape
 cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
 
 # nodejs
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
 sudo add-apt-repository -y ppa:mitya57
-sudo apt-get update
+sudo apt-get -y update
 sudo apt-get -y install libssl-dev openssh-server
 
 ver="0.10.4"
@@ -30,23 +30,23 @@ cd ~
 wget http://nodejs.org/dist/v$ver/node-v$ver.tar.gz
 tar -zxf node-v$ver.tar.gz
 cd node-v$ver
-./configure --prefix=/local
+./configure --prefix=/usr/local
 make
-checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
+sudo checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
 
 # meteor
 curl https://install.meteor.com | /bin/sh
 sudo -H npm install -g meteorite
 
-sudo npm install -g grunt
+sudo npm install -g grunt-cli
 sudo npm install -g dustjs-linkedin
 
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 # github ssh
-sudo apt-get install xclip
+sudo apt-get -y install xclip
 # vim-reload-linux
-sudo apt-get install xdotool
+sudo apt-get -y install xdotool
 # tnt.vim
-sudo apt-get install recode
+sudo apt-get -y install recode
