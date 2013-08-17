@@ -53,6 +53,7 @@ Bundle 'Guardian'
 Bundle 'Lokaltog/vim-distinguished'
 Bundle 'noahfrederick/Hemisu'
 Bundle 'Pychimp/vim-luna'
+Bundle 'altercation/vim-colors-solarized'
 
 filetype plugin indent on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -109,6 +110,7 @@ augroup filetypeSettings
   autocmd BufRead,BufNewFile Makefile* setlocal shiftwidth=8 tabstop=8
   autocmd BufRead,BufNewFile *.rs setlocal shiftwidth=4 tabstop=4
   autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
+  autocmd BufRead,BufNewFile *.elm setlocal filetype=haskell
   autocmd BufRead,BufNewFile *.md setlocal colorcolumn=0
   autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
@@ -118,6 +120,8 @@ function! FtColors()
     if g:colors_name != 'gruvbox' | color gruvbox | endif
   elseif match(['html', 'css'], &ft) != -1
     if g:colors_name != 'distinguished' | color distinguished | endif
+  elseif match(['haskell'], &ft) != -1
+    if g:colors_name != 'solarized' | color solarized | endif
   else | if g:colors_name != 'mustang' | color mustang | endif
   endif
   highlight ColorColumn guibg=#373737 ctermbg=236 |
