@@ -641,6 +641,22 @@ nnoremap <silent> <Leader>.b :call Dmenu("edit", "bundle", {
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 
+" vim-around: type an opening ({['"<TAG> etc and press C-S + text object
+" to wrap the text around with a closing object.
+" have to test it for programming Rust as an alternative to paredit.
+let s:around = { '(': ')', '{': '}', '[': ']', '"': '"', "'": "'" }
+function! Around(type)
+  let pos = col('.')
+  let open = getline('.')[l:pos - 1]
+  let close = get(s:around, l:open, '')
+  if len(l:close)
+    normal! "']i" . l:close
+  "else we need to deal with a multi-char html tag.
+  endif
+  call cursor('.', l:pos)
+endfunction
+inoremap <C-S> <Esc>:set opfunc=Around<CR>g@
+
 " toggle uppercase/lowercase.
 inoremap <C-B>t <Esc>vb~gvova
 " same as above but going over underscores.
