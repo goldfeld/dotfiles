@@ -23,6 +23,7 @@ Bundle 'michaeljsmith/vim-indent-object'
 " files
 Bundle 'grep.vim'
 Bundle 'goldfeld/vim-fugitive'
+Bundle 'goldfeld/vim-sanity'
 "Bundle 'spolu/dwm.vim'
 
 " moving
@@ -240,49 +241,10 @@ function! ReadDowFile(path)
   endfor
 endfunction
 
-function! FindGitPrj(...)
-  let returnoptions = a:0 ? split(a:1, ',') : ['folder']
-  let originalpath = a:0 >= 2 ? a:2 : expand('%:p:h')
-  let dirs = split(l:originalpath, '/')
-  let path = ''
-  for idx in range(len(l:dirs))
-    let dir = l:dirs[idx]
-    let l:path = l:path . '/' . l:dir
-
-    if isdirectory(l:path . '/.git/')
-      let returnpaths = []
-      for returnoption in returnoptions
-        if returnoption ==? 'absolute' | call add(returnpaths, l:path)
-        elseif returnoption ==? 'relative'
-          call add(returnpaths, join(l:dirs[idx : -1], '/'))
-        else | call add(returnpaths, l:dir)
-        endif
-      endfor
-
-      if len(returnoptions) == 1 | return returnpaths[0]
-      else | return returnpaths
-      endif
-
-    endif
-  endfor
-
-  let l:originalpath = fnamemodify(l:originalpath, ':~')
-  let returnpaths = []
-  for returnoption in returnoptions
-    if returnoption ==? 'absolute' | call add(returnpaths, l:originalpath)
-    elseif returnoption ==? 'relative' | call add(returnpaths, l:originalpath)
-    else | call add(returnpaths, '')
-    endif
-  endfor
-  if len(returnoptions) == 1 | return returnpaths[0]
-  else | return returnpaths
-endfunction
-
 nnoremap <Leader>C :Vimdow Chrome<CR>
 nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
 " working terminal
-"nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
-nnoremap <Leader>B :execute "Vimdow " . FindGitPrj()<CR>
+nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
 " server task
 nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
 " compiler task
@@ -549,55 +511,6 @@ function! GetLocalBufList(...)
   return l:query
 endfunction
 
-function! GetBufList(...)
-  let currentbuf = bufnr('%')
-  let ids = filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
-    \ . ' && getbufvar(v:val, "&bl") && strlen(bufname(v:val))'
-    \ . ' && v:val != ' . currentbuf)
-  if !a:0 | return map(ids, 'fnamemodify(bufname(v:val), ":p")')
-  elseif a:1 == 'id' | return ids
-
-  else
-    let modifyidx = stridx(a:1, ':')
-    if modifyidx == -1
-      let modify = ''
-      let opt = a:1
-    else
-      let modify = strpart(a:1, l:modifyidx)
-      let opt = strpart(a:1, 0, l:modifyidx)
-    endif
-
-    let currentgit = FindGitPrj()
-    if l:opt == 'ls'
-      let buflist = []
-      for id in ids
-        call add(l:buflist, id . ':' . fnamemodify(
-          \ FindGitPrj('relative', fnamemodify(bufname(id), ':p')), l:modify))
-      endfor
-
-    elseif l:opt == 'group'
-      let buflist = {}
-      for id in ids
-        let git = FindGitPrj('relative,folder', fnamemodify(bufname(id), ':p'))
-        let group = l:git[1]
-        let l:buflist[l:group] = get(buflist, l:group, [])
-          \ + [id . ':' . fnamemodify(l:git[0], l:modify)]
-      endfor
-
-    elseif l:opt == 'local'
-      let buflist = []
-      for id in ids
-        let git = FindGitPrj('relative,folder', fnamemodify(bufname(id), ':p'))
-        " skip this id if the buffer's git folder isn't our current git folder.
-        if l:currentgit !=# l:git[1] | continue | endif
-        call add(l:buflist, id . ':' . fnamemodify(l:git[0]), l:modify)
-      endfor
-
-    endif
-    return l:buflist
-  endif
-endfunction
-
 nnoremap <Leader><Leader> <C-^>
 " <Leader>w, <Leader>b and <Leader>e are taken by the CamelCaseMotion plugin.
 
@@ -631,9 +544,6 @@ function! DateAndBattery()
   let battery = system("acpi")
   return l:date . ' ' . l:battery
 endfunction
-
-" run a bash command from the git root directory 
-nnoremap <silent> <Leader>; :<C-\>e("!cd " . FindGitPrj('absolute') . " && ")<CR>
 
 nnoremap <leader>m :TNTVisibleHeadingNext<CR>
 
@@ -824,78 +734,10 @@ endfor
 let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
 execute "nnoremap <C-F> ?".expr."<CR>"
 
-" B to close a buffer by bufnr (pegword), <C-B> enter purge repl (currently mp)
-" G to kill group (git repo), <C-G> for repl
-" L list local (git repo), <C-L> list all (as currently)
-function! NemoMaps()
-  let nemobuf = [
-    \ ['n', 'edit', 'prj', "8"],
-    \ ['t', 'buffer', 'buf', "0, { 'farray':
-      \ GetBufList('ls'), 'process': 'split(v:val, \":\")[0]' }"],
-    \ ['c', 'buffer', 'loc', "0, { 'farray':
-      \ GetBufList('local'), 'process': 'split(v:val, \":\")[0]' }"],
-    \]
-
-  for c in l:nemobuf
-    execute "nnoremap <silent> <C-T><C-" . l:c[0] . "> :call Dmenu('"
-      \ l:c[1] "','" . l:c[2] . "keep'," l:c[3] . ")\<CR>"
-    execute "nnoremap <silent> <C-T>" . l:c[0] ":call BufAway('"
-      \ l:c[1] "','" . l:c[2] . "away'," l:c[3] . ")\<CR>"
-  endfor
-endfunction
-call NemoMaps()
-
-" set split to double-width, so it can de diffed w/o affecting other splits.
-nnoremap <C-T><C-D> :vertical resize 160<CR>
-nnoremap <C-T>d :vertical resize 160<CR>:Gdiff<CR><C-W>h
-" show buffer list as single echo line, grouped by git repo.
-nnoremap <C-T><C-L> :echo join(values(map(GetBufList('group:t'),
-  \ '"(" .v:key . " " . join(v:val, " ") . ")"' )), ' –– ')<CR>
-
-"nnoremap <C-T><C-L> :<C-\>eNemoBufList()<CR>
-function! NemoBufList()
-  call setcmdpos(3)
-  return "B  " . join(GetBufList('ls:t'), " –– ")
-endfunction
-
 command! -nargs=1 B execute "buffer" (<q-args>)[0]
 command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 " 'V' is for viewing, when my intent is to quickly view a file then bdelete it.
 command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
-
-function! BufAway(cmd, prompt, ...)
-  if a:0 && a:1 | let list = a:1 | else | let list = 0 | endif
-  if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
-
-  let buf = bufnr('%')
-  let result = Dmenu('keepalt ' . a:cmd, a:prompt, l:list, l:opts)
-  if l:result | execute "bdelete" l:buf | endif
-endfunction
-
-" strip the newline from the end of a string
-function! Chomp(str)
-  return substitute(a:str, '\n$', '', '')
-endfunction
-
-" find a file and pass it to cmd; credit: leafo (initial idea and code)
-function! Dmenu(cmd, prompt, ...)
-  if a:0 && a:1 | let list = ' -l '.a:1.' ' | else | let list = '' | endif
-  if a:0 >= 2 | let opts = a:2 | else | let opts = { } | endif
-
-  let fnames = get(l:opts, 'farray', [])
-  let process = get(l:opts, 'process', 'v:val')
-  if !empty(l:fnames) | let q = 'printf %"s\n" ' . join(l:fnames, " ")
-  else | let q = get(l:opts, 'query', 'git ls-files '.FindGitPrj('absolute'))
-  endif
-
-  let prepend = get(l:opts, 'prepend', '')
-  let append = get(l:opts, 'append', '')
-
-  let choice = Chomp(system(l:q." | dmenu -i -p " . a:prompt . l:list))
-  if empty(l:choice) | return 0 | endif
-  execute a:cmd l:prepend . map([l:choice], l:process)[0] . l:append
-  return 1
-endfunction
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
@@ -929,6 +771,11 @@ nnoremap <Tab> :CtrlPBuffer<CR>
 vnoremap <silent> dd :delete<CR>
 vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
+
+" set split to double-width, so it can de diffed w/o affecting other splits.
+nnoremap <C-T><C-D> :vertical resize 160<CR>
+nnoremap <C-T>d :vertical resize 160<CR>:Gdiff<CR><C-W>h
+" show buffer list as single echo line, grouped by git repo.
 
 " gS will always get status while gs depends on the current repo situation.
 nnoremap gS :Gstatus<CR>
