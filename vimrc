@@ -708,23 +708,37 @@ inoremap <A-C> <A-U>
 nnoremap <C-;> yl:execute "normal! f" . @"<CR>
 nnoremap <C-:> yl:execute "normal! F" . @"<CR>
 
+let g:hey = []
 function! WordFreqList(...)
   let words = {}
-  let lines = getbufline(bufname('%'), 1, '$') 
+  let lines = getbufline(bufname('%'), 1, '$')
+  if a:0 && a:1 ==? 'buffers'
+    let scopearg = 1
+    for bufid in GetBufList('id')
+      let buflines = getbufline(bufid, 1, '$')
+      let l:lines += buflines
+      call add(g:hey, [bufid, len(buflines)])
+    endfor
+  endif
+
   for line in l:lines
     let pattern = "[\-\"'.,_?!:()/{}><+*=#$0-9]"
     let tokens = split(substitute(line, l:pattern, ' ', 'g'), ' ')
     for word in l:tokens
-      let word = matchstr(word, '\v(^\s*)@<=\S.*\S(\s*$)@=')
+      let word = tolower(matchstr(word, '\v(^\s*)@<=\S.*\S(\s*$)@='))
       if len(word) < 2 | continue | endif
       let l:words[l:word] = get(l:words, l:word, 0) + 1
     endfor
   endfor
 
-  if a:0 == 0 | return sort(items(l:words), 'WordFreqListSorter')
-  elseif type(a:1) == type(0)
-    return sort(items(l:words), 'WordFreqListSorter')[a:1]
-  else | return get(l:words, a:1, 0)
+  if a:0 == 0 || a:0 == 1 && l:scopearg
+    return sort(items(l:words), 'WordFreqListSorter')
+  else
+    let lastarg = a:000[-1]
+    if type(l:lastarg) == type(0)
+      return sort(items(l:words), 'WordFreqListSorter')[l:lastarg]
+    else | return get(l:words, l:lastarg, 0)
+    endif
   endif
 endfunction
 function! WordFreqListSorter(arr1, arr2)
