@@ -30,6 +30,10 @@ alias s='git status'
 function B() {
   command git branch | grep "$@" | xargs git cherry -v --abbrev
 }
+function S() {
+  command git stash save -k unstaged
+  # run tests to make sure commit isnt broken
+}
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
 alias ror="./ror"
