@@ -23,7 +23,6 @@ Bundle 'michaeljsmith/vim-indent-object'
 " files
 Bundle 'grep.vim'
 Bundle 'goldfeld/vim-fugitive'
-Bundle 'goldfeld/vim-sanity'
 "Bundle 'spolu/dwm.vim'
 
 " moving
@@ -244,24 +243,6 @@ function! ReadDowFile(path)
     execute "badd" fname
   endfor
 endfunction
-
-nnoremap <Leader>C :Vimdow Chrome<CR>
-nnoremap <Leader>h :Vimdow http<CR>:Vimdow Luakit<CR>
-" working terminal
-nnoremap <Leader>B :Vimdow fish<CR>:Vimdow @vitoria<CR>
-" server task
-nnoremap <Leader>u :Vimdow sudo<CR>:Vimdow meteor<CR>
-" compiler task
-if get(g:Vimdow, 'grunt', 1)
-  nnoremap <Leader>o :Vimdow coffee<CR>:Vimdow grunt<CR>:Vimdow compass<CR>
-endif
-
-"nnoremap <Leader>W :Vimdow Chrome o<CR>
-nnoremap <Leader>H :Vimdow Luakit o<CR>
-nnoremap <Leader>S :Vimdow fish o<CR>
-nnoremap <Leader>O :Vimdow coffee o<CR>
-nnoremap <Leader>M :Vimdow meteor o<CR>
-nnoremap <Leader>G :Vimdow gedit o<CR>
 
 nnoremap <C-H> <NOP>
 nnoremap <C-L> <NOP>
@@ -486,34 +467,10 @@ function! AutoReload()
   :let l:reloading = !l:reloading
 endfunction
 noremap mr :ChromeReload<CR>
-noremap mR :w<CR>:ChromeReload<CR>:Vimdow Chrome<CR>
+noremap mR :w<CR>:ChromeReload<CR>
 
 " b mark for closing buffer.
 nnoremap <silent> mb :execute "keepalt b#\\| bdelete" bufnr('%')<CR>
-
-function! GetLocalBufList(...)
-  let execute = a:0 && a:1 == 1
-  " can be simplified using getftime(); then sort() the array of dicts
-  " also look into shellescape()
-
-  let b1  = "find . -name .\\*.swp | " " find all swap files
-  let b2  = "tee buflst            | " " save a temporary copy of the filenames
-  let b3  = "xargs -l stat         | " " get file stats (-l means pipe linewise)
-  let b4  = "(awk -F '[-:. ]'        " " awk will get the file's last access
-  let b5  = "'/^Access: 2/ { print $3 $4 $5 $6 $7 $8; }'; "
-  let b6  = "awk '{print}' buflst) | " " a 2nd awk retrieves filename temp copy
-  let b7  = "xargs -0 -n 2         | " " pipe results 2 by 2 (one for each awk)
-  let b8  = "awk 'BEGIN {c=0}        " " stitch the two args together, then sort
-  let b9  = "/^[0-9]+$/ {arr[++c]=$0} "
-  let b10 = "/swp$/ { print arr[NR - c] \" \" $0 }' | sort | "
-  let b11 = "awk '{ sub(/\\.swp/, \"\"); sub(/\\.\\/\\.?/,\"\"); "
-    \. "sub(/\\/\\./,\"/\"); print }'"
-  let b12 = " | awk '{a=\"\"; for (i=2; i<=NF; i++) { a=a \" \" $i }; print a }'"
-
-  let query = b1.b2.b3.b4.b5.b6.b7.b8.b9.b10.b11.b12
-  if l:execute | return split(system(l:query), "\n") | endif
-  return l:query
-endfunction
 
 nnoremap <Leader><Leader> <C-^>
 " <Leader>w, <Leader>b and <Leader>e are taken by the CamelCaseMotion plugin.
