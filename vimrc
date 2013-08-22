@@ -117,7 +117,7 @@ augroup END
 function! FtColors()
   if &diff || match(['vim', 'perl', 'diff'], &ft) != -1
     if g:colors_name != 'gruvbox' | color gruvbox | endif
-  elseif match(['html', 'css'], &ft) != -1
+  elseif match(['html', 'css', 'make'], &ft) != -1
     if g:colors_name != 'distinguished' | color distinguished | endif
   elseif match(['haskell'], &ft) != -1
     if g:colors_name != 'solarized' | color solarized | endif
