@@ -763,16 +763,18 @@ vnoremap <silent> dd :delete<CR>
 vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
 
-nnoremap <silent> <C-T><C-N> :VimdowPrjEdit<CR>
-nnoremap <silent> <C-T>n :VimdowPrjSwap<CR>
+nnoremap <silent> <C-T><C-N> :DowPrjEdit<CR>
+nnoremap <silent> <C-T>n :DowPrjSwap<CR>
 
-nnoremap <silent> <C-T><C-T> :VimdowBufEdit<CR>
-nnoremap <silent> <C-T>t :VimdowBufSwap<CR>
+nnoremap <silent> <C-T><C-T> :DowBufEdit<CR>
+nnoremap <silent> <C-T>t :DowBufSwap<CR>
 
-nnoremap <silent> <C-T><C-C> :VimdowPrjbufEdit<CR>
-nnoremap <silent> <C-T>c :VimdowPrjbufSwap<CR>
+nnoremap <silent> <C-T><C-C> :DowPrjbufEdit<CR>
+nnoremap <silent> <C-T>c :DowPrjbufSwap<CR>
 
-nnoremap <C-T><C-L> :VimdowBuflist<CR>
+nnoremap <C-T><C-L> :DowBuflist<CR>
+nnoremap <C-T><C-M> :Dowb<CR>
+nnoremap <C-T>m :Dowp<CR>
 
 " set split to double-width, so it can de diffed w/o affecting other splits.
 nnoremap <C-T><C-D> :vertical resize 160<CR>
