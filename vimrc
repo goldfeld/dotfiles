@@ -1,3 +1,4 @@
+"{{{1 BUNDLES
 " Vundle setup
 filetype off
 set rtp+=~/.vim/bundle/vundle
@@ -53,7 +54,8 @@ Bundle 'Lokaltog/vim-distinguished'
 Bundle 'noahfrederick/Hemisu'
 Bundle 'Pychimp/vim-luna'
 Bundle 'altercation/vim-colors-solarized'
-
+"}}}
+"{{{1 OPTIONS
 filetype plugin indent on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 runtime macros/matchit.vim
@@ -69,6 +71,7 @@ set expandtab
 set smartindent
 set autoindent
 set fillchars=vert:\ ,fold:\ 
+set foldopen-=block
 
 set backspace=indent,eol,start  " allow <C-H> over everything in insert mode
 set scrolloff=3                 " keep 3 lines when scrolling
@@ -88,7 +91,7 @@ set previewheight=20            " height of the preview window
 "set wildcharm=<C-Z>
 set wildignorecase
 
-if filereadable(expand("~/punchcard"))
+if filereadable(expand("~/helium/Gruntfile.coffee"))
   autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,
     \*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,
@@ -149,9 +152,8 @@ set guioptions-=lrbmTLce
 set guioptions+=c
 " modelines can execute arbitrary code in e.g. set foldexpr
 set modelines=0
-
-let mapleader = ","
-
+"}}}1
+"{{{1 VIM-COMA
 " vim-coma - use the comma as a dead key.
 inoremap ,, <Esc>
 inoremap ,a <Esc>A
@@ -191,7 +193,8 @@ function! IndentGuideFind(linesUp)
   if !l:empty | execute "normal! A\<Space>" | startinsert
   else | startinsert | call cursor(l:line, col('.') + 1) | endif
 endfunction
-
+"}}}
+"{{{1 PLUGIN SETTINGS
 let g:TNTWebBrowser = 'luakit'
 
 let g:seek_char_aliases = '&% $~ #` @^ \| ;: ,< .> -_ /? ' . "'" . '"'
@@ -213,6 +216,15 @@ xmap X   <Plug>VSurround
 xmap gX  <Plug>VgSurround
 imap <C-G>t <Plug>Isurround
 imap <C-G>T <Plug>ISurround
+
+let g:MicroMarks = ['h', 't', 'n', 's', '-']
+nnoremap mi :MicroMark<CR>
+nnoremap md :MicroMarkClear<CR>
+"nnoremap 'c :MicroMarkMatch<CR>
+for micromark in g:MicroMarks
+  execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
+endfor
+"}}}1
 
 let g:Vimdow = {}
 augroup DOW
@@ -411,6 +423,7 @@ function! Backspace()
   execute "normal! ".l:move."l"
 endfunction
 
+"{{{1 M-BINDS
 " sacrifice some marks for my pinkies' sake
 nnoremap mm :
 nnoremap mw :w<CR>
@@ -471,9 +484,7 @@ noremap mR :w<CR>:ChromeReload<CR>
 
 " b mark for closing buffer.
 nnoremap <silent> mb :execute "keepalt b#\\| bdelete" bufnr('%')<CR>
-
-nnoremap <Leader><Leader> <C-^>
-" <Leader>w, <Leader>b and <Leader>e are taken by the CamelCaseMotion plugin.
+"}}}1
 
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
@@ -481,6 +492,12 @@ nnoremap : ,
 " visual shifting (relect after shift).
 vnoremap < <gv
 vnoremap > >gv
+
+"{{{1 LEADER MAPPINGS
+let mapleader = ","
+
+nnoremap <Leader><Leader> <C-^>
+" <Leader>w, <Leader>b and <Leader>e are taken by the CamelCaseMotion plugin.
 
 nnoremap <Leader>[ {o
 nnoremap <Leader>] }O
@@ -558,7 +575,8 @@ function! CloseQFBufs()
     if listedbuf != l:chosenbuf | silent! execute "bdelete" listedbuf | endif
   endfor
 endfunction
-
+"}}}
+"{{{1 LEADER DOT MAPPINGS
 " quickly edit my tnt outline
 nnoremap <silent> <Leader>.t :e ~/goldfeld/.tnt/lifethreads.tnt.md<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
@@ -575,17 +593,6 @@ nnoremap <silent> <Leader>.l :set list!<CR>:set cursorcolumn!<CR>
 nnoremap <Leader>./h /HEAD<CR>
 nnoremap <Leader>./c /console<CR>
 
-" workaround glitchy redimensioning of gvim when sourcing my vimrc.
-function! SaveDimensions()
-  let g:RESETLINES = &lines
-  let g:RESETCOLUMNS = &columns
-  wviminfo
-endfunction
-function! ResetDimensions()
-  execute "set lines=" . g:RESETLINES
-  execute "set columns=" . g:RESETCOLUMNS
-endfunction
-
 " quickly edit my vimrc.
 nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
 " source vimrc to allow live reloading of changes.
@@ -595,6 +602,18 @@ nnoremap <silent> <Leader>.V :w<CR>:call SaveDimensions()<CR>:so $MYVIMRC<CR>
 nnoremap <silent> <Leader>.b :call Dmenu("edit", "bundle", {
   \ 'query': 'ls $HOME/.vim/bundle/', 'prepend': '$HOME/.vim/bundle/',
   \ 'append': "/README.md" })<CR>
+
+" workaround xmonad glitchy redimensioning of gvim when sourcing my vimrc.
+function! SaveDimensions()
+  let g:RESETLINES = &lines
+  let g:RESETCOLUMNS = &columns
+  wviminfo
+endfunction
+function! ResetDimensions()
+  execute "set lines=" . g:RESETLINES
+  execute "set columns=" . g:RESETCOLUMNS
+endfunction
+"}}}1
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 
@@ -614,6 +633,7 @@ function! Around(type)
 endfunction
 inoremap <C-S> <Esc>:set opfunc=Around<CR>g@
 
+"{{{1 ^B MAPPINGS
 " toggle uppercase/lowercase.
 inoremap <C-B>t <Esc>vb~gvova
 " same as above but going over underscores.
@@ -632,6 +652,7 @@ function! InsertPair()
   execute "normal! a" . repeat(l:char, 2)
   startinsert
 endfunction
+"}}}1
 
 " make C-U and C-W undoable by using <C-G>u (signal a new change to vim.)
 inoremap <C-U> <C-G>u<C-U>
@@ -713,14 +734,6 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurLeft()': ['<left>'],
   \ }
 
-let g:MicroMarks = ['h', 't', 'n', 's', '-']
-nnoremap mi :MicroMark<CR>
-nnoremap md :MicroMarkClear<CR>
-"nnoremap 'c :MicroMarkMatch<CR>
-for micromark in g:MicroMarks
-  execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
-endfor
-
 " go to the function name from within a function
 let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
 execute "nnoremap <C-F> ?".expr."<CR>"
@@ -763,6 +776,7 @@ vnoremap <silent> dd :delete<CR>
 vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
 
+"{{{1 ^T MAPPINGS
 nnoremap <silent> <C-T><C-N> :DowPrjEdit<CR>
 nnoremap <silent> <C-T>n :DowPrjSwap<CR>
 
@@ -780,7 +794,8 @@ nnoremap <C-T>m :Dowp<CR>
 nnoremap <C-T><C-D> :vertical resize 160<CR>
 nnoremap <C-T>d :vertical resize 160<CR>:Gdiff<CR><C-W>h
 " show buffer list as single echo line, grouped by git repo.
-
+"}}}1
+"{{{1 GIT BINDS
 " gS will always get status while gs depends on the current repo situation.
 nnoremap gS :Gstatus<CR>
 nnoremap gs :call Gcached()<CR>
@@ -891,6 +906,7 @@ function! s:Bash(cmdline, ...)
   setlocal nomodifiable
   1
 endfunction
+"}}}1
 
 nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
 command! -nargs=0 AutoHighlightToggle call AutoHighlightToggle()
@@ -1057,6 +1073,7 @@ function! Stab()
   endtry
 endfunction
 
+"{{{1 LIFEHACKS
 command! -nargs=1 -complete=customlist,DayOpt Day call Day(<f-args>)
 function! DayOpt(ArgLead, CmdLine, CursorPos)
   if a:ArgLead == 't' | return ['tue', 'thu'] | endif
@@ -1149,6 +1166,7 @@ function! Inform(data)
   endfor
   return
 endfunction
+"}}}
 
 nnoremap <leader>.p :call ShowingHNParse()<CR>
 function! ShowingHNParse()
@@ -1172,6 +1190,7 @@ function! Viminder()
   echo sys
 endfunction
 
+"{{{1 MISC
 " http://learnvimscriptthehardway.stevelosh.com/chapters/12.html
 " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
 " http://forrst.com/posts/Adding_a_Next_Adjective_to_Vim_Version_2-C4P#comment-land
@@ -1311,3 +1330,4 @@ function! PreviewWord()
     endif
   endif
 endfunction
+"}}}
