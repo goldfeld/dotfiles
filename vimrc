@@ -502,6 +502,9 @@ nnoremap <Leader><Leader> <C-^>
 nnoremap <Leader>[ {o
 nnoremap <Leader>] }O
 
+nnoremap <Leader>* g*
+nnoremap <Leader># g#
+
 " to go end of textwidth.
 nnoremap <Leader>- 81\|
 " pull next line and delete any comment symbols.
@@ -827,11 +830,13 @@ nnoremap gb :Gblame<CR>
 nnoremap gB :Gbrowse<CR>
 nnoremap gL :Glog<CR>
 
-nnoremap gn :execute "Ggrep!" expand('<cword>') " -- '*." . &ft . "'"<CR>
-vnoremap gn y:execute "Ggrep!" getreg('"') " -- '*." . &ft . "'"<CR>
+nnoremap g/ :Git log -G
 
-nnoremap gN :Ggrep! 
-vnoremap gN y:Ggrep! 
+nnoremap g* :execute "Ggrep!" expand('<cword>') " -- '*." . &ft . "'"<CR>
+vnoremap g* y:execute "Ggrep!" getreg('"') " -- '*." . &ft . "'"<CR>
+
+nnoremap g# :Ggrep! 
+vnoremap g# y:Ggrep! 
 
 " same as git add the current file.
 nnoremap gt :Gwrite<CR>
