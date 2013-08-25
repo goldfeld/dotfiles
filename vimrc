@@ -112,9 +112,9 @@ augroup filetypeSettings
   autocmd filetype vim setlocal fdm=marker kp=:help
   autocmd filetype make setlocal shiftwidth=8 tabstop=8
   autocmd filetype rust setlocal shiftwidth=4 tabstop=4
-  autocmd filetype markdown setlocal colorcolumn=0
+  autocmd filetype markdown setlocal textwidth=80
+  autocmd BufRead,BufNewFile *.tnt.* *.ana.* setlocal et colorcolumn=0
   autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
-  autocmd BufRead,BufNewFile *.tnt.* setlocal expandtab
 augroup END
 
 function! FtColors()
