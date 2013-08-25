@@ -844,11 +844,12 @@ nnoremap gt :Gwrite<CR>
 nnoremap gx :Gread<CR>
 " leave me on the index version, so I can quickly check it and close it.
 nnoremap gc :Gdiff<CR><C-W>h
+nnoremap ge :Git 
 nnoremap go :Git checkout 
 nnoremap gm :Git merge 
 " use 'help index' to see vim's built-in natively mapped keys
 
-nnoremap ge :Sgit 
+nnoremap g! :Sgit 
 command! -complete=shellcmd -nargs=+ Sgit call s:Bash('git ' . <q-args>, 'git')
 
 command! -complete=shellcmd -nargs=+ S call s:Bash(<q-args>)
