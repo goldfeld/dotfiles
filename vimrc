@@ -709,6 +709,13 @@ command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 " 'V' is for viewing, when my intent is to quickly view a file then bdelete it.
 command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 
+" scaffold new jekyll leak
+command! -nargs=* L execute
+  \ "edit +call\\ append(0,['---','layout:\\ leak','title:\\ " .
+  \ escape(<q-args>, ' ') . "','category:\\ leaks','---',''])"
+  \ strpart(system("date +'%Y-%m-%e-'"), 0, 11) .
+  \ substitute(<q-args>, ' ', '-', 'g') . '.md'
+
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
   " get current column
