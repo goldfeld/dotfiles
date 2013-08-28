@@ -638,13 +638,19 @@ inoremap <C-S> <Esc>:set opfunc=Around<CR>g@
 
 "{{{1 ^B MAPPINGS
 " toggle uppercase/lowercase.
-inoremap <C-B>t <Esc>vb~gvova
+inoremap <C-B>b <Esc>vb~gvova
 " same as above but going over underscores.
-inoremap <C-B><C-T> <Esc>vB~gvova
+inoremap <C-B><C-B> <Esc>vB~gvova
 " toggle uppercase/lowercase of whole line.
 inoremap <C-B><C-L> <Esc>v^~gvova
-" toggle case of first letter.
+
+" toggle case of first letter (pascal case).
 inoremap <C-B><C-P> <Esc>bv~ea
+" toggle case of first letter in each word (title case).
+inoremap <C-B><C-T> <Esc>mb:execute
+  \ "wh col('.') > 1<Bar>exe 'norm! bv~'<Bar>endw"<CR>`ba
+nnoremap <C-B><C-T> :let linelen = len(getline('.'))<CR>mbge:execute
+  \ "wh col('.') < linelen<Bar>exe 'norm! wv~e'<Bar>endw"<CR>`b
 
 " insert two en-dashes (&#8211)
 inoremap <C-B><C-D> ––
