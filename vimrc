@@ -762,8 +762,11 @@ nnoremap <silent> <C-T>n :DowPrjSwap<CR>
 nnoremap <silent> <C-T><C-T> :DowBufEdit<CR>
 nnoremap <silent> <C-T>t :DowBufSwap<CR>
 
-nnoremap <silent> <C-T><C-C> :DowPrjbufEdit<CR>
-nnoremap <silent> <C-T>c :DowPrjbufSwap<CR>
+nnoremap <silent> <C-T><C-C> :DowPrjBufEdit<CR>
+nnoremap <silent> <C-T>c :DowPrjBufSwap<CR>
+
+nnoremap <silent> <C-U><C-C> :DowPrjOtherEdit<CR>
+nnoremap <silent> <C-U>c :DowPrjOtherSwap<CR>
 
 nnoremap <C-T><C-L> :DowBuflist<CR>
 nnoremap <C-T><C-M> :Dowb<CR>
