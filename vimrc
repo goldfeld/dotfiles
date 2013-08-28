@@ -721,6 +721,8 @@ command! -nargs=* L execute
   \ escape(<q-args>, ' ') . "','category:\\ leaks','---',''])"
   \ strpart(system("date +'%Y-%m-%e-'"), 0, 11) .
   \ substitute(<q-args>, ' ', '-', 'g') . '.md'
+command! -nargs=* LL execute "norm! i[leak: " . <q-args> . "][/" .
+  \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "L" <q-args>
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
