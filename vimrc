@@ -38,6 +38,7 @@ Bundle 'Vim-R-plugin'
 Bundle 'goldfeld/criticmarkup-vim'
 Bundle 'wting/rust.vim'
 Bundle 'unc0/vim-gorilla-script'
+Bundle 'gkz/vim-ls'
 
 " other
 Bundle 'goldfeld/vim-pegword'
@@ -122,6 +123,8 @@ function! FtColors()
     if g:colors_name != 'gruvbox' | color gruvbox | endif
   elseif match(['html', 'css', 'make'], &ft) != -1
     if g:colors_name != 'distinguished' | color distinguished | endif
+  elseif match(['ls'], &ft) != -1
+    if g:colors_name != 'candycode' | color candycode | endif
   elseif match(['haskell'], &ft) != -1
     if g:colors_name != 'solarized' | color solarized | endif
   else | if g:colors_name != 'mustang' | color mustang | endif
