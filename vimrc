@@ -109,11 +109,11 @@ augroup filetypeSettings
   autocmd BufEnter * call FtColors()
   autocmd BufRead *pentadactylrc setlocal filetype=vim
   autocmd BufRead,BufNewFile *.elm setlocal filetype=haskell
+  autocmd BufRead,BufNewFile *.tnt,*.ana setlocal et cc=0 filetype=markdown
+  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
   autocmd filetype vim setlocal fdm=marker kp=:help
   autocmd filetype make setlocal shiftwidth=8 tabstop=8
   autocmd filetype rust setlocal shiftwidth=4 tabstop=4
-  autocmd filetype markdown setlocal textwidth=80
-  autocmd BufRead,BufNewFile *.tnt.* *.ana.* setlocal et colorcolumn=0
   autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
 augroup END
 
