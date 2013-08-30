@@ -201,6 +201,7 @@ endfunction
 let g:TNTWebBrowser = 'luakit'
 
 let g:seek_char_aliases = '&% $~ #` @^ \| ;: ,< .> -_ /? ' . "'" . '"'
+let g:seek_listchars = ','
 let g:seek_enable_jumps = 1
 let g:seek_use_vanilla_binds_in_diffmode = 1
 
@@ -722,6 +723,7 @@ command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 command! -nargs=* L execute
   \ "edit +call\\ append(0,['---','layout:\\ leak','title:\\ " .
   \ escape(<q-args>, ' ') . "','category:\\ leaks','---',''])"
+  \ "~/goldfeld/goldfeld.org/leaks/_posts/" .
   \ strpart(system("date +'%Y-%m-%e-'"), 0, 11) .
   \ substitute(<q-args>, ' ', '-', 'g') . '.md'
 command! -nargs=* LL execute "norm! i[leak: " . <q-args> . "][/" .
