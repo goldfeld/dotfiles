@@ -280,6 +280,16 @@ nnoremap dD ggdG
 inoremap <Backspace> <NOP>
 nnoremap ZZ <NOP>
 
+let g:restrain_map = {
+  \ "jj": [""],
+  \ "kk": [""],
+  \ "lw": ["2w"],
+  \ "ew": ["3w"],
+  \ "hb": ["2b"],
+  \ "-b": ["3b"],
+  \ "hh ll hl lh": ["%"]
+  \ }
+
 nnoremap <silent> j
   \ :<C-U>call RestrainCommand('j', "", v:count1, 2)<CR>
 nnoremap <silent> k
