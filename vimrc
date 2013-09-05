@@ -730,18 +730,23 @@ command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 
 " scaffold new jekyll leak
-function! ScaffoldLeakHeader(title)
-  let newfile = "~/goldfeld/goldfeld.org/leaks/_posts/"
+function! ScaffoldLeakHeader(title, dir)
+  let newfile = '~/' . a:dir . 'leaks/_posts/'
     \ . strpart(system("date +'%Y-%m-%d-'"), 0, 11)
-    \ . substitute(a:title, ' ', '-', '') . '.md'
+    \ . substitute(a:title, ' ', '-', 'g') . '.md'
 
   call writefile(['---', 'layout: leak', 'title: ' . a:title,
-    \ 'category: leaks', '---', 'a'], fnamemodify(l:newfile, ':p'))
+    \ 'category: leaks', '---', ''], fnamemodify(l:newfile, ':p'))
   execute "edit" l:newfile
 endfunction
-command! -nargs=* L call ScaffoldLeakHeader(<q-args>)
-command! -nargs=* LL execute "norm! i[leak: " . <q-args> . "][/" .
-  \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "L" <q-args>
+
+command! -nargs=* G call ScaffoldLeakHeader(<q-args>, 'goldfeld/goldfeld.org/')
+command! -nargs=* GG execute "norm! i[leak: " . <q-args> . "][/" .
+  \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "G" <q-args>
+
+command! -nargs=* C call ScaffoldLeakHeader(<q-args>, 'voidco/void.co')
+command! -nargs=* CC execute "norm! i[leak: " . <q-args> . "][/" .
+  \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "C" <q-args>
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
