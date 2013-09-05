@@ -1,14 +1,22 @@
 #!/bin/bash
 
 sudo apt-get -y update
-sudo apt-get -y install git-core
+sudo apt-get -y git-core
 git config --global user.name "Vic Goldfeld"
 git config --global user.email "vic@longstorm.org"
 git config --global push.default simple
 
+mkdir ~/goldfeld && git clone https://github.com/goldfeld/dotfiles
+cd ~/goldfeld/dotfiles
+git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
+ln -s vimrc ~/.vimrc
+ln -s bashrc ~/.bashrc
+ln -s xinitrc ~/.xinitrc
+ln -s Xmodmap ~/.Xmodmap
+ln -s pentadactylrc ~/.pentadactylrc
+cd ~
+
 sudo apt-get -y install automake autoconf pkg-config bison flex build-essential curl gcc g++ checkinstall
-# battery info
-sudo apt-get -y install acpi
 
 # vundle
 mkdir -p ~/.vim/bundle
@@ -45,9 +53,7 @@ sudo npm install -g dustjs-linkedin
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
-# github ssh
-sudo apt-get -y install xclip
-# vim-reload-linux
-sudo apt-get -y install xdotool
-# tnt.vim
-sudo apt-get -y install recode
+# deps respectively for: battery info, github ssh, vim-reload-linux, tnt.vim
+sudo apt-get -y install acpi xclip xdotool recode
+
+read -p "done (press Enter to finish)"
