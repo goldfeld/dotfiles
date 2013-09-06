@@ -20,6 +20,7 @@ Bundle 'goldfeld/tnt'
 Bundle 'tpope/vim-surround'
 Bundle 'paradigm/TextObjectify'
 Bundle 'michaeljsmith/vim-indent-object'
+Bundle 'vim-pandoc/vim-markdownfootnotes'
 
 " files
 Bundle 'grep.vim'
