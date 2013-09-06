@@ -10,7 +10,8 @@ set -o vi
 echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
 
 # create script from vimdow code parsing xrandr resolutions
-# xrandr --output DP2 --primary --mode 1920x1080 --output LVDS1 --mode 1600x900 --right-of DP2 --auto
+# xrandr --output LVDS1 --primary --mode 1600x900 --below DP2
+# xrandr --output DP2 --mode 1920x1080 
 
 # letters
 alias a='ls -a'
