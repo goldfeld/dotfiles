@@ -744,7 +744,7 @@ command! -nargs=* G call ScaffoldLeakHeader(<q-args>, 'goldfeld/goldfeld.org/')
 command! -nargs=* GG execute "norm! i[leak: " . <q-args> . "][/" .
   \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "G" <q-args>
 
-command! -nargs=* C call ScaffoldLeakHeader(<q-args>, 'voidco/void.co')
+command! -nargs=* C call ScaffoldLeakHeader(<q-args>, 'voidco/void.co/')
 command! -nargs=* CC execute "norm! i[leak: " . <q-args> . "][/" .
   \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "C" <q-args>
 
