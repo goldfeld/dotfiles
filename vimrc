@@ -1128,7 +1128,7 @@ command! -nargs=1 Inf call Inform(<f-args>)
 function! Inform(data)
   let info = 'No matching info.'
   let otherinfo = []
-  if match(['wifi', 'pass'], a:data) != -1 | let l:info = '6106e0ce4fs'
+  if match(['wifi', 'pass'], a:data) != -1 | let l:info = '6106e0ce4f'
   elseif match(['phone', 'tel'], a:data) != -1 | let l:info = '3176-6107'
 
   elseif match(['tar, gz'], a:data) != -1
