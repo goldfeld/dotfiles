@@ -21,6 +21,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'paradigm/TextObjectify'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'vim-pandoc/vim-markdownfootnotes'
+Bundle 'Twinside/vim-haskellConceal'
 
 " files
 Bundle 'grep.vim'
