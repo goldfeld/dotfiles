@@ -736,7 +736,7 @@ function! ScaffoldLeakHeader(title, dir)
     \ . strpart(system("date +'%Y-%m-%d-'"), 0, 11)
     \ . substitute(a:title, ' ', '-', 'g') . '.md'
 
-  call writefile(['---', 'layout: leak', 'title: ' . a:title,
+  call writefile(['---', 'layout: leak', 'title: "' . a:title . '"',
     \ 'category: leaks', '---', ''], fnamemodify(l:newfile, ':p'))
   execute "edit" l:newfile
 endfunction
