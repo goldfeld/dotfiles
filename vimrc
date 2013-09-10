@@ -1132,6 +1132,12 @@ function! Inform(data)
   if match(['wifi', 'pass'], a:data) != -1 | let l:info = '6106e0ce4f'
   elseif match(['phone', 'tel'], a:data) != -1 | let l:info = '3176-6107'
 
+  elseif match(['ifconfig', 'wlan'], a:data) != -1
+    let l:info = "sudo ifconfig wlan0"
+    call add(l:otherinfo, "iwlist wlan0 scanning")
+    call add(l:otherinfo, "sudo iwconfig wlan0 essid GVT-6E0F")
+    call add(l:otherinfo, "sudo dhclient wlan0")
+
   elseif match(['tar, gz'], a:data) != -1
     let l:info = 'tar xvzf filename.tar.gz'
     call add(l:otherinfo, 'tar it all')
