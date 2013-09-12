@@ -785,6 +785,10 @@ vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
 
 "{{{1 ^T MAPPINGS
+" project based configs: https://github.com/timtadh/swork
+" B to close a buffer by bufnr (pegword), <C-B> enter purge repl (currently mp)
+" G to kill group (git repo), <C-G> for repl
+" L list local (git repo), <C-L> list all (as currently)
 nnoremap <silent> <C-T><C-N> :DowPrjEdit<CR>
 nnoremap <silent> <C-T>n :DowPrjSwap<CR>
 
@@ -794,10 +798,17 @@ nnoremap <silent> <C-T>t :DowBufSwap<CR>
 nnoremap <silent> <C-T><C-C> :DowPrjBufEdit<CR>
 nnoremap <silent> <C-T>c :DowPrjBufSwap<CR>
 
-nnoremap <silent> <C-U><C-C> :DowPrjOtherEdit<CR>
-nnoremap <silent> <C-U>c :DowPrjOtherSwap<CR>
+nnoremap <silent> <C-T><C-U> :DowPrjOtherEdit<CR>
+nnoremap <silent> <C-T>c :DowPrjOtherSwap<CR>
 
-nnoremap <C-T><C-L> :DowBuflist<CR>
+" source all leaks by absolute path (goldfeld.org & void.co)
+" nnoremap <silent> <C-T><C-L>
+" nnoremap <silent> <C-T>l
+
+" list projects
+nnoremap <C-T><C-P> :DowBuflist<CR>
+
+" on vim plugins, ^T^M should :w|so %
 nnoremap <C-T><C-M> :Dowb<CR>
 nnoremap <C-T>m :Dowp<CR>
 
