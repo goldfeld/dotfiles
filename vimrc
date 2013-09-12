@@ -12,6 +12,7 @@ Bundle 'goldfeld/vimdow'
 Bundle 'mikewest/vimroom'
 Bundle 'goldfeld/vim-micro'
 Bundle 'lordm/vim-browser-reload-linux'
+Bundle 'goldfeld/vim-walker'
 
 " writing
 Bundle 'goldfeld/tnt'
@@ -580,9 +581,9 @@ endfunction
 
 nnoremap <silent> <Leader>f :cwindow<CR>
 "nnoremap qg :let b:qfbufs = cfirst<CR>
-nnoremap <silent> <Leader>g @=(&diff?"gg]c":":cfirst\r")<CR>
-nnoremap <silent> <Leader>c @=(&diff?"]c":":cn\r")<CR>
-nnoremap <silent> <Leader>r @=(&diff?"[c":":cN\r")<CR>
+nnoremap <silent> <Leader>g :WalkerFirst<CR>
+nnoremap <silent> <Leader>c :WalkerNext<CR>
+nnoremap <silent> <Leader>r :WalkerPrev<CR>
 nnoremap <silent> <Leader>l @=(&diff?":diffupd\r":":call CloseQFBufs()\r")<CR>
 
 function! CloseQFBufs()
