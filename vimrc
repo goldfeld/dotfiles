@@ -660,8 +660,8 @@ inoremap <C-S> <Esc>:set opfunc=Around<CR>g@
 inoremap <C-B>b <Esc>vb~gvova
 " same as above but going over underscores.
 inoremap <C-B><C-B> <Esc>vB~gvova
-" toggle uppercase/lowercase of whole line.
-inoremap <C-B><C-L> <Esc>v^~gvova
+" toggle uppercase/lowercase of whole line (aka yell)
+inoremap <C-B><C-Y> <Esc>v^~gvova
 
 " toggle case of first letter (pascal case).
 inoremap <C-B><C-P> <Esc>bv~ea
@@ -679,6 +679,17 @@ function! InsertPair()
   let char = nr2char(getchar())
   execute "normal! a" . repeat(l:char, 2)
   startinsert
+endfunction
+
+inoremap <C-B><C-L> <Esc>:call LinkPost()<Cr>
+function! LinkPost()
+  let pick = dow#source(g:all_leaks_query)
+  let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
+    \ . l:pick))
+
+  let date_and_slug = fnamemodify(l:pick, ':t')
+  execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
+    \ . '](/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :] . ')'
 endfunction
 "}}}1
 
@@ -752,17 +763,6 @@ command! -nargs=* GG execute "norm! i[leak: " . <q-args> . "][/" .
 command! -nargs=* C call ScaffoldPost(<q-args>, 'voidco/void.co/leaks/')
 command! -nargs=* CC execute "norm! i[leak: " . <q-args> . "][/" .
   \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "C" <q-args>
-
-inoremap <C-B><C-N> <Esc>:call LinkPost()<Cr>
-function! LinkPost()
-  let pick = dow#source(g:all_leaks_query)
-  let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
-    \ . l:pick))
-
-  let date_and_slug = fnamemodify(l:pick, ':t')
-  execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
-    \ . '](/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :] . ')'
-endfunction
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
