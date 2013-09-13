@@ -231,6 +231,8 @@ nnoremap md :MicroMarkClear<CR>
 for micromark in g:MicroMarks
   execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
 endfor
+
+let g:dow_source = ['dmenu', 'ctrlr']
 "}}}1
 
 let g:Vimdow = {}
@@ -751,6 +753,17 @@ command! -nargs=* C call ScaffoldPost(<q-args>, 'voidco/void.co/leaks/')
 command! -nargs=* CC execute "norm! i[leak: " . <q-args> . "][/" .
   \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "C" <q-args>
 
+inoremap <C-B><C-N> <Esc>:call LinkPost()<Cr>
+function! LinkPost()
+  let pick = dow#source(g:all_leaks_query)
+  let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
+    \ . l:pick))
+
+  let date_and_slug = fnamemodify(l:pick, ':t')
+  execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
+    \ . '](/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :] . ')'
+endfunction
+
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
   " get current column
@@ -801,11 +814,17 @@ nnoremap <silent> <C-T>c :DowPrjBufSwap<CR>
 nnoremap <silent> <C-T><C-U> :DowPrjOtherEdit<CR>
 nnoremap <silent> <C-T>c :DowPrjOtherSwap<CR>
 
-" source all leaks by absolute path (goldfeld.org & void.co)
-" nnoremap <silent> <C-T><C-L>
-" nnoremap <silent> <C-T>l
+let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
+  \ . ' cd ~/voidco/void.co/leaks/_posts/ && find `pwd`;'
+  \ . ' cd ~/goldfeld/goldfeld.org/leaks/_posts/ && find `pwd`;'
+  \ . ' cd ~/goldfeld/goldfeld.org/articles/_posts/ && find `pwd`)' }
+nnoremap <silent> <C-T><C-L> :call dow#edit(g:all_leaks_query)<CR>
+nnoremap <silent> <C-T>l :call dow#swap(g:all_leaks_query)<CR>
 
 " list projects
+" allow me to define here some basic dow projects for which their status will
+" always be listed regardless of there being files open, it will still show me
+" if there are uncommitted and/or unpushed changes.
 nnoremap <C-T><C-P> :DowBuflist<CR>
 
 " on vim plugins, ^T^M should :w|so %
