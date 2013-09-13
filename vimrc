@@ -672,7 +672,7 @@ nnoremap <C-B><C-T> :let linelen = len(getline('.'))<CR>mbge:execute
 " insert two en-dashes (&#8211)
 inoremap <C-B><C-D> ––
 " insert a pair of anything and position in-between
-inoremap <C-B><C-B> <C-O>:call InsertPair()<CR>
+inoremap <C-B><C-A> <C-O>:call InsertPair()<CR>
 function! InsertPair()
   let char = nr2char(getchar())
   execute "normal! a" . repeat(l:char, 2)
