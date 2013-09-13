@@ -233,6 +233,8 @@ for micromark in g:MicroMarks
 endfor
 
 let g:dow_source = ['dmenu', 'ctrlr']
+let g:dow_wip = ['~/goldfeld', '~/voidco', '~/.vim/bundle',
+  \ '~/inkspree', '~/longstorm']
 "}}}1
 
 let g:Vimdow = {}
