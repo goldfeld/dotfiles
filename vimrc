@@ -804,17 +804,23 @@ vnoremap <silent> dp :diffput<CR>
 " B to close a buffer by bufnr (pegword), <C-B> enter purge repl (currently mp)
 " G to kill group (git repo), <C-G> for repl
 " L list local (git repo), <C-L> list all (as currently)
-nnoremap <silent> <C-T><C-N> :DowPrjEdit<CR>
-nnoremap <silent> <C-T>n :DowPrjSwap<CR>
+nnoremap <silent> <C-T><C-N> :Dow edit prj<CR>
+nnoremap <silent> <C-T>n :Dow swap prj<CR>
+nnoremap <silent> <C-T>t<C-N> :DowLine swap prj<CR>
 
-nnoremap <silent> <C-T><C-T> :DowBufEdit<CR>
-nnoremap <silent> <C-T>t :DowBufSwap<CR>
+nnoremap <silent> <C-T><C-H> :Dow edit buf<CR>
+nnoremap <silent> <C-T>h :Dow swap buf<CR>
 
-nnoremap <silent> <C-T><C-C> :DowPrjBufEdit<CR>
-nnoremap <silent> <C-T>c :DowPrjBufSwap<CR>
+nnoremap <silent> <C-T><C-C> :Dow edit prj buf<CR>
+nnoremap <silent> <C-T>c :Dow swap prj buf<CR>
 
-nnoremap <silent> <C-T><C-U> :DowPrjOtherEdit<CR>
-nnoremap <silent> <C-T>c :DowPrjOtherSwap<CR>
+nnoremap <silent> <C-T><C-S> :DowLine<CR>
+nnoremap <silent> <C-T>s :DowSymbol<CR>
+nnoremap <silent> <C-T><C-Z> :DowLine #<CR>
+nnoremap <silent> <C-T>z :DowSymbol #<CR>
+
+nnoremap <silent> <C-T><C-U> :Dow edit untracked<CR>
+nnoremap <silent> <C-T>c :Dow swap untracked<CR>
 
 let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
   \ . ' cd ~/voidco/void.co/leaks/_posts/ && find `pwd`;'
@@ -828,6 +834,7 @@ nnoremap <silent> <C-T>l :call dow#swap(g:all_leaks_query)<CR>
 " always be listed regardless of there being files open, it will still show me
 " if there are uncommitted and/or unpushed changes.
 nnoremap <C-T><C-P> :DowBuflist<CR>
+nnoremap <C-T><C-W> :DowWip<CR>
 
 " on vim plugins, ^T^M should :w|so %
 nnoremap <C-T><C-M> :Dowb<CR>
