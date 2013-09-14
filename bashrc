@@ -19,24 +19,28 @@ function b() {
   if [[ "$@" == '' ]]; then command git branch -v --all
   else command git branch -v --all | grep "$@"; fi
 }
-function c() {
+function B() {
+  command git branch | grep "$@" | xargs git cherry -v --abbrev
+}
+alias c='hookx 7'
+alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
+alias f='clear && git diff'
+function F() {
   command clear
   if [ -z `git diff --cached` ]; then command git whatchanged --oneline
   else command git diff --cached; fi
 }
-alias C='clear && git show $commit'
-alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
-alias f='clear && git diff'
 alias g='git log --graph --decorate --oneline --all | less'
+alias h='hookx 5'
 alias l=ls
 alias s='git status'
-
-function B() {
-  command git branch | grep "$@" | xargs git cherry -v --abbrev
-}
 function S() {
   command git stash save -k unstaged
   # run tests to make sure commit isnt broken
+}
+alias t='hookx 3'
+function w() {
+  command gvim -c 'e +set\ lines=24\ \|\ set\ columns=80\ \|\ vs\ ~/todo ~/tada'
 }
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
@@ -57,10 +61,6 @@ function cdg() { cdgrep "$@" ~/goldfeld/; }
 function cdb() { cdgrep "$@" ~/.vim/bundle/; }
 
 DOWEDITOR=gvim
-
-function t() {
-  command gvim -c 'e +set\ lines=24\ \|\ set\ columns=80\ \|\ vs\ ~/todo ~/tada'
-}
 
 function tnt() {
   if [[ "$@" == '' ]]; then command gvim --servername TNT

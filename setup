@@ -6,6 +6,10 @@ git config --global user.name "Vic Goldfeld"
 git config --global user.email "vic@longstorm.org"
 git config --global push.default simple
 
+sudo apt-get -y install automake autoconf pkg-config bison flex build-essential curl gcc g++ checkinstall
+sudo apt-get -y install haskell-platform
+
+mkdir -p /usr/local/bin
 mkdir ~/goldfeld && git clone https://github.com/goldfeld/dotfiles
 cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
@@ -14,9 +18,9 @@ ln -s bashrc ~/.bashrc
 ln -s xinitrc ~/.xinitrc
 ln -s Xmodmap ~/.Xmodmap
 ln -s pentadactylrc ~/.pentadactylrc
+ghc --make hoox.hs && mv hookx /usr/local/bin/ && rm hookx.o hookx.hi
 cd ~
 
-sudo apt-get -y install automake autoconf pkg-config bison flex build-essential curl gcc g++ checkinstall
 sudo apt-get -y install ruby-dev rubygems rake
 
 # vundle

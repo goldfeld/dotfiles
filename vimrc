@@ -237,6 +237,11 @@ let g:dow_wip = ['~/goldfeld', '~/voidco', '~/.vim/bundle',
   \ '~/inkspree', '~/longstorm']
 "}}}1
 
+" my thumb can't take being contracted for Alt all the time anymore
+nnoremap <silent> <Space>t :silent! !hookx 1<CR>
+nnoremap <silent> <Space>h :silent! !hookx 5<CR>
+nnoremap <silent> <Space>c :silent! !hookx 7<CR>
+
 let g:Vimdow = {}
 augroup DOW
   autocmd BufRead,BufNewFile *.dow call ReadDow()
