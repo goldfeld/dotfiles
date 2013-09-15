@@ -22,7 +22,7 @@ function b() {
 function B() {
   command git branch | grep "$@" | xargs git cherry -v --abbrev
 }
-alias c='hookx 7'
+alias c='hookx 9 && hookx 33'
 alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
 alias f='clear && git diff'
 function F() {
@@ -31,8 +31,9 @@ function F() {
   else command git diff --cached; fi
 }
 alias g='git log --graph --decorate --oneline --all | less'
-alias h='hookx 5'
+alias h='hookx 7'
 alias l=ls
+alias m='hookx 5'
 alias s='git status'
 function S() {
   command git stash save -k unstaged

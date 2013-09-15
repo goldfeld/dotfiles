@@ -239,8 +239,9 @@ let g:dow_wip = ['~/goldfeld', '~/voidco', '~/.vim/bundle',
 
 " my thumb can't take being contracted for Alt all the time anymore
 nnoremap <silent> t<CR> :silent! !hookx 1<CR>
-nnoremap <silent> h<CR> :silent! !hookx 5<CR>
-nnoremap <silent> c<CR> :silent! !hookx 7<CR>
+nnoremap <silent> m<CR> :silent! !hookx 5<CR>
+nnoremap <silent> h<CR> :silent! !hookx 7<CR>
+nnoremap <silent> c<CR> :silent! !hookx 9 && hookx 33<CR>
 
 let g:Vimdow = {}
 augroup DOW
