@@ -511,7 +511,7 @@ noremap mr :ChromeReload<CR>
 noremap mR :w<CR>:ChromeReload<CR>
 
 " b mark for closing buffer.
-nnoremap <silent> mb :execute "keepalt b#\\| bdelete" bufnr('%')<CR>
+nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
 "}}}1
 
 " repurpose the colon as my comma lost to leader.
