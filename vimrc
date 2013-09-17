@@ -275,6 +275,7 @@ vnoremap <silent> dd :delete<CR>
 vnoremap <silent> do :diffget<CR>
 vnoremap <silent> dp :diffput<CR>
 "}}}
+"{{{1 VIM-RESTRAIN
 let g:restrain_map = {
   \ "jj": [""],
   \ "kk": [""],
@@ -366,6 +367,7 @@ function! CheckCurrentCommand()
   endif
   let g:currentCommand = ''
 endfunction
+"}}}
 
 "inoremap <C-I> <C-O>:WriterMode<CR>
 
