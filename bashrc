@@ -13,6 +13,8 @@ echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
 # xrandr --output LVDS1 --primary --mode 1600x900 --below DP2
 # xrandr --output DP2 --mode 1920x1080 
 
+alias vi="gvim +'silent! !hookx 4 && hookx 3' +'au VimLeave * !hookx 1' "
+
 # letters
 alias a='ls -a'
 function b() {
