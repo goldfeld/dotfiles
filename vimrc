@@ -455,6 +455,7 @@ endfunction
 nnoremap mm :
 nnoremap mw :w<CR>
 nnoremap mq :q<CR>
+nnoremap mQ :ReturnFromFootnote<CR>
 nnoremap mv :vs<CR>
 nnoremap mz :sp<CR>
 nnoremap mh :help 
@@ -664,12 +665,22 @@ endfunction
 inoremap <C-S> <Esc>:set opfunc=Around<CR>g@
 
 "{{{1 ^B MAPPINGS
+" insert a pair of anything and position in-between
+inoremap <C-B><C-A> <C-O>:call InsertPair()<CR>
+function! InsertPair()
+  let char = nr2char(getchar())
+  execute "normal! a" . repeat(l:char, 2)
+  startinsert
+endfunction
+
 " toggle uppercase/lowercase.
 inoremap <C-B>b <Esc>vb~gvova
 " same as above but going over underscores.
 inoremap <C-B><C-B> <Esc>vB~gvova
-" toggle uppercase/lowercase of whole line (aka yell)
-inoremap <C-B><C-Y> <Esc>v^~gvova
+" insert two en-dashes (&#8211)
+inoremap <C-B><C-D> ––
+
+inoremap <C-B><C-F> <C-O>:AddVimFootnote<CR>
 
 " toggle case of first letter (pascal case).
 inoremap <C-B><C-P> <Esc>bv~ea
@@ -679,15 +690,8 @@ inoremap <C-B><C-T> <Esc>mb:execute
 nnoremap <C-B><C-T> :let linelen = len(getline('.'))<CR>mbge:execute
   \ "wh col('.') < linelen<Bar>exe 'norm! wv~e'<Bar>endw"<CR>`b
 
-" insert two en-dashes (&#8211)
-inoremap <C-B><C-D> ––
-" insert a pair of anything and position in-between
-inoremap <C-B><C-A> <C-O>:call InsertPair()<CR>
-function! InsertPair()
-  let char = nr2char(getchar())
-  execute "normal! a" . repeat(l:char, 2)
-  startinsert
-endfunction
+" toggle uppercase/lowercase of whole line (aka yell)
+inoremap <C-B><C-Y> <Esc>v^~gvova
 
 inoremap <C-B><C-L> <Esc>:call LinkPost()<Cr>
 function! LinkPost()
