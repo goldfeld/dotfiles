@@ -235,9 +235,15 @@ nnoremap <silent> m<CR> :silent! !hookx 5<CR>
 nnoremap <silent> h<CR> :silent! !hookx 7<CR>
 nnoremap <silent> c<CR> :silent! !hookx 9 && hookx 33<CR>
 
+nnoremap <silent> <Esc> :noh<CR><Esc>
+nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 
 nnoremap <C-H> <NOP>
 nnoremap <C-L> <NOP>
+nnoremap ZZ <NOP>
+
+" repurpose the colon as my comma lost to leader.
+nnoremap : ,
 
 " skip past big lines
 nnoremap gj j
@@ -245,8 +251,6 @@ nnoremap gk k
 
 " go to last inserted 
 nnoremap gi '^
-
-nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 
 nnoremap Y y$
 nnoremap yY ggyG
@@ -257,7 +261,6 @@ vnoremap < <gv
 vnoremap > >gv
 " save my pinky
 inoremap <Backspace> <NOP>
-nnoremap ZZ <NOP>
 
 " give up single d visual delete so I can emulate a diff buffer's normal
 " mode mappings in visual mode too with linewise control.
@@ -485,10 +488,6 @@ noremap mR :w<CR>:ChromeReload<CR>
 " b mark for closing buffer.
 nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
 "}}}1
-
-" repurpose the colon as my comma lost to leader.
-nnoremap : ,
-
 "{{{1 LEADER MAPPINGS
 let mapleader = ","
 
@@ -613,8 +612,6 @@ function! ResetDimensions()
   execute "set columns=" . g:RESETCOLUMNS
 endfunction
 "}}}1
-
-nnoremap <silent> <Esc> :noh<CR><Esc>
 
 " vim-around: type an opening ({['"<TAG> etc and press C-S + text object
 " to wrap the text around with a closing object.
