@@ -228,7 +228,7 @@ let g:dow_source = ['dmenu', 'ctrlr']
 let g:dow_projects = ['~/goldfeld', '~/voidco', '~/.vim/bundle',
   \ '~/inkspree', '~/longstorm']
 "}}}1
-
+"{{{1 CORE REMAPPINGS
 " my thumb can't take being contracted for Alt all the time anymore
 nnoremap <silent> t<CR> :silent! !hookx 1<CR>
 nnoremap <silent> m<CR> :silent! !hookx 5<CR>
@@ -252,10 +252,19 @@ nnoremap Y y$
 nnoremap yY ggyG
 nnoremap dD ggdG
 
+" visual shifting (relect after shift).
+vnoremap < <gv
+vnoremap > >gv
 " save my pinky
 inoremap <Backspace> <NOP>
 nnoremap ZZ <NOP>
 
+" give up single d visual delete so I can emulate a diff buffer's normal
+" mode mappings in visual mode too with linewise control.
+vnoremap <silent> dd :delete<CR>
+vnoremap <silent> do :diffget<CR>
+vnoremap <silent> dp :diffput<CR>
+"}}}
 let g:restrain_map = {
   \ "jj": [""],
   \ "kk": [""],
@@ -479,10 +488,6 @@ nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
 
 " repurpose the colon as my comma lost to leader.
 nnoremap : ,
-
-" visual shifting (relect after shift).
-vnoremap < <gv
-vnoremap > >gv
 
 "{{{1 LEADER MAPPINGS
 let mapleader = ","
@@ -766,12 +771,6 @@ endfunction
 
 " can't map <C-I> to anything else since it's the same as <Tab>.
 nnoremap <Tab> :CtrlPBuffer<CR>
-
-" give up single d visual delete so I can emulate a diff buffer's normal
-" mode mappings in visual mode too with linewise control.
-vnoremap <silent> dd :delete<CR>
-vnoremap <silent> do :diffget<CR>
-vnoremap <silent> dp :diffput<CR>
 
 "{{{1 ^T MAPPINGS
 " project based configs: https://github.com/timtadh/swork
