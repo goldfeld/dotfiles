@@ -833,9 +833,9 @@ nnoremap <silent> <C-T><C-U> :Dow edit untracked<CR>
 nnoremap <silent> <C-T>c :Dow swap untracked<CR>
 
 let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
-  \ . ' cd ~/voidco/void.co/leaks/_posts/ && find `pwd`;'
-  \ . ' cd ~/goldfeld/goldfeld.org/leaks/_posts/ && find `pwd`;'
-  \ . ' cd ~/goldfeld/goldfeld.org/articles/_posts/ && find `pwd`)' }
+\ . ' cd ~/goldfeld/goldfeld.org/articles/_posts/ && find `pwd` ! -iname ".*" ;'
+\ . ' cd ~/goldfeld/goldfeld.org/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
+\ . ' cd ~/voidco/void.co/leaks/_posts/ && find `pwd` ! -iname ".*" )' }
 nnoremap <silent> <C-T><C-L> :call dow#edit(g:all_leaks_query)<CR>
 nnoremap <silent> <C-T>l :call dow#swap(g:all_leaks_query)<CR>
 
