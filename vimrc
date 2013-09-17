@@ -749,6 +749,7 @@ command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 " 'V' is for viewing, when my intent is to quickly view a file then bdelete it.
 command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 
+" TODO auto title-case the post title, ignoring a user-defined dict of stopwords
 " scaffold new jekyll leak
 function! ScaffoldPost(title, dir)
   let newfile = '~/' . a:dir . '_posts/'
@@ -838,7 +839,6 @@ nnoremap <silent> <C-T>l :call dow#swap(g:all_leaks_query)<CR>
 nnoremap <C-T><C-P> :DowBuflist<CR>
 nnoremap <C-T><C-W> :DowWip<CR>
 
-" on vim plugins, ^T^M should :w|so %
 nnoremap <C-T><C-M> :Dowb<CR>
 nnoremap <C-T>m :Dowp<CR>
 
