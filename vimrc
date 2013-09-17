@@ -238,6 +238,7 @@ nnoremap <silent> c<CR> :silent! !hookx 9 && hookx 33<CR>
 nnoremap <silent> <Esc> :noh<CR><Esc>
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 
+inoremap <Backspace> <NOP>
 nnoremap <C-H> <NOP>
 nnoremap <C-L> <NOP>
 nnoremap ZZ <NOP>
@@ -259,8 +260,14 @@ nnoremap dD ggdG
 " visual shifting (relect after shift).
 vnoremap < <gv
 vnoremap > >gv
-" save my pinky
-inoremap <Backspace> <NOP>
+
+" make C-U and C-W undoable by using <C-G>u (signal a new change to vim.)
+inoremap <C-U> <C-G>u<C-U>
+inoremap <C-W> <C-G>u<C-W>
+
+" use register 'u' for emulating terminal C-U & C-Y on vim command line.
+cnoremap <C-U> <C-\>e(setreg("u", getcmdline())?"":"")<CR>
+cnoremap <C-Y> <C-R>u
 
 " give up single d visual delete so I can emulate a diff buffer's normal
 " mode mappings in visual mode too with linewise control.
@@ -669,14 +676,6 @@ function! LinkPost()
     \ . '](/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :] . ')'
 endfunction
 "}}}1
-
-" make C-U and C-W undoable by using <C-G>u (signal a new change to vim.)
-inoremap <C-U> <C-G>u<C-U>
-inoremap <C-W> <C-G>u<C-W>
-
-" use register 'u' for emulating terminal C-U & C-Y on vim command line.
-cnoremap <C-U> <C-\>e(setreg("u", getcmdline())?"":"")<CR>
-cnoremap <C-Y> <C-R>u
 
 " operator-pending
 onoremap in( :<C-U>normal! f(vi(<CR>
