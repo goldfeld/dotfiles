@@ -235,35 +235,6 @@ nnoremap <silent> m<CR> :silent! !hookx 5<CR>
 nnoremap <silent> h<CR> :silent! !hookx 7<CR>
 nnoremap <silent> c<CR> :silent! !hookx 9 && hookx 33<CR>
 
-let g:Vimdow = {}
-augroup DOW
-  autocmd BufRead,BufNewFile *.dow call ReadDow()
-   autocmd VimEnter * nested if argc() == 0 && filereadable(".dow") |
-     \ call ReadDowFile(".dow")
-augroup END
-
-function! ReadDowFile(path)
-  let lines = readfile(a:path)
-  let bufopen = []
-
-  for line in l:lines
-    let char = line[0]
-    if l:char == '$'
-      let exeline = line[1:]
-      call system(line[1:])
-      if stridx(line, "grunt") != -1
-        let escline = substitute(line[1:], '"', '\\"', 'g')
-        execute 'nnoremap <Leader>o :call system("' l:escline '"' ")\<CR>"
-      endif
-    elseif l:char == '.' || l:char == '/'
-      call add(bufopen, line)
-    endif
-  endfor
-
-  for fname in l:bufopen
-    execute "badd" fname
-  endfor
-endfunction
 
 nnoremap <C-H> <NOP>
 nnoremap <C-L> <NOP>
