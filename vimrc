@@ -10,7 +10,7 @@ Bundle 'gmarik/vundle'
 Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
 Bundle 'mikewest/vimroom'
-Bundle 'goldfeld/vim-micro'
+Bundle 'goldfeld/vim-remarkable'
 Bundle 'goldfeld/vim-walker'
 
 " writing
