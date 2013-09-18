@@ -668,7 +668,7 @@ inoremap <C-B><C-Y> <Esc>v^~gvova
 
 inoremap <C-B><C-L> <Esc>:call LinkPost()<Cr>
 function! LinkPost()
-  let pick = dow#source(g:all_leaks_query)
+  let pick = dow#pick(g:all_leaks_query)
   let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
     \ . l:pick))
 
@@ -815,6 +815,8 @@ nnoremap <C-T>d :vertical resize 160<CR>:Gdiff<CR><C-W>h
 " show buffer list as single echo line, grouped by git repo.
 "}}}1
 "{{{1 GIT BINDS
+" TODO move Gcached to vimdow and make it identify line moves
+ " [diff - Highlighting added/deleted lines, ignoring moves, in a patch file - Stack Overflow](http://stackoverflow.com/questions/1380333/highlighting-added-deleted-lines-ignoring-moves-in-a-patch-file)
 " gS will always get status while gs depends on the current repo situation.
 nnoremap gS :Gstatus<CR>
 nnoremap gs :call Gcached()<CR>
