@@ -779,19 +779,19 @@ nnoremap <silent> <C-T><C-N> :Dow edit prj<CR>
 nnoremap <silent> <C-T>n :Dow swap prj<CR>
 nnoremap <silent> <C-T>t<C-N> :DowLine swap prj<CR>
 
-nnoremap <silent> <C-T><C-H> :Dow edit buf<CR>
-nnoremap <silent> <C-T>h :Dow swap buf<CR>
+nnoremap <silent> <C-T><C-H> :Dowf edit buf<CR>
+nnoremap <silent> <C-T>h :Dowf swap buf<CR>
 
-nnoremap <silent> <C-T><C-C> :Dow edit prj buf<CR>
-nnoremap <silent> <C-T>c :Dow swap prj buf<CR>
+nnoremap <silent> <C-T><C-C> :Dowf edit prj buf<CR>
+nnoremap <silent> <C-T>c :Dowf swap prj buf<CR>
 
 nnoremap <silent> <C-T><C-S> :DowLine<CR>
 nnoremap <silent> <C-T>s :DowSymbol<CR>
 nnoremap <silent> <C-T><C-Z> :DowLine #<CR>
 nnoremap <silent> <C-T>z :DowSymbol #<CR>
 
-nnoremap <silent> <C-T><C-U> :Dow edit untracked<CR>
-nnoremap <silent> <C-T>c :Dow swap untracked<CR>
+nnoremap <silent> <C-T><C-U> :Dowf edit untracked<CR>
+nnoremap <silent> <C-T>c :Dowf swap untracked<CR>
 
 let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
 \ . ' cd ~/goldfeld/goldfeld.org/articles/_posts/ && find `pwd` ! -iname ".*" ;'
