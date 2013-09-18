@@ -11,7 +11,6 @@ Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
 Bundle 'mikewest/vimroom'
 Bundle 'goldfeld/vim-micro'
-Bundle 'lordm/vim-browser-reload-linux'
 Bundle 'goldfeld/vim-walker'
 
 " writing
@@ -483,16 +482,10 @@ function! PurgeBuffers()
   redraw
 endfunction
 
-let reloading = 0
-command! -nargs=* AutoReload call AutoReload()
-function! AutoReload()
-  if l:reloading | ChromeReloadStart<CR>
-  else | ChromeReloadStop<CR>
-  endif
-  :let l:reloading = !l:reloading
-endfunction
-noremap mr :ChromeReload<CR>
-noremap mR :w<CR>:ChromeReload<CR>
+nnoremap mR :Reload<CR>
+nnoremap mr :w<CR>:Reload<CR>
+command! Reload silent! execute '!hookx 9 && hookx 33 && xdotool search'
+  \ . ' --onlyvisible --class Chromium-browser key --clearmodifiers ctrl+r'
 
 " b mark for closing buffer.
 nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
