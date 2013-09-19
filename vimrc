@@ -444,12 +444,20 @@ endfunction
 nnoremap mm :
 nnoremap mw :w<CR>
 nnoremap mq :q<CR>
-nnoremap mQ :ReturnFromFootnote<CR>
 nnoremap mv :vs<CR>
 nnoremap mz :sp<CR>
 nnoremap mh :help 
 
-nnoremap mx :x<CR>:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
+" 'more <cWORD>'; made for markdown footnotes but just as useful generally.
+nnoremap m* /<C-\>eCfootnote("<C-R><C-A>")<CR><CR>
+nnoremap m# ?<C-\>eCfootnote("<C-R><C-A>")<CR><CR>
+nnoremap mQ :ReturnFromFootnote<CR>
+function! Cfootnote(text)
+  return escape(substitute(a:text,'[\[\]:]', '', 'g') , '^$.*+')
+endfunction
+
+nnoremap mx :x<CR>
+  \:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
 
 " other marks for my other pinky
 nnoremap mo O
@@ -932,7 +940,7 @@ function! s:Bash(cmdline, ...)
 endfunction
 "}}}1
 
-nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
+"nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
 command! -nargs=0 AutoHighlightToggle call AutoHighlightToggle()
 function! AutoHighlightToggle()
   let @/ = ''
