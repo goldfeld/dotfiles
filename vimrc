@@ -230,7 +230,7 @@ let g:pomodoro_time_break = 1
 set statusline+=(%{pomodoro#status()})
 
 let g:dow_source = ['dmenu', 'ctrlr']
-let g:dow_projects = ['~/goldfeld', '~/voidco', '~/.vim/bundle',
+let g:dow_projects = ['~/goldfeld', '~/void', '~/.vim/bundle',
   \ '~/inkspree', '~/longstorm']
 "}}}1
 "{{{1 CORE REMAPPINGS
@@ -732,7 +732,7 @@ command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 
 " TODO auto title-case the post title, ignoring a user-defined dict of stopwords
 " scaffold new jekyll leak
-function! ScaffoldPost(title, dir)
+function! ScaffoldPost(dir, title)
   let newfile = '~/' . a:dir . '_posts/'
     \ . strpart(system("date +'%Y-%m-%d-'"), 0, 11)
     \ . substitute(a:title, ' ', '-', 'g') . '.md'
@@ -742,11 +742,14 @@ function! ScaffoldPost(title, dir)
   execute "edit" l:newfile
 endfunction
 
-command! -nargs=* G call ScaffoldPost(<q-args>, 'goldfeld/goldfeld.org/leaks/')
+command! -nargs=* Post call ScaffoldPost(
+  \ split(<q-args>, ' ')[0], join(split(<q-args>, ' ')[1:], ' '))
+
+command! -nargs=* G call ScaffoldPost('goldfeld/goldfeld.org/leaks/', <q-args>)
 command! -nargs=* GG execute "norm! i[leak: " . <q-args> . "][/" .
   \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "G" <q-args>
 
-command! -nargs=* C call ScaffoldPost(<q-args>, 'voidco/void.co/leaks/')
+command! -nargs=* C call ScaffoldPost('void/void.co/leaks/', <q-args>)
 command! -nargs=* CC execute "norm! i[leak: " . <q-args> . "][/" .
   \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "C" <q-args>
 
@@ -803,7 +806,7 @@ nnoremap <silent> <C-T>c :Dowf swap untracked<CR>
 let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
 \ . ' cd ~/goldfeld/goldfeld.org/articles/_posts/ && find `pwd` ! -iname ".*" ;'
 \ . ' cd ~/goldfeld/goldfeld.org/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
-\ . ' cd ~/voidco/void.co/leaks/_posts/ && find `pwd` ! -iname ".*" )' }
+\ . ' cd ~/void/void.co/leaks/_posts/ && find `pwd` ! -iname ".*" )' }
 nnoremap <silent> <C-T><C-L> :call dow#edit(g:all_leaks_query)<CR>
 nnoremap <silent> <C-T>l :call dow#swap(g:all_leaks_query)<CR>
 
