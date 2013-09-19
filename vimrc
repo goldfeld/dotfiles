@@ -60,6 +60,11 @@ Bundle 'noahfrederick/Hemisu'
 Bundle 'Pychimp/vim-luna'
 Bundle 'altercation/vim-colors-solarized'
 "}}}
+"{{{ HELPERS
+function! Rescape(text)
+  return escape(a:text, '^$.*+')
+endfunction
+"}}}
 "{{{1 OPTIONS
 filetype plugin indent on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -448,13 +453,10 @@ nnoremap mv :vs<CR>
 nnoremap mz :sp<CR>
 nnoremap mh :help 
 
-" 'more <cWORD>'; made for markdown footnotes but just as useful generally.
-nnoremap m* /<C-\>eCfootnote("<C-R><C-A>")<CR><CR>
-nnoremap m# ?<C-\>eCfootnote("<C-R><C-A>")<CR><CR>
+" 'more <cWORD>'
+nnoremap m* /<C-\>eRescape("<C-R><C-A>")<CR><CR>
+nnoremap m# ?<C-\>eRescape("<C-R><C-A>")<CR><CR>
 nnoremap mQ :ReturnFromFootnote<CR>
-function! Cfootnote(text)
-  return escape(substitute(a:text,'[\[\]:]', '', 'g') , '^$.*+')
-endfunction
 
 nnoremap mx :x<CR>
   \:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
@@ -515,6 +517,8 @@ nnoremap <Leader>] }O
 
 nnoremap <Leader>* g*
 nnoremap <Leader># g#
+nnoremap ]* yi]/<C-\>eRescape('<C-R>"')<CR><CR>
+nnoremap [# yi]?<C-\>eRescape('<C-R>"')<CR><CR>
 
 " to go end of textwidth.
 nnoremap <Leader>- 81\|
