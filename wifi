@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo service network-manager restart
+sudo ifconfig wlan0
+sudo iwconfig wlan0 essid GVT-6E0F
+sudo dhclient wlan0

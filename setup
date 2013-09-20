@@ -18,6 +18,7 @@ ln -s bashrc ~/.bashrc
 ln -s xinitrc ~/.xinitrc
 ln -s Xmodmap ~/.Xmodmap
 ln -s pentadactylrc ~/.pentadactylrc
+ln -s wifi ~/wifi
 ghc --make hoox.hs && mv hookx /usr/local/bin/ && rm hookx.o hookx.hi
 cd ~
 
