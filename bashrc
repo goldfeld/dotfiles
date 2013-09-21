@@ -13,7 +13,7 @@ echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
 # xrandr --output LVDS1 --primary --mode 1600x900 --below DP2
 # xrandr --output DP2 --mode 1920x1080 
 
-alias vi="gvim +'silent! !hookx 4 && hookx 3' +'au VimLeave * !hookx 1' "
+alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
 
 # letters
 alias a='ls -a'
@@ -24,7 +24,7 @@ function b() {
 function B() {
   command git branch | grep "$@" | xargs git cherry -v --abbrev
 }
-alias c='hookx 9 && hookx 33'
+alias c='hooker 1'
 alias d="date +'[%Yw%W] %b %-e %a <%H:%M>'"
 alias f='clear && git diff'
 function F() {
@@ -33,15 +33,16 @@ function F() {
   else command git diff --cached; fi
 }
 alias g='git log --graph --decorate --oneline --all | less'
-alias h='hookx 7'
+alias h='hooker 7'
 alias l=ls
-alias m='hookx 5'
+alias m='hooker 5'
+alias r='hooker 9 && hooker 33'
 alias s='git status'
 function S() {
   command git stash save -k unstaged
   # run tests to make sure commit isnt broken
 }
-alias t='hookx 3'
+alias t='hooker 3'
 function w() {
   command gvim -c 'e +set\ lines=24\ \|\ set\ columns=80\ \|\ vs\ ~/todo ~/tada'
 }

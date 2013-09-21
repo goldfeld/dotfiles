@@ -240,10 +240,10 @@ let g:dow_projects = ['~/goldfeld', '~/void', '~/.vim/bundle',
 "}}}1
 "{{{1 CORE REMAPPINGS
 " my thumb can't take being contracted for Alt all the time anymore
-nnoremap <silent> t<CR> :silent! !hookx 1<CR>
-nnoremap <silent> m<CR> :silent! !hookx 5<CR>
-nnoremap <silent> h<CR> :silent! !hookx 7<CR>
-nnoremap <silent> c<CR> :silent! !hookx 9 && hookx 33<CR>
+nnoremap <silent> c<CR> :silent! !hooker 1<CR>
+nnoremap <silent> m<CR> :silent! !hooker 5<CR>
+nnoremap <silent> h<CR> :silent! !hooker 7<CR>
+nnoremap <silent> r<CR> :silent! !hooker 9 && hooker 33<CR>
 
 nnoremap <silent> <Esc> :noh<CR><Esc>
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -498,9 +498,9 @@ function! PurgeBuffers()
   redraw
 endfunction
 
-nnoremap mR :Reload<CR>
 nnoremap mr :w<CR>:Reload<CR>
-command! Reload silent! execute '!hookx 9 && hookx 33 && xdotool search'
+nnoremap mR :Reload<CR>
+command! Reload silent! execute '!hooker 9 && hooker 33 && xdotool search'
   \ . ' --onlyvisible --class Chromium-browser key --clearmodifiers ctrl+r'
 
 " b mark for closing buffer.
