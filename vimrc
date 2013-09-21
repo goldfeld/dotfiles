@@ -678,15 +678,21 @@ nnoremap <C-B><C-T> :let linelen = len(getline('.'))<CR>mbge:execute
 " toggle uppercase/lowercase of whole line (aka yell)
 inoremap <C-B><C-Y> <Esc>v^~gvova
 
-inoremap <C-B><C-L> <Esc>:call LinkPost()<Cr>
-function! LinkPost()
+inoremap <C-B><C-L> <Esc>:call LinkPost('title')<Cr>
+inoremap <C-B>l <Esc>:call LinkPost()<Cr>
+function! LinkPost(...)
+  let with_title = get(a:000, 0, '')
   let pick = dow#pick(g:all_leaks_query)
-  let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
-    \ . l:pick))
-
   let date_and_slug = fnamemodify(l:pick, ':t')
-  execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
-    \ . '](/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :] . ')'
+  let url = '/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :]
+
+  if with_title =~# 'title'
+    let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
+      \ . l:pick))
+    execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
+      \ . '](' . l:url . ')'
+  else | execute 'normal! i ' . l:url
+  endif
 endfunction
 "}}}1
 
