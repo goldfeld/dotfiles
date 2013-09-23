@@ -200,13 +200,13 @@ endfunction
 "}}}
 "{{{1 PLUGIN SETTINGS
 let g:TNTWebBrowser = 'luakit'
+let g:walker_keepalt = 1
+let g:textobjectify_onthefly_same = 1
 
 let g:seek_char_aliases = '&% $~ #` @^ \| ;: ,< .> -_ /? ' . "'" . '"'
 let g:seek_listchars = ','
 let g:seek_enable_jumps = 1
 let g:seek_use_vanilla_binds_in_diffmode = 1
-
-let g:textobjectify_onthefly_same = 1
 
 let g:surround_no_mappings = 1
 let g:surround_no_insert_mappings = 1
