@@ -64,6 +64,23 @@ Bundle 'altercation/vim-colors-solarized'
 function! Rescape(text)
   return escape(a:text, '^$.*+')
 endfunction
+
+let g:inbox = fnamemodify('~/goldfeld/.tnt/inbox.tnt', ':p')
+let g:inbox_cmd = "awk 'BEGIN { links = 0; } /^### links$/ { links = 1; } "
+  \ . "!/^#/ { if (links) print \"L\" NR \" \" $0 }' " . g:inbox
+let g:inbox_query = { 'list': 10, 'prompt': 'inbox','query': g:inbox_cmd }
+
+function! InboxHookWrap(cmd)
+  if !empty(system(g:inbox_cmd))
+    let item = split(dow#pick(g:inbox_query), ' ')
+    if empty(l:item) | return | endif
+    let [cutoff, markdown] = [l:item[0][1:], l:item[1:]]
+    let lines = readfile(g:inbox)
+    call writefile(l:lines[: l:cutoff - 2] + l:lines[l:cutoff :], g:inbox)
+    let @" = join(l:markdown, ' ')
+  endif
+  execute a:cmd
+endfunction
 "}}}
 "{{{1 OPTIONS
 filetype plugin indent on
@@ -818,8 +835,10 @@ let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
 \ . ' cd ~/goldfeld/goldfeld.org/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
 \ . ' cd ~/void/void.co/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
 \ . ' cd ~/void/void.co/readings/_posts/ && find `pwd` ! -iname ".*" )' }
-nnoremap <silent> <C-T><C-L> :call dow#edit(g:all_leaks_query)<CR>
-nnoremap <silent> <C-T>l :call dow#swap(g:all_leaks_query)<CR>
+nnoremap <silent> <C-T><C-L>
+  \ :call InboxHookWrap('call dow#edit(g:all_leaks_query)')<CR>
+nnoremap <silent> <C-T>l
+  \ :call InboxHookWrap('call dow#swap(g:all_leaks_query)')<CR>
 
 " list projects
 " allow me to define here some basic dow projects for which their status will
