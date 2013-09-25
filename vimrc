@@ -13,7 +13,7 @@ Bundle 'mikewest/vimroom'
 Bundle 'goldfeld/vim-remarkable'
 Bundle 'goldfeld/vim-walker'
 Bundle 'pydave/AsyncCommand'
-Bundle 'mnick/vim-pomodoro'
+Bundle 'goldfeld/vim-pomooc'
 
 " writing
 Bundle 'goldfeld/tnt'
