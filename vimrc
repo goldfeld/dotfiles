@@ -138,7 +138,10 @@ augroup filetypeSettings
   autocmd BufRead,BufNewFile *.elm setlocal filetype=haskell
   autocmd BufRead,BufNewFile *.tnt,*.ana setlocal et cc=0 filetype=markdown
   autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+
   autocmd filetype vim setlocal fdm=marker kp=:help
+  autocmd filetype vim nnoremap <buffer> <C-T><C-M> :w<CR>:so %<CR>
+
   autocmd filetype make setlocal shiftwidth=8 tabstop=8
   autocmd filetype rust setlocal shiftwidth=4 tabstop=4
   autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
