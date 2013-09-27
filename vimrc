@@ -13,7 +13,6 @@ Bundle 'mikewest/vimroom'
 Bundle 'goldfeld/vim-remarkable'
 Bundle 'goldfeld/vim-walker'
 Bundle 'pydave/AsyncCommand'
-Bundle 'goldfeld/vim-pomooc'
 
 " writing
 Bundle 'goldfeld/tnt'
@@ -249,10 +248,6 @@ nnoremap md :MicroMarkClear<CR>
 for micromark in g:MicroMarks
   execute "nnoremap '" . micromark . " `" . micromark . "zvzz"
 endfor
-
-let g:pomodoro_time_work = 1
-let g:pomodoro_time_break = 1
-set statusline+=(%{pomodoro#status()})
 
 let g:dow_source = ['dmenu', 'ctrlr']
 let g:dow_projects = ['~/leak', '~/goldfeld', '~/void', '~/.vim/bundle',
