@@ -1250,7 +1250,13 @@ function! ShowingHNParse()
   echo parsed
 endfunction
 
-nnoremap <leader>.s :call Viminder()<CR>
+nnoremap <leader>.s :call SearchTableRow()<CR>
+function! SearchTableRow()
+  execute 'normal! ^"ryt|'
+  call system('chromium-browser https://duckduckgo.com/?q=g!+rio+'
+    \ . substitute(getreg('r'), ' ', '%20', 'g'))
+endfunction
+
 function! Viminder()
   let [date, time] = split(system("date +'%Y%m%d_%T'"), '_')
   let punchcard = '"' . expand('$HOME') . '/punchcard"'
