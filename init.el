@@ -14,6 +14,7 @@
 
 (defvar my-packages '(evil
                       evil-leader
+                      org
                       projectile
                       flx-ido
                       helm
@@ -79,6 +80,8 @@
 
 (define-key evil-normal-state-map "\C-t" nil)
 (define-key evil-normal-state-map "\C-t\C-h" 'ido-switch-buffer)
+
+(define-key evil-normal-state-map "\C-cf" 'org-footnote-action)
 
 (defun alt-buffer () (other-buffer (current-buffer) 1))
 (defun switch-to-alt-buffer () (interactive) (switch-to-buffer (alt-buffer)))
