@@ -810,8 +810,11 @@ nnoremap <Tab> :CtrlPBuffer<CR>
 "{{{1 ^T MAPPINGS
 " project based configs: https://github.com/timtadh/swork
 " B to close a buffer by bufnr (pegword), <C-B> enter purge repl (currently mp)
-" G to kill group (git repo), <C-G> for repl
+" G to kill group (git repo), <C-G> for repl -- (pk in projectile)
 " L list local (git repo), <C-L> list all (as currently)
+nnoremap <silent> <C-C>pf <C-C>:Dow edit prj<CR>
+nnoremap <silent> <C-C>pb <C-C>:Dow edit prj buf<CR>
+
 nnoremap <silent> <C-T><C-N> :Dow edit prj<CR>
 nnoremap <silent> <C-T>n :Dow swap prj<CR>
 nnoremap <silent> <C-T>t<C-N> :DowLine swap prj<CR>
