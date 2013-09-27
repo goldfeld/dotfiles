@@ -15,6 +15,7 @@
 (defvar my-packages '(evil
                       evil-leader
                       projectile
+                      flx-ido
                       helm
                       helm-projectile
                       magit
@@ -40,17 +41,19 @@
 	 
 (projectile-global-mode)
 
-;(require 'color-theme)
-;(color-theme-initialize)
-;(color-theme-arjen)
-(load-theme 'solarized-dark t)
+;(load-theme 'solarized-dark t)
+;(load-theme 'zenburn t)
+(load-theme 'purple-haze t)
 
 (require 'evil)
 (evil-mode t)
 
 (require 'ido)
+(require 'flx-ido)
 (ido-mode 1)
 (ido-everywhere 1)
+(flx-ido-mode 1)
+(setq ido-use-faces nil)
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-tramp-completion nil)
 (setq ido-enable-flex-matching t)
@@ -77,12 +80,21 @@
 (define-key evil-normal-state-map "\C-t" nil)
 (define-key evil-normal-state-map "\C-t\C-h" 'ido-switch-buffer)
 
+(defun alt-buffer () (other-buffer (current-buffer) 1))
+(defun switch-to-alt-buffer () (interactive) (switch-to-buffer (alt-buffer)))
+
 (define-key evil-motion-state-map "," nil)
+(define-key evil-normal-state-map ",," 'switch-to-alt-buffer)
 (define-key evil-normal-state-map ",.v" (kbd ":e /home/vic/goldfeld/dotfiles/init.el"))
 
 (define-key evil-normal-state-map "m" nil)
 (define-key evil-motion-state-map "mm" 'evil-ex)
 (define-key evil-normal-state-map "mw" (kbd ":w"))
+(define-key evil-normal-state-map "mb" (lambda () (interactive)
+					 (switch-to-alt-buffer)
+					 (kill-buffer (alt-buffer))))
+
+;nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
 (define-key evil-normal-state-map "mq" (kbd ":q"))
 (define-key evil-normal-state-map "mv" (kbd ":vsplit"))
 (define-key evil-normal-state-map "mz" (kbd ":split"))
@@ -113,12 +125,14 @@
 (add-hook 'nrepl-mode-hook 'paredit-mode)
 ;; (add-hook 'nrepl-mode-hook 'smartparens-mode)
 (add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("c5207e7b8cc960e08818b95c4b9a0c870d91db3eaf5959dd4eba09098b7f232b" default))))
+ '(custom-safe-themes (quote ("f5db04080a5133bc99721d680a11cf974d60d1df347b08841b43c3e97f52d3bf" "c5207e7b8cc960e08818b95c4b9a0c870d91db3eaf5959dd4eba09098b7f232b" default))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
