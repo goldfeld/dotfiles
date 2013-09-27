@@ -65,7 +65,7 @@ function! Rescape(text)
   return escape(a:text, '^$.*+')
 endfunction
 
-let g:inbox = fnamemodify('~/goldfeld/.tnt/inbox.tnt', ':p')
+let g:inbox = fnamemodify('~/leak/.tnt/inbox.tnt', ':p')
 let g:inbox_cmd = "awk 'BEGIN { links = 0; } /^### links$/ { links = 1; } "
   \ . "!/^#/ { if (links) print \"L\" NR \" \" $0 }' " . g:inbox
 let g:inbox_query = { 'list': 10, 'prompt': 'inbox','query': g:inbox_cmd }
@@ -255,7 +255,7 @@ let g:pomodoro_time_break = 1
 set statusline+=(%{pomodoro#status()})
 
 let g:dow_source = ['dmenu', 'ctrlr']
-let g:dow_projects = ['~/goldfeld', '~/void', '~/.vim/bundle',
+let g:dow_projects = ['~/leak', '~/goldfeld', '~/void', '~/.vim/bundle',
   \ '~/inkspree', '~/longstorm']
 "}}}1
 "{{{1 CORE REMAPPINGS
@@ -616,7 +616,7 @@ endfunction
 "}}}
 "{{{1 LEADER DOT MAPPINGS
 " quickly edit my tnt outline
-nnoremap <silent> <Leader>.t :e ~/goldfeld/.tnt/lifethreads.tnt<CR>
+nnoremap <silent> <Leader>.t :e ~/leak/.tnt/lifethreads.tnt<CR>
 " allow left ctrl (which I remap to my Caps Lock key) to act as <Esc> when pressed alone.
 nnoremap <silent> <Leader>.x :execute "call system(\"xcape -e 'Control_L=Escape'\")"<CR>
 " grab ssh publickey to clipboard.
@@ -762,26 +762,24 @@ command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 
 " TODO auto title-case the post title, ignoring a user-defined dict of stopwords
 " scaffold new jekyll leak
-function! ScaffoldPost(dir, title)
-  let newfile = '~/' . a:dir . '_posts/'
+let g:leakyll_basedir = '~/leak'
+let g:leakyll_default_category = 'leaks'
+function! ScaffoldPost(dir, title, ...)
+  let category = get(a:000, 0, g:leakyll_default_category)
+
+  let newfile = g:leakyll_basedir . '/' . a:dir . '/' . l:category . '/_posts/'
     \ . strpart(system("date +'%Y-%m-%d-'"), 0, 11)
     \ . substitute(a:title, ' ', '-', 'g') . '.md'
 
   call writefile(['---', 'layout: leak', 'title: "' . a:title . '"',
-    \ 'category: leaks', '---', ''], fnamemodify(l:newfile, ':p'))
+    \ 'category: ' . l:category, '---', ''], fnamemodify(l:newfile, ':p'))
   execute "edit" l:newfile
 endfunction
 
-command! -nargs=* Post call ScaffoldPost(
+command! -nargs=* L call ScaffoldPost(
   \ split(<q-args>, ' ')[0], join(split(<q-args>, ' ')[1:], ' '))
-
-command! -nargs=* G call ScaffoldPost('goldfeld/goldfeld.org/leaks/', <q-args>)
-command! -nargs=* GG execute "norm! i[leak: " . <q-args> . "][/" .
-  \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "G" <q-args>
-
-command! -nargs=* C call ScaffoldPost('void/void.co/leaks/', <q-args>)
-command! -nargs=* CC execute "norm! i[leak: " . <q-args> . "][/" .
-  \ substitute(<q-args>, ' ', '-', 'g') . "]" | execute "C" <q-args>
+command! -nargs=* LL execute "norm! i[" . join(split(<q-args>, ' ')[1:], ' ')
+  \ . "](/" . substitute(<q-args>, ' ', '-', 'g') . ")" | execute "L" <q-args>
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
@@ -837,10 +835,13 @@ nnoremap <silent> <C-T><C-U> :Dowf edit untracked<CR>
 nnoremap <silent> <C-T>c :Dowf swap untracked<CR>
 
 let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
-\ . ' cd ~/goldfeld/goldfeld.org/articles/_posts/ && find `pwd` ! -iname ".*" ;'
-\ . ' cd ~/goldfeld/goldfeld.org/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
-\ . ' cd ~/void/void.co/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
-\ . ' cd ~/void/void.co/readings/_posts/ && find `pwd` ! -iname ".*" )' }
+  \ . ' cd ~/leak/goldfeld/articles/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/goldfeld/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/void/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/.tnt/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/.tnt/games/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/.tnt/games/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/void/readings/_posts/ && find `pwd` ! -iname ".*" )' }
 nnoremap <silent> <C-T><C-L>
   \ :call InboxHookWrap('call dow#edit(g:all_leaks_query)')<CR>
 nnoremap <silent> <C-T>l
