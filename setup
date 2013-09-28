@@ -10,10 +10,11 @@ sudo apt-get -y install automake autoconf pkg-config bison flex build-essential 
 sudo apt-get -y install haskell-platform
 
 mkdir -p /usr/local/bin
-mkdir -p ~/.emacs.d
+mkdir -p ~/.emacs.d && mkdir -p ~/.xmonad
 mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
 cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
+
 ln -s vimrc ~/.vimrc
 ln -s bashrc ~/.bashrc
 ln -s init.el ~/.emacs.d/init.el
@@ -21,6 +22,7 @@ ln -s xinitrc ~/.xinitrc
 ln -s Xmodmap ~/.Xmodmap
 ln -s pentadactylrc ~/.pentadactylrc
 ln -s wifi ~/wifi
+cp xmonad.hs ~/.xmonad/xmonad.hs
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
 
