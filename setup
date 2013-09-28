@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get -y update
-sudo apt-get -y git-core
+sudo apt-get -y install git-core
 git config --global user.name "Vic Goldfeld"
 git config --global user.email "vic@longstorm.org"
 git config --global push.default simple
@@ -11,7 +11,7 @@ sudo apt-get -y install haskell-platform
 
 mkdir -p /usr/local/bin
 mkdir -p ~/.emacs.d
-mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles
+mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
 cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
 ln -s vimrc ~/.vimrc
@@ -21,7 +21,7 @@ ln -s xinitrc ~/.xinitrc
 ln -s Xmodmap ~/.Xmodmap
 ln -s pentadactylrc ~/.pentadactylrc
 ln -s wifi ~/wifi
-ghc --make hoox.hs && mv hookx /usr/local/bin/ && rm hookx.o hookx.hi
+ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
 
 sudo apt-get -y install ruby-dev rubygems rake
