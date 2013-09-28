@@ -30,15 +30,25 @@ sudo apt-get -y install ruby-dev rubygems rake
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
 
+# dmenu with ^M working as Return 
+git clone https://github.com/goldfeld/dmenu ~/dmenu
+cd ~/dmenu && make && sudo make install && cd ~
+
 # xcape
 sudo apt-get -y install libxtst-dev
 git clone https://github.com/alols/xcape ~/xcape
 cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
 
+# heroku toolbelt (cli)
+sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+# deps respectively for: battery info, github ssh, vim-reload-linux, tnt.vim
+sudo apt-get -y install acpi xclip xdotool recode
+
 # termite
 sudo apt-get -y install vte-2.90
 git clone --recursive https://github.com/thestinger/termite.git ~/termite
-cd ~/termite && make
+cd ~/termite && make & cd ~
 
 # nodejs
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
@@ -65,11 +75,5 @@ sudo npm install -g dustjs-linkedin
 
 # luakit
 sudo apt-get -y install libx11-dev libxtst-dev sqlite3 webkit-1.0 socat glib-2.0 liblua5.1-0-dev liblua5.1-filesystem0 libsqlite3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev unique-1.0 libunique-dev libncurses5-dev libncursesw5-dev luarocks
-
-# heroku toolbelt (cli)
-sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-# deps respectively for: battery info, github ssh, vim-reload-linux, tnt.vim
-sudo apt-get -y install acpi xclip xdotool recode
 
 read -p "done (press Enter to finish)"
