@@ -14,7 +14,11 @@ echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
 # xrandr --output DP2 --mode 1920x1080 
 
 alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
-alias em="emacsclient -a "" -c &"
+
+function em() {
+  command emacsclient -a "" -c &
+  command emacs "$@"
+}
 
 # letters
 alias a='ls -a'
