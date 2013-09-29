@@ -26,8 +26,6 @@ cp xmonad.hs ~/.xmonad/xmonad.hs
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
 
-sudo apt-get -y install ruby-dev rubygems rake
-
 # vundle
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
@@ -46,6 +44,9 @@ sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 # deps respectively for: battery info, github ssh, vim-reload-linux, tnt.vim
 sudo apt-get -y install acpi xclip xdotool recode
+
+sudo apt-get -y install ruby-dev rubygems rake
+sudo gem install bundler
 
 # termite
 sudo apt-get -y install vte-2.90
