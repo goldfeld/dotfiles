@@ -777,10 +777,12 @@ command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
 " scaffold new jekyll leak
 let g:leakyll_basedir = '~/leak'
 let g:leakyll_default_category = 'leaks'
-function! ScaffoldPost(dir, title, ...)
-  let category = get(a:000, 0, g:leakyll_default_category)
+function! ScaffoldPost(dir, title)
+  let path = split(a:dir, '/')
+  let dir = l:path[0]
+  let category = get(l:path, 1, g:leakyll_default_category)
 
-  let newfile = g:leakyll_basedir . '/' . a:dir . '/' . l:category . '/_posts/'
+  let newfile = g:leakyll_basedir . '/' . l:dir . '/' . l:category . '/_posts/'
     \ . strpart(system("date +'%Y-%m-%d-'"), 0, 11)
     \ . substitute(a:title, ' ', '-', 'g') . '.md'
 
