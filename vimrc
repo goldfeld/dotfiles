@@ -202,6 +202,113 @@ function! SearchTableRow()
     \ . substitute(getreg('r'), ' ', '%20', 'g'))
 endfunction
 "}}}
+"{{{1 SINGLE-FUNCTION FEATURES
+nnoremap m@ :set opfunc=Mawkro<CR>g@
+vnoremap m@ :<C-U>call Mawkro(visualmode(), 1)<CR>
+function! Mawkro(type, ...)
+  let sel_save = &selection
+  let &selection = "inclusive"
+  let reg_save = @@
+
+  silent exe "normal! uyy<C-R>"
+  let original_line = @@
+
+  " taken from ':help g@'
+  if a:0                   | silent exe "normal! `<" . a:type . "`>y"
+  elseif a:type == 'line'  | silent exe "normal! '[V']y"
+  elseif a:type == 'block' | silent exe "normal! `[\<C-V>`]y"
+  else                     | silent exe "normal! `[v`]y"
+  endif
+
+  let lines = split(@@, '\n')
+  let word = 0
+  let char = 0
+  let condition = 1
+  let last_was_space = 0
+
+  while l:condition
+    let now_char = l:lines[0][l:char]
+    let original_char = l:original_line[l:char]
+    let l:condition = l:now_char != "" && l:now_char == l:original_char
+    if l:original_char == " " && !l:last_was_space
+      let l:word += l:word + 1
+      let l:last_was_space = 1
+    else | let l:last_was_space = 0
+    endif
+  endwhile
+
+  silent exe "normal! `["
+  for line in l:lines[1:]
+    silent exe "normal! j0" . l:word . "W."
+  endfor
+
+  let &selection = sel_save
+  let @@ = reg_save
+endfunction
+
+" search for current selection when in visual mode.
+vnoremap <silent> * :call VisualSearch('f')<CR>
+vnoremap <silent> # :call VisualSearch('b')<CR>
+" from an idea by Michael Naumann
+function! VisualSearch(direction) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
+
+  let l:pattern = escape(@", '\\/.*$^~[]')
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+  if a:direction == 'b' | execute "normal ?" . l:pattern . "^M"
+  elseif a:direction == 'gv'
+    call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+  elseif a:direction == 'f' | execute "normal /" . l:pattern . "^M"
+  endif
+
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+
+"au! CursorHold *.[ch] nested call PreviewWord()
+" This will cause a ":ptag" to be executed for the keyword under the cursor,
+" when the cursor hasn't moved for the time set with 'updatetime'.  The "nested"
+" makes other autocommands be executed, so that syntax highlighting works in the
+" preview window.  The "silent!" avoids an error message when the tag could not
+" be found.
+" A nice addition is to highlight the found tag, avoid the ":ptag" when there
+" is no word under the cursor, and a few other things: >
+" (from vim documentation)
+function! PreviewWord()
+  " don't do this in the preview window
+  if &previewwindow | return | endif
+  let w = expand("<cword>")		" get the word under cursor
+  if w =~ '\a'			" if the word contains a letter
+
+    " Delete any existing highlight before showing another tag
+    silent! wincmd P			" jump to preview window
+    if &previewwindow			" if we really get there...
+      match none			" delete existing highlight
+      wincmd p			" back to old window
+    endif
+
+    " Try displaying a matching tag for the word under the cursor
+    try | exe "ptag " . w
+    catch | return
+    endtry
+
+    silent! wincmd P			" jump to preview window
+    if &previewwindow		" if we really get there...
+      " don't want a closed fold
+      if has("folding") | silent! .foldopen | endif
+      call search("$", "b")		" to end of previous line
+      let w = substitute(w, '\\', '\\\\', "")
+      call search('\<\V' . w . '\>')	" position cursor on match
+      " Add a match highlight to the word at this position
+      hi previewWord term=bold ctermbg=green guibg=green
+      exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
+      wincmd p			" back to old window
+    endif
+  endif
+endfunction
+"}}}
 "{{{1 VIM-COMA
 " vim-coma - use the comma as a dead key.
 inoremap ,, <Esc>
@@ -1344,28 +1451,6 @@ if !exists(":DiffOrig")
     \ | wincmd p | diffthis
 endif
 
-" search for current selection when in visual mode.
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
-
-" from an idea by Michael Naumann
-function! VisualSearch(direction) range
-  let l:saved_reg = @"
-  execute "normal! vgvy"
-
-  let l:pattern = escape(@", '\\/.*$^~[]')
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-  if a:direction == 'b' | execute "normal ?" . l:pattern . "^M"
-  elseif a:direction == 'gv'
-    call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-  elseif a:direction == 'f' | execute "normal /" . l:pattern . "^M"
-  endif
-
-  let @/ = l:pattern
-  let @" = l:saved_reg
-endfunction
-
 " meta-vim
 augroup HELP
   autocmd!
@@ -1390,46 +1475,4 @@ endfunction
 
 " don't mess up splits when resizing vim
 autocmd VimResized * wincmd =
-
-"au! CursorHold *.[ch] nested call PreviewWord()
-" This will cause a ":ptag" to be executed for the keyword under the cursor,
-" when the cursor hasn't moved for the time set with 'updatetime'.  The "nested"
-" makes other autocommands be executed, so that syntax highlighting works in the
-" preview window.  The "silent!" avoids an error message when the tag could not
-" be found.
-" A nice addition is to highlight the found tag, avoid the ":ptag" when there
-" is no word under the cursor, and a few other things: >
-" (from vim documentation)
-function! PreviewWord()
-  " don't do this in the preview window
-  if &previewwindow | return | endif
-  let w = expand("<cword>")		" get the word under cursor
-  if w =~ '\a'			" if the word contains a letter
-
-    " Delete any existing highlight before showing another tag
-    silent! wincmd P			" jump to preview window
-    if &previewwindow			" if we really get there...
-      match none			" delete existing highlight
-      wincmd p			" back to old window
-    endif
-
-    " Try displaying a matching tag for the word under the cursor
-    try | exe "ptag " . w
-    catch | return
-    endtry
-
-    silent! wincmd P			" jump to preview window
-    if &previewwindow		" if we really get there...
-      " don't want a closed fold
-      if has("folding") | silent! .foldopen | endif
-      call search("$", "b")		" to end of previous line
-      let w = substitute(w, '\\', '\\\\', "")
-      call search('\<\V' . w . '\>')	" position cursor on match
-      " Add a match highlight to the word at this position
-      hi previewWord term=bold ctermbg=green guibg=green
-      exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
-      wincmd p			" back to old window
-    endif
-  endif
-endfunction
 "}}}
