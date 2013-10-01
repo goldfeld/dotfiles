@@ -810,6 +810,8 @@ nnoremap <Tab> :CtrlPBuffer<CR>
 " L list local (git repo), <C-L> list all (as currently)
 nnoremap <silent> <C-C>pf <C-C>:Dow edit prj<CR>
 nnoremap <silent> <C-C>pb <C-C>:Dow edit prj buf<CR>
+nnoremap <silent> <C-C><C-C> :x<CR>
+  \:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
 
 nnoremap <silent> <C-T><C-N> :Dow edit prj<CR>
 nnoremap <silent> <C-T>n :Dow swap prj<CR>
