@@ -162,21 +162,6 @@ augroup filetypeSettings
   autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
 augroup END
 
-augroup orgMode
-  autocmd BufRead,BufNewFile *.tbl.org
-    \ vnoremap <buffer> is <Esc>?--<CR>jV/--<CR>k<Esc>:noh<CR>gv
-
-  autocmd BufRead,BufNewFile *.tbl.org
-    \ nnoremap <buffer> ]] /--<CR>j:noh<CR>
-  autocmd BufRead,BufNewFile *.tbl.org
-    \ nnoremap <buffer> ][ /--<CR>k:noh<CR>
-
-  autocmd BufRead,BufNewFile *.tbl.org
-    \ nnoremap <buffer> [[ ?--<CR>knj:noh<CR>
-  autocmd BufRead,BufNewFile *.tbl.org
-    \ nnoremap <buffer> [] ?--<CR>j:noh<CR>
-augroup END
-
 function! FtColors()
   if &diff || match(['vim', 'perl', 'diff'], &ft) != -1
     if g:colors_name != 'gruvbox' | color gruvbox | endif
@@ -192,6 +177,29 @@ function! FtColors()
   highlight ColorColumn guibg=#373737 ctermbg=236 |
   highlight CursorLine guibg=#373737 ctermbg=236 |
   highlight CursorColumn guibg=#373737 ctermbg=236
+endfunction
+"}}}
+"{{{1 ORG-MODE
+augroup orgMode
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ vnoremap <buffer> is <Esc>?--<CR>jV/--<CR>k<Esc>:noh<CR>gv
+
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> ]] /--<CR>j:noh<CR>
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> ][ /--<CR>k:noh<CR>
+
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> [[ ?--<CR>knj:noh<CR>
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> [] ?--<CR>j:noh<CR>
+augroup END
+
+nnoremap <leader>.s :call SearchTableRow()<CR>
+function! SearchTableRow()
+  execute 'normal! ^"ryt|'
+  call system('chromium-browser https://duckduckgo.com/?q=g!+rio+'
+    \ . substitute(getreg('r'), ' ', '%20', 'g'))
 endfunction
 "}}}
 "{{{1 VIM-COMA
@@ -1269,13 +1277,6 @@ function! ShowingHNParse()
   let output = '"'. expand('$HOME/result') .'"'
   let parsed = system("awk 'BEGIN {RS = ".'"[<>]"'."} NR == 2 {print}' ".file."")
   echo parsed
-endfunction
-
-nnoremap <leader>.s :call SearchTableRow()<CR>
-function! SearchTableRow()
-  execute 'normal! ^"ryt|'
-  call system('chromium-browser https://duckduckgo.com/?q=g!+rio+'
-    \ . substitute(getreg('r'), ' ', '%20', 'g'))
 endfunction
 
 function! Viminder()
