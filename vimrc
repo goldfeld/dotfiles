@@ -130,38 +130,6 @@ endif
 " rust's conceal (replacing stuff with unicode) doesn't work in gvim
 let g:no_rust_conceal = 1
 
-augroup filetypeSettings
-  autocmd!
-  autocmd BufEnter * call FtColors()
-  autocmd BufRead *pentadactylrc setlocal filetype=vim
-  autocmd BufRead,BufNewFile *.elm setlocal filetype=haskell
-  autocmd BufRead,BufNewFile *.tnt,*.ana setlocal et cc=0 filetype=markdown
-  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-
-  autocmd filetype vim setlocal fdm=marker kp=:help
-  autocmd filetype vim nnoremap <buffer> <C-T><C-M> :w<CR>:so %<CR>
-
-  autocmd filetype make setlocal shiftwidth=8 tabstop=8
-  autocmd filetype rust setlocal shiftwidth=4 tabstop=4
-  autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
-augroup END
-
-function! FtColors()
-  if &diff || match(['vim', 'perl', 'diff'], &ft) != -1
-    if g:colors_name != 'gruvbox' | color gruvbox | endif
-  elseif match(['html', 'css', 'make'], &ft) != -1
-    if g:colors_name != 'distinguished' | color distinguished | endif
-  elseif match(['ls'], &ft) != -1
-    if g:colors_name != 'candycode' | color candycode | endif
-  elseif match(['haskell'], &ft) != -1
-    if g:colors_name != 'solarized' | color solarized | endif
-  else | if g:colors_name != 'mustang' | color mustang | endif
-  endif
-  highlight ColorColumn guibg=#373737 ctermbg=236 |
-  highlight CursorLine guibg=#373737 ctermbg=236 |
-  highlight CursorColumn guibg=#373737 ctermbg=236
-endfunction
-
 set laststatus=2
 set statusline=
 set statusline+=%{fugitive#statusline()}
@@ -176,6 +144,56 @@ set guioptions+=c
 " modelines can execute arbitrary code in e.g. set foldexpr
 set modelines=0
 "}}}1
+"{{{1 BUFLOCAL OPTIONS
+augroup filetypeSettings
+  autocmd!
+  autocmd BufEnter * call FtColors()
+
+  autocmd BufRead *pentadactylrc setlocal filetype=vim
+  autocmd BufRead,BufNewFile *.elm setlocal filetype=haskell
+  autocmd BufRead,BufNewFile *.tnt,*.ana setlocal et cc=0 filetype=markdown
+  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+
+  autocmd filetype vim setlocal fdm=marker kp=:help
+  autocmd filetype vim nnoremap <buffer> <C-T><C-M> :w<CR>:so %<CR>
+
+  autocmd filetype make setlocal shiftwidth=8 tabstop=8
+  autocmd filetype rust setlocal shiftwidth=4 tabstop=4
+  autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
+augroup END
+
+augroup orgMode
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ vnoremap <buffer> is <Esc>?--<CR>jV/--<CR>k<Esc>:noh<CR>gv
+
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> ]] /--<CR>j:noh<CR>
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> ][ /--<CR>k:noh<CR>
+
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> [[ ?--<CR>knj:noh<CR>
+  autocmd BufRead,BufNewFile *.tbl.org
+    \ nnoremap <buffer> [] ?--<CR>j:noh<CR>
+augroup END
+
+function! FtColors()
+  if &diff || match(['vim', 'perl', 'diff'], &ft) != -1
+    if g:colors_name != 'gruvbox' | color gruvbox | endif
+  elseif match(['html', 'css', 'make'], &ft) != -1
+    if g:colors_name != 'distinguished' | color distinguished | endif
+  elseif match(['ls'], &ft) != -1
+    if g:colors_name != 'candycode' | color candycode | endif
+  elseif match(['haskell'], &ft) != -1
+    if g:colors_name != 'solarized' | color solarized | endif
+  else | if g:colors_name != 'mustang' | color mustang | endif
+  endif
+
+  highlight ColorColumn guibg=#373737 ctermbg=236 |
+  highlight CursorLine guibg=#373737 ctermbg=236 |
+  highlight CursorColumn guibg=#373737 ctermbg=236
+endfunction
+"}}}
 "{{{1 VIM-COMA
 " vim-coma - use the comma as a dead key.
 inoremap ,, <Esc>
