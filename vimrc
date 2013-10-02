@@ -952,8 +952,8 @@ nnoremap <silent> <C-T><C-N> :Dow edit prj<CR>
 nnoremap <silent> <C-T>n :Dow swap prj<CR>
 nnoremap <silent> <C-T>t<C-N> :DowLine swap prj<CR>
 
-nnoremap <silent> <C-T><C-H> :Dowf edit buf<CR>
-nnoremap <silent> <C-T>h :Dowf swap buf<CR>
+nnoremap <silent> <C-T><C-H> :Dow edit buf<CR>
+nnoremap <silent> <C-T>h :Dow swap buf<CR>
 
 nnoremap <silent> <C-T><C-C> :Dowf edit prj buf<CR>
 nnoremap <silent> <C-T>c :Dowf swap prj buf<CR>
