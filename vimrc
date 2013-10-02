@@ -202,6 +202,48 @@ function! SearchTableRow()
     \ . substitute(getreg('r'), ' ', '%20', 'g'))
 endfunction
 "}}}
+"{{{1 LEAKYLL
+" TODO auto title-case the post title, ignoring a user-defined dict of stopwords
+" scaffold new jekyll leak
+let g:leakyll_basedir = '~/leak'
+let g:leakyll_default_category = 'leaks'
+function! ScaffoldPost(dir, title)
+  let path = split(a:dir, '/')
+  let dir = l:path[0]
+  let category = get(l:path, 1, g:leakyll_default_category)
+
+  let newfile = g:leakyll_basedir . '/' . l:dir . '/' . l:category . '/_posts/'
+    \ . strpart(system("date +'%Y-%m-%d-'"), 0, 11)
+    \ . substitute(a:title, ' ', '-', 'g') . '.md'
+
+  call writefile(['---', 'layout: leak', 'title: "' . a:title . '"',
+    \ 'category: ' . l:category, '---', ''], fnamemodify(l:newfile, ':p'))
+  execute "edit" l:newfile
+endfunction
+
+command! -nargs=* L call ScaffoldPost(
+  \ split(<q-args>, ' ')[0], join(split(<q-args>, ' ')[1:], ' '))
+command! -nargs=* LL execute "norm! i[" . join(split(<q-args>, ' ')[1:], ' ')
+  \ . "](/" . substitute(<q-args>, ' ', '-', 'g') . ")" | execute "L" <q-args>
+
+inoremap <C-B><C-L> <Esc>:call LinkPost('title')<Cr>
+inoremap <C-B>l <Esc>:call LinkPost()<Cr>
+
+function! LinkPost(...)
+  let with_title = get(a:000, 0, '')
+  let pick = dow#pick(g:all_leaks_query)
+  let date_and_slug = fnamemodify(l:pick, ':t')
+  let url = '/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :]
+
+  if with_title =~# 'title'
+    let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
+      \ . l:pick))
+    execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
+      \ . '](' . l:url . ')'
+  else | execute 'normal! i ' . l:url
+  endif
+endfunction
+"}}}
 "{{{1 SINGLE-FUNCTION FEATURES
 nnoremap m@ :set opfunc=Mawkro<CR>g@
 vnoremap m@ :<C-U>call Mawkro(visualmode(), 1)<CR>
@@ -825,23 +867,6 @@ nnoremap <C-B><C-T> :let linelen = len(getline('.'))<CR>mbge:execute
 
 " toggle uppercase/lowercase of whole line (aka yell)
 inoremap <C-B><C-Y> <Esc>v^~gvova
-
-inoremap <C-B><C-L> <Esc>:call LinkPost('title')<Cr>
-inoremap <C-B>l <Esc>:call LinkPost()<Cr>
-function! LinkPost(...)
-  let with_title = get(a:000, 0, '')
-  let pick = dow#pick(g:all_leaks_query)
-  let date_and_slug = fnamemodify(l:pick, ':t')
-  let url = '/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :]
-
-  if with_title =~# 'title'
-    let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
-      \ . l:pick))
-    execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
-      \ . '](' . l:url . ')'
-  else | execute 'normal! i ' . l:url
-  endif
-endfunction
 "}}}1
 
 " operator-pending
@@ -887,29 +912,6 @@ command! -nargs=1 B execute "buffer" (<q-args>)[0]
 command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
 " 'V' is for viewing, when my intent is to quickly view a file then bdelete it.
 command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
-
-" TODO auto title-case the post title, ignoring a user-defined dict of stopwords
-" scaffold new jekyll leak
-let g:leakyll_basedir = '~/leak'
-let g:leakyll_default_category = 'leaks'
-function! ScaffoldPost(dir, title)
-  let path = split(a:dir, '/')
-  let dir = l:path[0]
-  let category = get(l:path, 1, g:leakyll_default_category)
-
-  let newfile = g:leakyll_basedir . '/' . l:dir . '/' . l:category . '/_posts/'
-    \ . strpart(system("date +'%Y-%m-%d-'"), 0, 11)
-    \ . substitute(a:title, ' ', '-', 'g') . '.md'
-
-  call writefile(['---', 'layout: leak', 'title: "' . a:title . '"',
-    \ 'category: ' . l:category, '---', ''], fnamemodify(l:newfile, ':p'))
-  execute "edit" l:newfile
-endfunction
-
-command! -nargs=* L call ScaffoldPost(
-  \ split(<q-args>, ' ')[0], join(split(<q-args>, ' ')[1:], ' '))
-command! -nargs=* LL execute "norm! i[" . join(split(<q-args>, ' ')[1:], ' ')
-  \ . "](/" . substitute(<q-args>, ' ', '-', 'g') . ")" | execute "L" <q-args>
 
 nnoremap <silent> <Leader>A :call Sass()<CR>
 function! Sass()
