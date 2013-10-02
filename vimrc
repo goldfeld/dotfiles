@@ -60,6 +60,11 @@ Bundle 'Pychimp/vim-luna'
 Bundle 'altercation/vim-colors-solarized'
 "}}}
 "{{{ HELPERS
+command! -nargs=1 B execute "buffer" (<q-args>)[0]
+command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
+" 'V' is for viewing, when my intent is to quickly view a file then bdelete it.
+command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
+
 function! Rescape(text)
   return escape(a:text, '^$.*+')
 endfunction
@@ -568,72 +573,6 @@ function! CheckCurrentCommand()
   let g:currentCommand = ''
 endfunction
 "}}}
-
-"inoremap <C-I> <C-O>:WriterMode<CR>
-
-function! WriterTimestamp()
-  let date = system('date +%s%N | cut -b1-13')
-  return strpart(l:date, 0, len(l:date) - 1)
-endfunction
-command! -nargs=0 WriterMode call WriterMode()
-function! WriterMode()
-  let g:writerModeStart = WriterTimestamp()
-  let esc = maparg('<Esc>')
-  let bksp = maparg('<Backspace>')
-  if l:esc
-    let g:writerModeStoreEsc = l:esc
-    unmap <Esc>
-  endif
-  if l:bksp
-    let g:writerModeStoreBksp = l:bksp
-    unmap <Backspace>
-  endif
-  inoremap <silent> <Esc> <Esc>:WriterModeEnd<CR>
-  inoremap <silent> <Backspace> <NOP>
-  startinsert
-endfunction
-command! -nargs=0 WriterModeEnd call WriterModeEnd()
-function! WriterModeEnd()
-  let g:writerModeEnd = WriterTimestamp()
-  echo 'hey'
-  unmap <Esc>
-  unmap <Backspace>
-  if g:writerModeStoreEsc | execute 'nnoremap | endif
-  "echo 'Writing started at '.g:writerModeStart.', '.g:writerModeEnd.' elapsed; X words typed, 180wpm'
-endfunction
-
-nnoremap <Backspace> :call Backspace()<CR>
-function! Backspace()
-  " need to check the current word
-  " if we're at the end of it, need to 
-  " leave us at the end of the previous.
-
-  " also remap <Enter> to 'ea' or 'eal'
-
-  " get current column
-  let cursor = getpos('.')[2]
-  " get line text
-  let line = getline('.')
-  " if we're not at the beginning of the word, go to it.
-  if !(l:line[l:cursor - 2] =~ '\s')
-    execute "normal! b"
-  endif
-
-  let newcursor = getpos('.')[2]
-  let delta = l:cursor - l:newcursor
-  execute "normal! dawb"
-
-  let max = len(expand("<cword>")) - 1
-  let move = 0
-  if l:max > l:delta
-    let l:move = l:delta
-  else
-    let l:move = l:max
-  endif
-  
-  execute "normal! ".l:move."l"
-endfunction
-
 "{{{1 M-BINDS
 " sacrifice some marks for my pinkies' sake
 nnoremap mm :
@@ -822,23 +761,6 @@ function! ResetDimensions()
   execute "set columns=" . g:RESETCOLUMNS
 endfunction
 "}}}1
-
-" vim-around: type an opening ({['"<TAG> etc and press C-S + text object
-" to wrap the text around with a closing object.
-" have to test it for programming Rust as an alternative to paredit.
-let s:around = { '(': ')', '{': '}', '[': ']', '"': '"', "'": "'" }
-function! Around(type)
-  let pos = col('.')
-  let open = getline('.')[l:pos - 1]
-  let close = get(s:around, l:open, '')
-  if len(l:close)
-    normal! "']i" . l:close
-  "else we need to deal with a multi-char html tag.
-  endif
-  call cursor('.', l:pos)
-endfunction
-inoremap <C-S> <Esc>:set opfunc=Around<CR>g@
-
 "{{{1 ^B MAPPINGS
 " insert a pair of anything and position in-between
 inoremap <C-B><C-A> <C-O>:call InsertPair()<CR>
@@ -868,78 +790,6 @@ nnoremap <C-B><C-T> :let linelen = len(getline('.'))<CR>mbge:execute
 " toggle uppercase/lowercase of whole line (aka yell)
 inoremap <C-B><C-Y> <Esc>v^~gvova
 "}}}1
-
-" operator-pending
-onoremap in( :<C-U>normal! f(vi(<CR>
-onoremap in< :<C-U>normal! f<vi<<CR>
-onoremap in[ :<C-U>normal! f[vi[<CR>
-onoremap ih :<C-U>execute "normal! ?^==\\+$\r:noh\rkvg_"<CR>
-onoremap ah :<C-U>execute "normal! ?^==\\+$\r:noh\rg_vk0"<CR>
-
-onoremap aa :<C-U>call AttrTextObj()<CR>
-
-function! AttrTextObj()
-  let res = searchpair("\['\"\]", "", "\['\"\]")
-  if l:res == 0 || l:res == -1
-    normal! f=
-    let res = searchpair("\['\"\]", "", "\['\"\]")
-    echo res
-  endif
-  execute 'normal! v' 
-endfunction
-
-inoremap <A-C> <A-U>
-
-nnoremap <C-;> yl:execute "normal! f" . @"<CR>
-nnoremap <C-:> yl:execute "normal! F" . @"<CR>
-
-"let g:ctrlp_extensions = ['commitdriven']
-"noremap <C-T> :CommitDriven<CR>
-":noremap <Leader><Leader> :CommitDrivenLeader<CR>
-
-let g:ctrlp_user_command =
-  \ ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtBS()': ['<c-h>', '<c-]>'],
-  \ 'PrtCurLeft()': ['<left>'],
-  \ }
-
-" go to the function name from within a function
-let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
-execute "nnoremap <C-F> ?".expr."<CR>"
-
-command! -nargs=1 B execute "buffer" (<q-args>)[0]
-command! -nargs=1 -complete=file E execute "edit +bdelete\\" bufnr('%') <f-args>
-" 'V' is for viewing, when my intent is to quickly view a file then bdelete it.
-command! -nargs=1 -complete=file V execute "keepalt edit" <f-args>
-
-nnoremap <silent> <Leader>A :call Sass()<CR>
-function! Sass()
-  " get current column
-  let cursor = getpos('.')[2]
-  " get line text
-  let line = getline('.')
-
-  let beginning = ''
-  let word = expand("<cWORD>")
-  if stridx(l:word, '(') != -1
-    " if we're not at the beginning of the sass invocation, go to it.
-    if !(l:line[l:cursor - 2] =~ '\s')
-      let l:beginning = 'B'
-    endif
-  else
-    let l:beginning = 'F(B'
-  endif
-
-  execute 'normal! ' . l:beginning . 'vf)"qy'
-  let output = system('echo "' . @q . '" | sass -i | xargs echo')
-  let @q = strpart(l:output, matchend(l:output, @q) + 1, 7)
-  execute 'normal! gv"qp'
-endfunction
-
-" can't map <C-I> to anything else since it's the same as <Tab>.
-nnoremap <Tab> :CtrlPBuffer<CR>
-
 "{{{1 ^T MAPPINGS
 " project based configs: https://github.com/timtadh/swork
 " B to close a buffer by bufnr (pegword), <C-B> enter purge repl (currently mp)
@@ -1113,6 +963,333 @@ function! s:Bash(cmdline, ...)
   1
 endfunction
 "}}}1
+"{{{1 LIFEHACKS
+command! -nargs=1 -complete=customlist,DayOpt Day call Day(<f-args>)
+function! DayOpt(ArgLead, CmdLine, CursorPos)
+  if a:ArgLead == 't' | return ['tue', 'thu'] | endif
+  if a:ArgLead == 'tu' | return ['tue'] | endif
+  if a:ArgLead == 'th' | return ['thu'] | endif
+  if a:ArgLead == 's' | return ['sat', 'sun'] | endif
+  if a:ArgLead == 'sa' | return ['sat'] | endif
+  if a:ArgLead == 'su' | return ['sun'] | endif
+  if a:ArgLead == 'm' || a:ArgLead == 'mo' | return ['mon'] | endif
+  if a:ArgLead == 'w' || a:ArgLead == 'we' | return ['wed'] | endif
+  if a:ArgLead == 'f' || a:ArgLead == 'fr' | return ['fri'] | endif
+  if a:ArgLead == 'u' | return ['tue'] | endif
+  if a:ArgLead == 'h' | return ['thu'] | endif
+  if a:ArgLead == 'n' | return ['sun'] | endif
+  if a:ArgLead == 'a' | return ['sat'] | endif
+endfunction
+
+function! Day(date)
+  if a:date > 31 && a:date < 1 && !match(
+    \ ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'], '\c' . a:date)
+    return
+  endif
+  let now = system("date +'%b %-e, %Y 00:00:00 +000 + '")
+  let l:now = strpart(l:now, 0, len(l:now) - 1)
+  let offset = 86400
+
+  while 1
+    let day = system('date --date "' . l:now
+      \ . l:offset . ' seconds" ' . "+'%b %-e %a'")
+    if match(l:day, '\c\W' . a:date . '\W') != -1
+      echo system('date --date "' . l:now
+        \ . l:offset . ' seconds" ' . "+'[%Yw%W] %b %-e %a'")
+      return
+    endif
+    let l:offset += 86400
+  endwhile
+endfunction
+
+command! -nargs=1 Inf call Inform(<f-args>)
+function! Inform(data)
+  let info = 'No matching info.'
+  let otherinfo = []
+  if match(['wifi', 'pass'], a:data) != -1 | let l:info = '6106e0ce4f'
+  elseif match(['phone', 'tel'], a:data) != -1 | let l:info = '3176-6107'
+
+  elseif match(['ifconfig', 'wlan'], a:data) != -1
+    let l:info = "sudo ifconfig wlan0"
+    call add(l:otherinfo, "iwlist wlan0 scanning")
+    call add(l:otherinfo, "sudo iwconfig wlan0 essid GVT-6E0F")
+    call add(l:otherinfo, "sudo dhclient wlan0")
+
+  elseif match(['tar, gz'], a:data) != -1
+    let l:info = 'tar xvzf filename.tar.gz'
+    call add(l:otherinfo, 'tar it all')
+  elseif match(['moon', 'moonc'], a:data) != -1
+    let l:info = 'moonc -t "$HOME/.vim/bundle/hudmode-vim/core" .'
+    call add(l:otherinfo, 'execute command from ~/goldfeld/hudmode/core')
+  elseif match(['restart'], a:data) != -1
+    let l:info = 'sudo service network-manager restart'
+    call add(l:otherinfo, 'then toggle hardware wireless switch')
+  elseif match(['apache', 'stop'], a:data) != -1
+    let l:info = 'sudo /etc/init.d/apache2 stop'
+    call add(l:otherinfo, 'noop')
+  elseif match(['chmod', 'permission', 'executable', 'exe'], a:data) != -1
+    let l:info = 'chmod +x filename'
+  elseif match(['nodejs', 'node'], a:data) != -1
+    let l:info = 'rm -r bin/node bin/node-waf include/node lib/node lib/pkgconfig/nodejs.pc share/man/man1/node.1'
+    call add(l:otherinfo, 'noop')
+
+
+  elseif match(['heroku', 'buildpack'], a:data) != -1
+    let appname = input("enter your app's name: ")
+    echo "\n"
+    let l:info = "heroku create ".l:appname." --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
+    call add(l:otherinfo, "then do 'heroku login'")
+
+  elseif match(['watch', 'inotify'], a:data) != -1
+    let l:info = "echo 10000 > /proc/sys/fs/inotify/max_user_watches"
+    call add(l:otherinfo, "should 'sudo su' first")
+    call add(l:otherinfo, "may also need to pipe to max_user_instances")
+    call add(l:otherinfo, "after done, do 'exit'")
+
+  elseif match(['ssh', 'publickey', 'keygen'], a:data) != -1
+    let email = input("enter email for publickey: ")
+    echo "\n"
+    let l:info = 'ssh-keygen -t rsa -C "'.l:email.'"'
+    call add(l:otherinfo, "just press enter when prompted for file in which to save")
+    call add(l:otherinfo, "use <Leader>.k to xclip the key")
+  endif
+
+  let @* = l:info
+  let @+ = l:info
+  echo l:info
+  for other in l:otherinfo
+    echo '# '.other
+  endfor
+  return
+endfunction
+"}}}
+"{{{1 MISC
+" http://learnvimscriptthehardway.stevelosh.com/chapters/12.html
+" http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
+" http://forrst.com/posts/Adding_a_Next_Adjective_to_Vim_Version_2-C4P#comment-land
+" http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
+" https://github.com/amikula/vim_flashcards/blob/master/all_cards.txt
+
+function! LoadSession()
+  if filereadable($HOME . "/.vim/Session.vim")
+    execute "source " . $HOME . "/.vim/Session.vim"
+  endif
+endfunction
+
+" save session on exit.
+autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
+  \ call mkdir($HOME . "/.vim") |
+  \ endif |
+  \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+
+" From vimrc_example.vim distributed with Vim 7.
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
+" Put these in an autocmd group, so that we can delete them easily.
+augroup vimrcEx
+au!
+" For all text files set 'textwidth' to 78 characters.
+autocmd FileType text setlocal textwidth=78
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+" Also don't do it when the mark is in the first line, that is the default
+" position when opening a file.
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+augroup END
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+    \ | wincmd p | diffthis
+endif
+
+" meta-vim
+augroup HELP
+  autocmd!
+  autocmd filetype help nnoremap <buffer><C-M> <C-]>
+  autocmd filetype help nnoremap <buffer>H <C-T>
+  autocmd filetype help nnoremap <buffer>L :tag<CR>
+  autocmd filetype help nnoremap <buffer>q :q!<CR>
+  autocmd filetype help setlocal nonumber
+augroup END
+function! ListLeaders()
+  silent! redir @r
+  silent! nmap <Leader>
+  silent! redir END
+  silent! new
+  silent! put! a
+  silent! g/^s*$/d
+  silent! %s/^.*,//
+  silent! normal ggVg
+  silent! sort
+  silent! let lines = getline(1,"$")
+endfunction
+
+" don't mess up splits when resizing vim
+autocmd VimResized * wincmd =
+"}}}
+"{{{1 UNFINISHED OR UNUSED
+
+"inoremap <C-I> <C-O>:WriterMode<CR>
+
+function! WriterTimestamp()
+  let date = system('date +%s%N | cut -b1-13')
+  return strpart(l:date, 0, len(l:date) - 1)
+endfunction
+
+command! -nargs=0 WriterMode call WriterMode()
+function! WriterMode()
+  let g:writerModeStart = WriterTimestamp()
+  let esc = maparg('<Esc>')
+  let bksp = maparg('<Backspace>')
+  if l:esc
+    let g:writerModeStoreEsc = l:esc
+    unmap <Esc>
+  endif
+  if l:bksp
+    let g:writerModeStoreBksp = l:bksp
+    unmap <Backspace>
+  endif
+  inoremap <silent> <Esc> <Esc>:WriterModeEnd<CR>
+  inoremap <silent> <Backspace> <NOP>
+  startinsert
+endfunction
+
+command! -nargs=0 WriterModeEnd call WriterModeEnd()
+function! WriterModeEnd()
+  let g:writerModeEnd = WriterTimestamp()
+  echo 'hey'
+  unmap <Esc>
+  unmap <Backspace>
+  if g:writerModeStoreEsc | execute 'nnoremap | endif
+  "echo 'Writing started at '.g:writerModeStart.', '.g:writerModeEnd.' elapsed; X words typed, 180wpm'
+endfunction
+
+nnoremap <Backspace> :call Backspace()<CR>
+function! Backspace()
+  " need to check the current word
+  " if we're at the end of it, need to 
+  " leave us at the end of the previous.
+
+  " also remap <Enter> to 'ea' or 'eal'
+
+  " get current column
+  let cursor = getpos('.')[2]
+  " get line text
+  let line = getline('.')
+  " if we're not at the beginning of the word, go to it.
+  if !(l:line[l:cursor - 2] =~ '\s')
+    execute "normal! b"
+  endif
+
+  let newcursor = getpos('.')[2]
+  let delta = l:cursor - l:newcursor
+  execute "normal! dawb"
+
+  let max = len(expand("<cword>")) - 1
+  let move = 0
+  if l:max > l:delta
+    let l:move = l:delta
+  else
+    let l:move = l:max
+  endif
+  
+  execute "normal! ".l:move."l"
+endfunction
+
+" vim-around: type an opening ({['"<TAG> etc and press C-S + text object
+" to wrap the text around with a closing object.
+" have to test it for programming Rust as an alternative to paredit.
+let s:around = { '(': ')', '{': '}', '[': ']', '"': '"', "'": "'" }
+function! Around(type)
+  let pos = col('.')
+  let open = getline('.')[l:pos - 1]
+  let close = get(s:around, l:open, '')
+  if len(l:close)
+    normal! "']i" . l:close
+  "else we need to deal with a multi-char html tag.
+  endif
+  call cursor('.', l:pos)
+endfunction
+inoremap <C-S> <Esc>:set opfunc=Around<CR>g@
+
+" operator-pending
+onoremap in( :<C-U>normal! f(vi(<CR>
+onoremap in< :<C-U>normal! f<vi<<CR>
+onoremap in[ :<C-U>normal! f[vi[<CR>
+onoremap ih :<C-U>execute "normal! ?^==\\+$\r:noh\rkvg_"<CR>
+onoremap ah :<C-U>execute "normal! ?^==\\+$\r:noh\rg_vk0"<CR>
+
+onoremap aa :<C-U>call AttrTextObj()<CR>
+
+function! AttrTextObj()
+  let res = searchpair("\['\"\]", "", "\['\"\]")
+  if l:res == 0 || l:res == -1
+    normal! f=
+    let res = searchpair("\['\"\]", "", "\['\"\]")
+    echo res
+  endif
+  execute 'normal! v' 
+endfunction
+
+inoremap <A-C> <A-U>
+
+nnoremap <C-;> yl:execute "normal! f" . @"<CR>
+nnoremap <C-:> yl:execute "normal! F" . @"<CR>
+
+"let g:ctrlp_extensions = ['commitdriven']
+"noremap <C-T> :CommitDriven<CR>
+":noremap <Leader><Leader> :CommitDrivenLeader<CR>
+
+let g:ctrlp_user_command =
+  \ ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtBS()': ['<c-h>', '<c-]>'],
+  \ 'PrtCurLeft()': ['<left>'],
+  \ }
+
+" go to the function name from within a function
+let expr = '\(^fun\S* \)\@<=[^f][^u][^n]\w\+\<Bar>^\w\+'
+execute "nnoremap <C-F> ?".expr."<CR>"
+
+nnoremap <silent> <Leader>A :call Sass()<CR>
+function! Sass()
+  " get current column
+  let cursor = getpos('.')[2]
+  " get line text
+  let line = getline('.')
+
+  let beginning = ''
+  let word = expand("<cWORD>")
+  if stridx(l:word, '(') != -1
+    " if we're not at the beginning of the sass invocation, go to it.
+    if !(l:line[l:cursor - 2] =~ '\s')
+      let l:beginning = 'B'
+    endif
+  else
+    let l:beginning = 'F(B'
+  endif
+
+  execute 'normal! ' . l:beginning . 'vf)"qy'
+  let output = system('echo "' . @q . '" | sass -i | xargs echo')
+  let @q = strpart(l:output, matchend(l:output, @q) + 1, 7)
+  execute 'normal! gv"qp'
+endfunction
+
+" can't map <C-I> to anything else since it's the same as <Tab>.
+nnoremap <Tab> :CtrlPBuffer<CR>
 
 "nnoremap <Leader>* :set hls<CR>:AutoHighlightToggle<CR>
 command! -nargs=0 AutoHighlightToggle call AutoHighlightToggle()
@@ -1279,107 +1456,6 @@ function! Stab()
   endtry
 endfunction
 
-"{{{1 LIFEHACKS
-command! -nargs=1 -complete=customlist,DayOpt Day call Day(<f-args>)
-function! DayOpt(ArgLead, CmdLine, CursorPos)
-  if a:ArgLead == 't' | return ['tue', 'thu'] | endif
-  if a:ArgLead == 'tu' | return ['tue'] | endif
-  if a:ArgLead == 'th' | return ['thu'] | endif
-  if a:ArgLead == 's' | return ['sat', 'sun'] | endif
-  if a:ArgLead == 'sa' | return ['sat'] | endif
-  if a:ArgLead == 'su' | return ['sun'] | endif
-  if a:ArgLead == 'm' || a:ArgLead == 'mo' | return ['mon'] | endif
-  if a:ArgLead == 'w' || a:ArgLead == 'we' | return ['wed'] | endif
-  if a:ArgLead == 'f' || a:ArgLead == 'fr' | return ['fri'] | endif
-  if a:ArgLead == 'u' | return ['tue'] | endif
-  if a:ArgLead == 'h' | return ['thu'] | endif
-  if a:ArgLead == 'n' | return ['sun'] | endif
-  if a:ArgLead == 'a' | return ['sat'] | endif
-endfunction
-
-function! Day(date)
-  if a:date > 31 && a:date < 1 && !match(
-    \ ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'], '\c' . a:date)
-    return
-  endif
-  let now = system("date +'%b %-e, %Y 00:00:00 +000 + '")
-  let l:now = strpart(l:now, 0, len(l:now) - 1)
-  let offset = 86400
-
-  while 1
-    let day = system('date --date "' . l:now
-      \ . l:offset . ' seconds" ' . "+'%b %-e %a'")
-    if match(l:day, '\c\W' . a:date . '\W') != -1
-      echo system('date --date "' . l:now
-        \ . l:offset . ' seconds" ' . "+'[%Yw%W] %b %-e %a'")
-      return
-    endif
-    let l:offset += 86400
-  endwhile
-endfunction
-
-command! -nargs=1 Inf call Inform(<f-args>)
-function! Inform(data)
-  let info = 'No matching info.'
-  let otherinfo = []
-  if match(['wifi', 'pass'], a:data) != -1 | let l:info = '6106e0ce4f'
-  elseif match(['phone', 'tel'], a:data) != -1 | let l:info = '3176-6107'
-
-  elseif match(['ifconfig', 'wlan'], a:data) != -1
-    let l:info = "sudo ifconfig wlan0"
-    call add(l:otherinfo, "iwlist wlan0 scanning")
-    call add(l:otherinfo, "sudo iwconfig wlan0 essid GVT-6E0F")
-    call add(l:otherinfo, "sudo dhclient wlan0")
-
-  elseif match(['tar, gz'], a:data) != -1
-    let l:info = 'tar xvzf filename.tar.gz'
-    call add(l:otherinfo, 'tar it all')
-  elseif match(['moon', 'moonc'], a:data) != -1
-    let l:info = 'moonc -t "$HOME/.vim/bundle/hudmode-vim/core" .'
-    call add(l:otherinfo, 'execute command from ~/goldfeld/hudmode/core')
-  elseif match(['restart'], a:data) != -1
-    let l:info = 'sudo service network-manager restart'
-    call add(l:otherinfo, 'then toggle hardware wireless switch')
-  elseif match(['apache', 'stop'], a:data) != -1
-    let l:info = 'sudo /etc/init.d/apache2 stop'
-    call add(l:otherinfo, 'noop')
-  elseif match(['chmod', 'permission', 'executable', 'exe'], a:data) != -1
-    let l:info = 'chmod +x filename'
-  elseif match(['nodejs', 'node'], a:data) != -1
-    let l:info = 'rm -r bin/node bin/node-waf include/node lib/node lib/pkgconfig/nodejs.pc share/man/man1/node.1'
-    call add(l:otherinfo, 'noop')
-
-
-  elseif match(['heroku', 'buildpack'], a:data) != -1
-    let appname = input("enter your app's name: ")
-    echo "\n"
-    let l:info = "heroku create ".l:appname." --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git"
-    call add(l:otherinfo, "then do 'heroku login'")
-
-  elseif match(['watch', 'inotify'], a:data) != -1
-    let l:info = "echo 10000 > /proc/sys/fs/inotify/max_user_watches"
-    call add(l:otherinfo, "should 'sudo su' first")
-    call add(l:otherinfo, "may also need to pipe to max_user_instances")
-    call add(l:otherinfo, "after done, do 'exit'")
-
-  elseif match(['ssh', 'publickey', 'keygen'], a:data) != -1
-    let email = input("enter email for publickey: ")
-    echo "\n"
-    let l:info = 'ssh-keygen -t rsa -C "'.l:email.'"'
-    call add(l:otherinfo, "just press enter when prompted for file in which to save")
-    call add(l:otherinfo, "use <Leader>.k to xclip the key")
-  endif
-
-  let @* = l:info
-  let @+ = l:info
-  echo l:info
-  for other in l:otherinfo
-    echo '# '.other
-  endfor
-  return
-endfunction
-"}}}
-
 nnoremap <leader>.p :call ShowingHNParse()<CR>
 function! ShowingHNParse()
   let file = '"'. expand('$HOME/Dropbox/showhn') .'"'
@@ -1401,80 +1477,4 @@ function! Viminder()
   echo sys
 endfunction
 
-"{{{1 MISC
-" http://learnvimscriptthehardway.stevelosh.com/chapters/12.html
-" http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
-" http://forrst.com/posts/Adding_a_Next_Adjective_to_Vim_Version_2-C4P#comment-land
-" http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
-" https://github.com/amikula/vim_flashcards/blob/master/all_cards.txt
-
-function! LoadSession()
-  if filereadable($HOME . "/.vim/Session.vim")
-    execute "source " . $HOME . "/.vim/Session.vim"
-  endif
-endfunction
-
-" save session on exit.
-autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
-  \ call mkdir($HOME . "/.vim") |
-  \ endif |
-  \ execute "mksession! " . $HOME . "/.vim/Session.vim"
-
-" From vimrc_example.vim distributed with Vim 7.
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
-
-" Put these in an autocmd group, so that we can delete them easily.
-augroup vimrcEx
-au!
-" For all text files set 'textwidth' to 78 characters.
-autocmd FileType text setlocal textwidth=78
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-" Also don't do it when the mark is in the first line, that is the default
-" position when opening a file.
-autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
-augroup END
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-    \ | wincmd p | diffthis
-endif
-
-" meta-vim
-augroup HELP
-  autocmd!
-  autocmd filetype help nnoremap <buffer><C-M> <C-]>
-  autocmd filetype help nnoremap <buffer>H <C-T>
-  autocmd filetype help nnoremap <buffer>L :tag<CR>
-  autocmd filetype help nnoremap <buffer>q :q!<CR>
-  autocmd filetype help setlocal nonumber
-augroup END
-function! ListLeaders()
-  silent! redir @r
-  silent! nmap <Leader>
-  silent! redir END
-  silent! new
-  silent! put! a
-  silent! g/^s*$/d
-  silent! %s/^.*,//
-  silent! normal ggVg
-  silent! sort
-  silent! let lines = getline(1,"$")
-endfunction
-
-" don't mess up splits when resizing vim
-autocmd VimResized * wincmd =
-"}}}
+"}}}1
