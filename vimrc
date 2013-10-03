@@ -208,6 +208,22 @@ function! SearchTableRow()
 endfunction
 "}}}
 "{{{1 LEAKYLL
+let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
+  \ . ' cd ~/leak/goldfeld/articles/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/goldfeld/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/void/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/.tnt/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/.tnt/games/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/.tnt/games/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/void/readings/_posts/ && find `pwd` ! -iname ".*" )' }
+nnoremap <silent> <C-T><C-L><C-L>
+  \ :call InboxHookWrap('call dow#edit(g:all_leaks_query)')<CR>
+nnoremap <silent> <C-T><C-L>l
+  \ :call InboxHookWrap('call dow#swap(g:all_leaks_query)')<CR>
+
+inoremap <C-B><C-L> <Esc>:call LinkPost('title')<Cr>
+inoremap <C-B>l <Esc>:call LinkPost()<Cr>
+
 " TODO auto title-case the post title, ignoring a user-defined dict of stopwords
 " scaffold new jekyll leak
 let g:leakyll_basedir = '~/leak'
@@ -231,21 +247,31 @@ command! -nargs=* L call ScaffoldPost(
 command! -nargs=* LL execute "norm! i[" . join(split(<q-args>, ' ')[1:], ' ')
   \ . "](/" . substitute(<q-args>, ' ', '-', 'g') . ")" | execute "L" <q-args>
 
-inoremap <C-B><C-L> <Esc>:call LinkPost('title')<Cr>
-inoremap <C-B>l <Esc>:call LinkPost()<Cr>
+function! GetPost(filename, ...)
+  let what = get(a:000, 0, ['url'])
+  let date_and_slug = fnamemodify(a:filename, ':t')
+
+  let info = {}
+  if index(l:what, 'url') != -1 | let l:info.url = '/' . l:date_and_slug[0 : 3]
+    \ . '/' . l:date_and_slug[11 :] | endif
+  if index(l:what, 'title') != -1
+    let l:title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
+      \ . a:filename))
+    let l:info.title = strpart(l:title, 1, len(l:title) - 2)
+  endif
+
+  return l:info
+endfunction
 
 function! LinkPost(...)
-  let with_title = get(a:000, 0, '')
   let pick = dow#pick(g:all_leaks_query)
-  let date_and_slug = fnamemodify(l:pick, ':t')
-  let url = '/' . l:date_and_slug[0 : 3] . '/' . l:date_and_slug[11 :]
 
-  if with_title =~# 'title'
-    let title = dow#chomp(system("awk -F 'title: ' '/^title:/ { print $2 }' "
-      \ . l:pick))
-    execute 'normal! i[' . strpart(l:title, 1, len(l:title) - 2)
-      \ . '](' . l:url . ')'
-  else | execute 'normal! i ' . l:url
+  if get(a:000, 0, '') =~# 'title'
+    let post = GetPost(l:pick, ['title', 'url'])
+    execute 'normal! i[' . l:post.title . '](' . l:post.url . ')'
+  else
+    let post = GetPost(l:pick)
+    execute 'normal! i ' . l:post.url
   endif
 endfunction
 "}}}
@@ -817,19 +843,6 @@ nnoremap <silent> <C-T>z :DowSymbol #<CR>
 
 nnoremap <silent> <C-T><C-U> :Dowf edit untracked<CR>
 nnoremap <silent> <C-T>c :Dowf swap untracked<CR>
-
-let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
-  \ . ' cd ~/leak/goldfeld/articles/_posts/ && find `pwd` ! -iname ".*" ;'
-  \ . ' cd ~/leak/goldfeld/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
-  \ . ' cd ~/leak/void/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
-  \ . ' cd ~/leak/.tnt/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
-  \ . ' cd ~/leak/.tnt/games/_posts/ && find `pwd` ! -iname ".*" ;'
-  \ . ' cd ~/leak/.tnt/games/_posts/ && find `pwd` ! -iname ".*" ;'
-  \ . ' cd ~/leak/void/readings/_posts/ && find `pwd` ! -iname ".*" )' }
-nnoremap <silent> <C-T><C-L>
-  \ :call InboxHookWrap('call dow#edit(g:all_leaks_query)')<CR>
-nnoremap <silent> <C-T>l
-  \ :call InboxHookWrap('call dow#swap(g:all_leaks_query)')<CR>
 
 " list projects
 " allow me to define here some basic dow projects for which their status will
