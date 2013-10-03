@@ -221,6 +221,9 @@ nnoremap <silent> <C-T><C-L><C-L>
 nnoremap <silent> <C-T><C-L>l
   \ :call InboxHookWrap('call dow#swap(g:all_leaks_query)')<CR>
 
+nnoremap <silent> <C-T><C-L>w :sil! exe '!chromium-browser'
+  \ 'http://localhost:4000' . GetPost(getreg('%')).url<CR>
+
 inoremap <C-B><C-L> <Esc>:call LinkPost('title')<Cr>
 inoremap <C-B>l <Esc>:call LinkPost()<Cr>
 
@@ -249,7 +252,7 @@ command! -nargs=* LL execute "norm! i[" . join(split(<q-args>, ' ')[1:], ' ')
 
 function! GetPost(filename, ...)
   let what = get(a:000, 0, ['url'])
-  let date_and_slug = fnamemodify(a:filename, ':t')
+  let date_and_slug = fnamemodify(a:filename, ':t:r')
 
   let info = {}
   if index(l:what, 'url') != -1 | let l:info.url = '/' . l:date_and_slug[0 : 3]
