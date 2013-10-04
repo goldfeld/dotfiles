@@ -221,11 +221,14 @@ nnoremap <silent> <C-T><C-L><C-L>
 nnoremap <silent> <C-T><C-L>l
   \ :call InboxHookWrap('call dow#swap(g:all_leaks_query)')<CR>
 
-nnoremap <silent> <C-T><C-L>w :sil! exe '!chromium-browser'
+nnoremap <C-T><C-L>b :sil! exe '!chromium-browser'
   \ 'http://localhost:4000' . GetPost(getreg('%')).url<CR>
 
-inoremap <C-B><C-L> <Esc>:call LinkPost('title')<Cr>
-inoremap <C-B>l <Esc>:call LinkPost()<Cr>
+nnoremap <C-T><C-L>w :exe 'norm! i'.getreg('+')<CR>:TNTCreateWebp<CR>
+inoremap <C-B><C-L>w <Esc>:exe 'norm! i'.getreg('+')<CR>:TNTCreateWebp<CR>
+
+inoremap <C-B><C-L><C-L> <Esc>:call LinkPost('title')<Cr>
+inoremap <C-B><C-L>l <Esc>:call LinkPost()<Cr>
 
 " TODO auto title-case the post title, ignoring a user-defined dict of stopwords
 " scaffold new jekyll leak
