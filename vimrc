@@ -938,7 +938,7 @@ nnoremap gL :Glog<CR>
 nnoremap g/ :Git log -G
 
 nnoremap g* :execute "Ggrep!" expand('<cword>') " -- '*." . &ft . "'"<CR>
-vnoremap g* y:execute "Ggrep!" getreg('"') " -- '*." . &ft . "'"<CR>
+vnoremap g* y:execute "Ggrep!" getreg() " -- '*." . &ft . "'"<CR>
 
 nnoremap g# :Ggrep! 
 vnoremap g# y:Ggrep! 
@@ -1494,5 +1494,4 @@ function! Viminder()
   let sys = system(l:awk)
   echo sys
 endfunction
-
 "}}}1
