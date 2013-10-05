@@ -184,6 +184,28 @@ function! FtColors()
   highlight CursorColumn guibg=#373737 ctermbg=236
 endfunction
 "}}}
+"{{{1 XMONAD HOOKER
+" my thumb can't take being contracted for Alt all the time anymore
+nnoremap <silent> c<CR> :silent! !hooker 1<CR>
+nnoremap <silent> m<CR> :silent! !hooker 5<CR>
+nnoremap <silent> h<CR> :silent! !hooker 7<CR>
+nnoremap <silent> r<CR> :silent! !hooker 9 && hooker 33<CR>
+
+nnoremap <silent> <C-W>h :call Wincmd('h', 33)<CR>
+nnoremap <silent> <C-W>l :call Wincmd('l', 34)<CR>
+nnoremap <silent> <C-W>k :call Wincmd('k', 33)<CR>
+nnoremap <silent> <C-W>j :call Wincmd('j', 34)<CR>
+function! Wincmd(cmd, hooker)
+  if (winwidth(0) + 0.0)/(&columns + 0.0) >= 0.9 | sil! exe "!hooker" a:hooker
+  else | sil! exe "wincmd" a:cmd
+  endif
+endfunction
+
+nnoremap mr :w<CR>:Reload<CR>
+nnoremap mR :Reload<CR>
+command! Reload silent! execute '!hooker 9 && hooker 33 && xdotool search'
+  \ . ' --onlyvisible --class Chromium-browser key --clearmodifiers ctrl+r'
+"}}}
 "{{{1 ORG-MODE
 augroup orgMode
   autocmd BufRead,BufNewFile *.tbl.org
@@ -465,12 +487,6 @@ let g:dow_projects = ['~/leak', '~/goldfeld', '~/void', '~/.vim/bundle',
   \ '~/inkspree', '~/longstorm']
 "}}}1
 "{{{1 CORE REMAPPINGS
-" my thumb can't take being contracted for Alt all the time anymore
-nnoremap <silent> c<CR> :silent! !hooker 1<CR>
-nnoremap <silent> m<CR> :silent! !hooker 5<CR>
-nnoremap <silent> h<CR> :silent! !hooker 7<CR>
-nnoremap <silent> r<CR> :silent! !hooker 9 && hooker 33<CR>
-
 nnoremap <silent> <Esc> :noh<CR><Esc>
 nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 
@@ -657,11 +673,6 @@ function! PurgeBuffers()
   endwhile
   redraw
 endfunction
-
-nnoremap mr :w<CR>:Reload<CR>
-nnoremap mR :Reload<CR>
-command! Reload silent! execute '!hooker 9 && hooker 33 && xdotool search'
-  \ . ' --onlyvisible --class Chromium-browser key --clearmodifiers ctrl+r'
 
 " b mark for closing buffer.
 nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
