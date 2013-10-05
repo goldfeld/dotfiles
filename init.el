@@ -40,7 +40,7 @@
 (require 'rainbow-delimiters)
 (require 'paredit)
 (require 'projectile)
-	 
+
 (projectile-global-mode)
 
 ;(load-theme 'solarized-dark t)
@@ -59,6 +59,27 @@
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-tramp-completion nil)
 (setq ido-enable-flex-matching t)
+
+(require 'midnight)
+(midnight-delay-set 'midnight-delay "8:00am")
+(add-hook 'midnight-hook 'calendar)
+; here's the place to create nightly build hooks
+
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(global-whitespace-mode t)
+(setq indent-tabs-mode nil)
+
+(custom-set-faces
+   '(my-tab-face            ((((class color)) (:background "grey10"))) t)
+   '(my-trailing-space-face ((((class color)) (:background "gray10"))) t))
+
+(add-hook 'font-lock-mode (function (lambda ()
+    (setq font-lock-keywords
+	  (append font-lock-keywords
+		  '(("\t+" (0 'my-tab-face t))
+		    ("^.\\{81,\\}$" (0 'my-long-line-face t))
+		    ("[ \t]+$"      (0 'my-trailing-space-face t))))))))
 
 (defun my-move-key (keymap-from keymap-to key)
   "Moves key binding from one keymap to another, deleting from the old location."
