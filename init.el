@@ -1,6 +1,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (setq inhibit-splash-screen t)
+(setq eshell-aliases-file "/home/vic/.emacs.d/eshell/alias")
 
 ;; loads the package manager
 (require 'package)
