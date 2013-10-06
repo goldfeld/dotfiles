@@ -3,14 +3,11 @@
 (setq inhibit-splash-screen t)
 (setq eshell-aliases-file "/home/vic/.emacs.d/eshell/alias")
 
-;; loads the package manager
 (require 'package)
-
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
-
 (package-initialize)
 
 (defvar my-packages '(evil
@@ -102,6 +99,9 @@
 
 (define-key evil-normal-state-map "\C-t" nil)
 (define-key evil-normal-state-map "\C-t\C-h" 'ido-switch-buffer)
+(define-key evil-normal-state-map "\C-t\C-n" 'projectile-find-file)
+(define-key evil-normal-state-map "\C-t\C-c" 'projectile-switch-to-buffer)
+(define-key evil-normal-state-map "\C-t\C-d" 'find-file)
 
 (define-key evil-normal-state-map "\C-cf" 'org-footnote-action)
 
