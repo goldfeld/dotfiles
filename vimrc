@@ -251,6 +251,21 @@ inoremap <C-B><C-L>w <Esc>:exe 'norm! i'.getreg('+')<CR>:TNTCreateWebp<CR>
 inoremap <C-B><C-L><C-L> <Esc>:call LinkPost('title')<Cr>
 inoremap <C-B><C-L>l <Esc>:call LinkPost()<Cr>
 
+nnoremap <C-T><C-L><C-C> :call Cheatsheet()<CR>
+function! Cheatsheet()
+  let pick = dow#pick({ 'list': 10, 'prompt': 'cheatsheet',
+    \ 'query': "awk '/^[^[]/ {print}' ~/leak/.tnt/cheatsheet" })
+
+  for ref in split(system("awk '/^[[]/ {print}' ~/leak/.tnt/cheatsheet"), '\n')
+    let info = split(ref[1:], ']: ')
+    let [pattern, url] = [l:info[0], l:info[1]]
+    if l:pick =~# l:pattern
+      call system('chromium-browser ' . l:url . ' && hooker 9 && hooker 33')
+      break
+    endif
+  endfor
+endfunction
+
 " TODO auto title-case the post title, ignoring a user-defined dict of stopwords
 " scaffold new jekyll leak
 let g:leakyll_basedir = '~/leak'
