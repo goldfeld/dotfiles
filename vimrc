@@ -208,6 +208,7 @@ command! Reload silent! execute '!hooker 9 && hooker 33 && xdotool search'
 "}}}
 "{{{1 ORG-MODE
 augroup orgMode
+  autocmd!
   autocmd BufRead,BufNewFile *.tbl.org
     \ vnoremap <buffer> is <Esc>?--<CR>jV/--<CR>k<Esc>:noh<CR>gv
 
@@ -315,6 +316,56 @@ function! LinkPost(...)
     let post = GetPost(l:pick)
     execute 'normal! i ' . l:post.url
   endif
+endfunction
+"}}}
+"{{{1 INKSTONE
+let g:inkstone_triggers = {}
+let g:inkstone_tests = {}
+let g:inkstone_last_word = ''
+let g:inkstone_last_typed = ''
+let g:inkstone_do_replace = 0
+
+for pair in readfile(fnamemodify('~/inkspree/inkstone/dict', ':p'))
+  let splitpair = split(pair, '\s')
+  let g:inkstone_triggers[splitpair[1]] = splitpair[0]
+  let g:inkstone_tests[splitpair[0]] = splitpair[1]
+endfor
+
+inoremap <C-B><C-I> <Esc>:call ShowWord()<CR>
+
+augroup inkstone
+  autocmd!
+  autocmd BufRead,BufNewFile *.md inoremap <buffer> <expr> <Space> CheckWord()
+  autocmd InsertCharPre *.md let g:inkstone_last_typed .= v:char
+augroup END
+
+function! ShowWord()
+  normal! bdw
+  call setreg('"', g:inkstone_triggers[getreg()])
+  let g:inkstone_do_replace = 1
+  normal! pa
+endfunction
+
+function! CheckWord()
+  let line = getline('.')[: col('.')]
+  let word = split(l:line, ' ')[-1]
+  let insertion = ' ' " a <Space> character
+
+  " we only delete the word if it has been freshly typed, to avoid retesting
+  " the user when he is only editing already tested words.
+  let freshly_typed = g:inkstone_last_typed[1:] ==# l:word
+  if has_key(g:inkstone_triggers, l:word) && l:freshly_typed
+    let g:inkstone_last_word = l:word
+    let l:insertion = repeat("\<BS>", len(l:word))
+
+  elseif has_key(g:inkstone_tests, l:word)
+    let replacement = g:inkstone_last_word " g:inkstone_tests[l:word]
+    let l:insertion = repeat("\<BS>", len(l:word)) . l:replacement . ' '
+  endif
+
+  let g:inkstone_last_typed = ''
+  let g:inkstone_do_replace = 0
+  return l:insertion
 endfunction
 "}}}
 "{{{1 SINGLE-FUNCTION FEATURES
