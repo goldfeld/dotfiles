@@ -57,6 +57,7 @@ Bundle 'Guardian'
 Bundle 'Lokaltog/vim-distinguished'
 Bundle 'noahfrederick/Hemisu'
 Bundle 'Pychimp/vim-luna'
+Bundle 'Pychimp/vim-sol'
 Bundle 'altercation/vim-colors-solarized'
 "}}}
 "{{{ HELPERS
