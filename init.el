@@ -1,7 +1,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (setq inhibit-splash-screen t)
-(setq eshell-aliases-file "/home/vic/.emacs.d/eshell/alias")
+(setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
 
 (require 'package)
 (add-to-list 'package-archives
@@ -110,7 +110,7 @@
 
 (define-key evil-motion-state-map "," nil)
 (define-key evil-normal-state-map ",," 'switch-to-alt-buffer)
-(define-key evil-normal-state-map ",.v" (kbd ":e /home/vic/goldfeld/dotfiles/init.el"))
+(define-key evil-normal-state-map ",.v" (kbd ":e ~/goldfeld/dotfiles/init.el"))
 
 (define-key evil-normal-state-map "m" nil)
 (define-key evil-motion-state-map "mm" 'evil-ex)
