@@ -4,6 +4,9 @@
 
 PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 
+export JAVA_HOME=/usr/lib/jvm/java-6-openjdk-i386/bin/
+export PATH=$PATH:/usr/lib/jvm/java-6-openjdk-i386/bin/
+
 set -o vi
 #setxkbmap -query
 #setxkbmap -layout us # reset to querty for training purposes
