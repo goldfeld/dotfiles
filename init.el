@@ -54,7 +54,10 @@
 (load-theme 'purple-haze t)
 
 (require 'evil)
+(require 'evil-leader)
+(global-evil-leader-mode)
 (evil-mode t)
+(evil-leader/set-leader ",")
 
 (require 'ido)
 (require 'flx-ido)
@@ -114,12 +117,13 @@
 
 (define-key evil-normal-state-map "\C-cf" 'org-footnote-action)
 
+(evil-leader/set-key
+ "p" (lambda () (interactive) (kbd "\C-u\M-x org-insert-drawer RET"))
+ "," 'switch-to-alt-buffer
+ ".v" (kbd ":e ~/goldfeld/dotfiles/init.el"))
+
 (defun alt-buffer () (other-buffer (current-buffer) 1))
 (defun switch-to-alt-buffer () (interactive) (switch-to-buffer (alt-buffer)))
-
-(define-key evil-motion-state-map "," nil)
-(define-key evil-normal-state-map ",," 'switch-to-alt-buffer)
-(define-key evil-normal-state-map ",.v" (kbd ":e ~/goldfeld/dotfiles/init.el"))
 
 (define-key evil-normal-state-map "m" nil)
 (define-key evil-motion-state-map "mm" 'evil-ex)
