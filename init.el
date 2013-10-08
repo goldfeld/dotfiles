@@ -115,6 +115,11 @@
 (define-key evil-normal-state-map "\C-t\C-c" 'projectile-switch-to-buffer)
 (define-key evil-normal-state-map "\C-t\C-d" 'find-file)
 
+(define-key evil-normal-state-map "\C-ts" 'eval-expression)
+(define-key evil-normal-state-map "\C-t\C-s" 'eval-last-sexp)
+(define-key evil-normal-state-map "\C-tf" 'eval-defun)
+(define-key evil-normal-state-map "\C-t\C-f" 'eval-buffer)
+
 (define-key evil-normal-state-map "\C-cf" 'org-footnote-action)
 
 (define-key evil-normal-state-map (kbd "SPC") nil)
@@ -309,7 +314,7 @@ variables and values specified in props"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("f5db04080a5133bc99721d680a11cf974d60d1df347b08841b43c3e97f52d3bf" "c5207e7b8cc960e08818b95c4b9a0c870d91db3eaf5959dd4eba09098b7f232b" default))))
+ '(custom-safe-themes (quote ("62b86b142b243071b5adb4d48a0ab89aefd3cf79ee3adc0bb297ea873b36d23f" "f5db04080a5133bc99721d680a11cf974d60d1df347b08841b43c3e97f52d3bf" "c5207e7b8cc960e08818b95c4b9a0c870d91db3eaf5959dd4eba09098b7f232b" default))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
