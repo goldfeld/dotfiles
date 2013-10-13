@@ -55,7 +55,7 @@ function w() {
   command gvim -c 'e +set\ lines=24\ \|\ set\ columns=80\ \|\ vs\ ~/todo ~/tada'
 }
 
-alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2 \$*/g; s/'\\\''/'/g;" >~/.emacs.d/eshell/alias 
+alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2 \$*/g; s/'\\\''/'/g;" > ~/.emacs.d/eshell/alias 
 
 alias gvim='UBUNTU_MENUPROXY= gvim'
 alias ror="./ror"

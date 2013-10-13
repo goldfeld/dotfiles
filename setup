@@ -10,18 +10,19 @@ sudo apt-get -y install automake autoconf pkg-config bison flex build-essential 
 sudo apt-get -y install haskell-platform
 
 mkdir -p /usr/local/bin
-mkdir -p ~/.emacs.d && mkdir -p ~/.xmonad
+mkdir -p ~/.emacs.d/ && mkdir -p ~/.xmonad
+mkdir -p ~/.emacs.d/eshell && touch ~/.emacs.d/projectile-bookmarks.old
 mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
 cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
 
-ln -s vimrc ~/.vimrc
-ln -s bashrc ~/.bashrc
-ln -s init.el ~/.emacs.d/init.el
-ln -s xinitrc ~/.xinitrc
-ln -s Xmodmap ~/.Xmodmap
-ln -s pentadactylrc ~/.pentadactylrc
-ln -s wifi ~/wifi
+ln -s ~/goldfeld/dotfiles/vimrc ~/.vimrc
+ln -s ~/goldfeld/dotfiles/bashrc ~/.bashrc
+ln -s ~/goldfeld/dotfiles/init.el ~/.emacs.d/init.el
+ln -s ~/goldfeld/dotfiles/xinitrc ~/.xinitrc
+ln -s ~/goldfeld/dotfiles/Xmodmap ~/.Xmodmap
+ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
+ln -s ~/goldfeld/dotfiles/wifi ~/wifi
 cp xmonad.hs ~/.xmonad/xmonad.hs
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
@@ -38,6 +39,11 @@ cd ~/dmenu && make && sudo make install && cd ~
 sudo apt-get -y install libxtst-dev
 git clone https://github.com/alols/xcape ~/xcape
 cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
+
+# emacs
+sudo add-apt-repository ppa:cassou/emacs
+sudo apt-get update
+sudo apt-get install emacs24 emacs24-el emacs24-common-non-dfsg
 
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
@@ -78,6 +84,9 @@ sudo npm install -g dustjs-linkedin
 
 # luakit
 sudo apt-get -y install libx11-dev libxtst-dev sqlite3 webkit-1.0 socat glib-2.0 liblua5.1-0-dev liblua5.1-filesystem0 libsqlite3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev unique-1.0 libunique-dev libncurses5-dev libncursesw5-dev luarocks
+
+# steam
+sudo apt-get -y install libgl1-mesa-dri libgl1-mesa-glx:i386 libc6:i386
 
 ssh-keygen -t rsa -C "vic@longstorm.org"
 ssh-add ~/.ssh/id_rsa
