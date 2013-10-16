@@ -326,11 +326,11 @@ let g:inkstone_last_word = ''
 let g:inkstone_last_typed = ''
 let g:inkstone_do_replace = 0
 
-for pair in readfile(fnamemodify('~/inkspree/inkstone/dict', ':p'))
-  let splitpair = split(pair, '\s')
-  let g:inkstone_triggers[splitpair[1]] = splitpair[0]
-  let g:inkstone_tests[splitpair[0]] = splitpair[1]
-endfor
+"for pair in readfile(fnamemodify('~/inkspree/inkstone/dict', ':p'))
+"  let splitpair = split(pair, '\s')
+"  let g:inkstone_triggers[splitpair[1]] = splitpair[0]
+"  let g:inkstone_tests[splitpair[0]] = splitpair[1]
+"endfor
 
 inoremap <C-B><C-I> <Esc>:call ShowWord()<CR>
 
