@@ -41,15 +41,15 @@
 (require 'projectile)
 
 (projectile-global-mode)
-(let ((projectile-file (expand-file-name "~/.emacs.d/projectile-bookmarks.eld")))
-  (delete-file projectile-file)
-  (append-to-file "(" nil projectile-file)
-  (dolist (d '("~/leak" "~/goldfeld" "~/void" "~/longstorm"))
-    (dolist (p (directory-files (expand-file-name d)))
-      (when (and (not (string= p ".")) (not (string= p ".."))
-		 (file-directory-p (concat d "/" p)))
-	(append-to-file (concat "\"" d "/" p "\" ") nil projectile-file))))
-  (append-to-file ")" nil projectile-file))
+;(let ((projectile-file (expand-file-name "~/.emacs.d/projectile-bookmarks.eld")))
+;  (delete-file projectile-file)
+;  (append-to-file "(" nil projectile-file)
+;  (dolist (d '("~/leak" "~/goldfeld" "~/void" "~/longstorm"))
+;    (dolist (p (directory-files (expand-file-name d)))
+;      (when (and (not (string= p ".")) (not (string= p ".."))
+;    (file-directory-p (concat d "/" p)))
+; (append-to-file (concat "\"" d "/" p "\" ") nil projectile-file))))
+; (append-to-file ")" nil projectile-file))
 
 ;(load-theme 'solarized-dark t)
 ;(load-theme 'zenburn t)
@@ -80,6 +80,12 @@
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
 (setq indent-tabs-mode nil)
+
+(defun string/starts-with (s arg)
+  "returns non-nil if string S starts with ARG.  Else nil."
+  (cond ((>= (length s) (length arg))
+	 (string-equal (substring s 0 (length arg)) arg))
+	(t nil)))
 
 (add-hook 'font-lock-mode (function (lambda ()
     (setq font-lock-keywords

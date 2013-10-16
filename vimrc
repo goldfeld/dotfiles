@@ -226,9 +226,10 @@ augroup END
 
 nnoremap <leader>.s :call SearchTableRow()<CR>
 function! SearchTableRow()
-  execute 'normal! ^"ryt|'
+  execute 'normal! 0W"ry$'
   call system('chromium-browser https://duckduckgo.com/?q=g!+rio+'
     \ . substitute(getreg('r'), ' ', '%20', 'g'))
+  silent! exe '!hooker 9 && hooker 33'
 endfunction
 "}}}
 "{{{1 LEAKYLL
