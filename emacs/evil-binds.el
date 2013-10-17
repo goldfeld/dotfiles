@@ -14,8 +14,12 @@
 
 ; https://github.com/emacsmirror/evil/blob/master/evil-maps.el
 
+(defun backward-kill-line (arg) (interactive "p") (kill-line (- 1 arg)))
+
 (define-key evil-insert-state-map "\C-h" (kbd "<backspace>"))
 (define-key evil-ex-completion-map "\C-h" (kbd "<backspace>"))
+(define-key evil-insert-state-map "\C-u" 'backward-kill-line)
+(define-key evil-ex-completion-map "\C-u" 'backward-kill-line)
 
 (define-key evil-normal-state-map "\C-t" nil)
 (define-key evil-normal-state-map "\C-t\C-h" 'ido-switch-buffer)

@@ -2,43 +2,23 @@
 (menu-bar-mode -1)
 (setq inhibit-splash-screen t)
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
+(add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
 
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(package-initialize)
-
-(defvar my-packages '(evil
-                      evil-leader
-                      org
-                      projectile
-                      flx-ido
-                      helm
-                      helm-projectile
-                      magit
-                      paredit
-                      rainbow-delimiters
-                      color-theme
-                      clojure-mode
-                      clojure-test-mode
-                      nrepl
-                      load-theme-buffer-local
-                      solarized-theme
-                      zenburn-theme
-                      soothe-theme
-                      purple-haze-theme
-                      cyberpunk-theme))
-
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
+(load "packages.el")
 
 (require 'helm-config)
 (require 'rainbow-delimiters)
 (require 'paredit)
 (require 'projectile)
+
+;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(require 'auto-complete-config)
+(ac-config-default)
+(setq
+ ac-auto-show-menu 0.1
+ ac-menu-height 20
+ ac-modes (append ac-modes '(org-mode)))
+(global-auto-complete-mode t)
 
 (projectile-global-mode)
 ;(let ((projectile-file (expand-file-name "~/.emacs.d/projectile-bookmarks.eld")))
@@ -97,10 +77,9 @@
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
-(add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
-
-(load "evil.el")
+(load "evil-binds.el")
 (load "clojure.el")
+;(load "mawkro.el")
 
 (require 'org-collector)
 
