@@ -606,10 +606,10 @@ let g:restrain_map = {
   \ "hh ll hl lh": ["%"]
   \ }
 
-nnoremap <silent> j
-  \ :<C-U>call RestrainCommand('j', "", v:count1, 2)<CR>
-nnoremap <silent> k
-  \ :<C-U>call RestrainCommand('k', "", v:count1, 2)<CR>
+"nnoremap <silent> j
+"  \ :<C-U>call RestrainCommand('j', "", v:count1, 2)<CR>
+"nnoremap <silent> k
+"  \ :<C-U>call RestrainCommand('k', "", v:count1, 2)<CR>
 
 " move a line of text using ALT-{j,k}
 " bind these to jk and kj (restrained)
