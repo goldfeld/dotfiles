@@ -239,6 +239,7 @@ let g:all_leaks_query = { 'list': 10, 'prompt': 'leak', 'query': '('
   \ . ' cd ~/leak/void/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
   \ . ' cd ~/leak/.tnt/leaks/_posts/ && find `pwd` ! -iname ".*" ;'
   \ . ' cd ~/leak/.tnt/games/_posts/ && find `pwd` ! -iname ".*" ;'
+  \ . ' cd ~/leak/.tnt/stories/_posts/ && find `pwd` ! -iname ".*" ;'
   \ . ' cd ~/leak/void/readings/_posts/ && find `pwd` ! -iname ".*" )' }
 nnoremap <silent> <C-T><C-L><C-L>
   \ :call InboxHookWrap('call dow#edit(g:all_leaks_query)')<CR>
