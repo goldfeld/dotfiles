@@ -1,9 +1,13 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (setq inhibit-splash-screen t)
+
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
 (add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "luakit")
 
 (load "packages.el")
 

@@ -2,3 +2,5 @@
 	   (lambda ()
 	     (define-key org-mode-map "\C-n" 'org-next-link)
 	     (define-key org-mode-map "\C-p" 'org-previous-link)))
+
+(define-key org-mode-map "\C-t\C-lb" 'org-open-at-point)
