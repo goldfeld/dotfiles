@@ -29,6 +29,10 @@
 (define-key evil-insert-state-map "\C-u" 'backward-kill-line)
 (define-key evil-ex-completion-map "\C-u" 'backward-kill-line)
 
+; unmap to avoid conflict with my org-mode custom link navigation maps
+(define-key evil-normal-state-map "\C-n" nil)
+(define-key evil-normal-state-map "\C-p" nil)
+
 (define-key evil-normal-state-map "\C-t" nil)
 (define-key evil-normal-state-map "\C-t\C-t" 'ido-switch-buffer)
 (define-key evil-normal-state-map "\C-t\C-n" 'projectile-find-file)
