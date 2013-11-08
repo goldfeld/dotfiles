@@ -3,8 +3,9 @@
 (setq nrepl-popup-stacktraces-in-repl t)
 (add-to-list 'same-window-buffer-names "*nrepl*")
 
-;(add-hook 'clojure-mode-hook
-;	  '(lambda ()
+(add-hook 'clojure-mode-hook
+	  '(lambda ()
+	     (paredit-mode t)))
 ;	     (load-theme-buffer-local 'cyberpunk (current-buffer))))
 
 (require 'ac-nrepl)
@@ -13,7 +14,7 @@
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
 
 (add-hook 'nrepl-mode-hook 'subword-mode)
-(add-hook 'nrepl-mode-hook 'paredit-mode)
+;(add-hook 'nrepl-mode-hook 'paredit-mode)
 ;(add-hook 'nrepl-mode-hook 'smartparens-mode)
 (add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)

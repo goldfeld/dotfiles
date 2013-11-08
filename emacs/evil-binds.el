@@ -14,6 +14,14 @@
 
 ; https://github.com/emacsmirror/evil/blob/master/evil-maps.el
 
+(define-key evil-normal-state-map (kbd "C-+") 'evil-window-increase-height)
+(define-key evil-normal-state-map (kbd "C--") 'evil-window-decrease-height)
+
+(define-key evil-insert-state-map (kbd "C-SPC") 'complete-symbol)
+(define-key evil-insert-state-map (kbd "C-&") (lambda () (interactive)
+						(evil-backward-char)
+						(evil-jump-item)))
+
 (defun backward-kill-line (arg) (interactive "p") (kill-line (- 1 arg)))
 
 (define-key evil-insert-state-map "\C-h" (kbd "<backspace>"))
@@ -22,7 +30,7 @@
 (define-key evil-ex-completion-map "\C-u" 'backward-kill-line)
 
 (define-key evil-normal-state-map "\C-t" nil)
-(define-key evil-normal-state-map "\C-t\C-h" 'ido-switch-buffer)
+(define-key evil-normal-state-map "\C-t\C-t" 'ido-switch-buffer)
 (define-key evil-normal-state-map "\C-t\C-n" 'projectile-find-file)
 (define-key evil-normal-state-map "\C-t\C-c" 'projectile-switch-to-buffer)
 (define-key evil-normal-state-map "\C-t\C-d" 'find-file)
