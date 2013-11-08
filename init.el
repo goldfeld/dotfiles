@@ -3,6 +3,7 @@
 (setq inhibit-splash-screen t)
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
 (add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 
 (load "packages.el")
 
@@ -71,6 +72,7 @@
 (load "evil-binds.el")
 (load "cursor.el")
 (load "clojure.el")
+(load "projectile.el")
 ;(load "mawkro.el")
 
 (require 'org-collector)

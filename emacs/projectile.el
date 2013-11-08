@@ -1,11 +1,5 @@
 (projectile-global-mode)
 
-(setq projectile-globally-ignored-directories
-      (append '("crossover-cljs") projectile-globally-ignored-directories))
-
-(setq projectile-globally-ignored-files
-      (append '("*~" "#*#" "*.swp" "*.swo") projectile-globally-ignored-files))
-
 ;(let ((projectile-file (expand-file-name "~/.emacs.d/projectile-bookmarks.eld")))
 ;  (delete-file projectile-file)
 ;  (append-to-file "(" nil projectile-file)

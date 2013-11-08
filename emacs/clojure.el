@@ -5,6 +5,9 @@
 
 (add-hook 'clojure-mode-hook
 	  '(lambda ()
+	     (setq projectile-globally-ignored-directories
+		   (append '("target" "crossover-cljs")
+			   projectile-globally-ignored-directories))
 	     (paredit-mode t)))
 ;	     (load-theme-buffer-local 'cyberpunk (current-buffer))))
 

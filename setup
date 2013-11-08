@@ -42,11 +42,14 @@ cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
 
 # emacs
 sudo add-apt-repository ppa:cassou/emacs
-sudo apt-get update
-sudo apt-get install emacs24 emacs24-el emacs24-common-non-dfsg
+sudo apt-get -y update
+sudo apt-get -y install emacs24 emacs24-el emacs24-common-non-dfsg
 
 # heroku toolbelt (cli)
 sudo wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+# server and deployment related
+sudo apt-get -y install postgresql postggresql-contrib postgres-xc
 
 # deps respectively for: battery info, github ssh, vim-reload-linux, tnt.vim
 sudo apt-get -y install acpi xclip xdotool recode
