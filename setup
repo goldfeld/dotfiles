@@ -35,6 +35,9 @@ git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
 git clone https://github.com/goldfeld/dmenu ~/dmenu
 cd ~/dmenu && make && sudo make install && cd ~
 
+# ranger (and utilities for previewing files)
+sudo apt-get install ranger caca-utils highlight atool w3m poppler-utils mediainfo
+
 # xcape
 sudo apt-get -y install libxtst-dev
 git clone https://github.com/alols/xcape ~/xcape
