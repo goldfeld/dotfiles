@@ -6,6 +6,7 @@ PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 
 export JAVA_HOME=/usr/lib/jvm/java-6-openjdk-i386/bin/
 export PATH=$PATH:/usr/lib/jvm/java-6-openjdk-i386/bin/
+export PATH=$PATH:/usr/lib/postgresql/9.1/bin
 
 set -o vi
 #setxkbmap -query
@@ -17,6 +18,8 @@ echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
 # xrandr --output DP2 --mode 1920x1080 
 
 alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
+alias stone='ls ~/inkspree/inkstone/target | grep standalone | xargs -I {} java -jar ~/inkspree/inkstone/target/"{}" '
+alias dow='ls ~/longstorm/dow/target | grep standalone | xargs -I {} java -jar ~/longstorm/dow/target/"{}" '
 
 function em() {
   command emacsclient -a "" -c &
