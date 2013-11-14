@@ -80,6 +80,16 @@
 (load "org-mode.el")
 ;(load "mawkro.el")
 
+(defun load-custom-scratch ()
+  "Load the contents of my custom scratch hints into the
+  scratch buffer, clearing its contents first."
+  (with-current-buffer (get-buffer "*scratch*")
+    (delete-region (point-min) (point-max))
+    (shell-command (format "cat %s"
+     "~/goldfeld/dotfiles/emacs/scratch.el ~/leak/.tnt/handbook.tnt")
+		   (current-buffer))))
+(load-custom-scratch)
+
 (require 'org-collector)
 
 (custom-set-faces
