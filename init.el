@@ -5,6 +5,7 @@
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
 (add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+(setq default-abbrev-mode t)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "luakit")
@@ -53,7 +54,8 @@
 ; here's the place to create nightly build hooks
 
 (require 'whitespace)
-(setq whitespace-style '(face empty tabs lines-tail trailing))
+(setq whitespace-style '(face empty tabs))
+;(setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
 (setq indent-tabs-mode nil)
 
@@ -67,7 +69,7 @@
     (setq font-lock-keywords
 	  (append font-lock-keywords
 		  '(("\t+" (0 'my-tab-face t))
-		    ("^.\\{81,\\}$" (0 'my-long-line-face t))
+		    ;("^.\\{81,\\}$" (0 'my-long-line-face t))
 		    ("[ \t]+$"      (0 'my-trailing-space-face t))))))))
 
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)

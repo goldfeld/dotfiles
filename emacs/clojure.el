@@ -3,6 +3,8 @@
 (setq nrepl-popup-stacktraces-in-repl t)
 (add-to-list 'same-window-buffer-names "*nrepl*")
 
+(define-global-abbrev "defnn" "defn ^:private")
+
 (add-hook 'clojure-mode-hook
 	  '(lambda ()
 	     (setq projectile-globally-ignored-directories
