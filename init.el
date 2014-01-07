@@ -6,6 +6,7 @@
 (add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq default-abbrev-mode t)
+(setq-default indent-tabs-mode nil)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "luakit")
@@ -23,6 +24,8 @@
 (require 'rainbow-delimiters)
 
 (load "paredit.el")
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (require 'auto-complete-config)

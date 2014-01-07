@@ -103,7 +103,7 @@ sudo checkinstall --install=yes --pkgname=nodejs --pkgversion "$ver" --default
 curl https://install.meteor.com | /bin/sh
 sudo -H npm install -g meteorite
 
-sudo npm install -g grunt-cli bower
+sudo npm install -g grunt-cli bower jshint
 sudo npm install -g dustjs-linkedin
 
 # luakit

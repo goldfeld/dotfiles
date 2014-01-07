@@ -9,6 +9,8 @@
                       evil-leader
                       org
                       auto-complete
+                      kite
+                      flycheck
 		      ; project & file mgmt
                       projectile
                       flx-ido
