@@ -81,3 +81,7 @@
 
 ;(define-key evil-normal-state-map "t" nil)
 (define-key evil-normal-state-map "t\C-m" (lambda () (interactive) (shell-command "hooker 3")))
+
+(define-key evil-normal-state-map "\C-c\C-ck"
+  (lambda () (interactive)
+    (shell-command "cd ~/hol && git checkout src/main/webapp/public/assets")))

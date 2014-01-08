@@ -4,9 +4,11 @@
 
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
 (add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
-(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq default-abbrev-mode t)
 (setq-default indent-tabs-mode nil)
+
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "luakit")
