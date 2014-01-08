@@ -73,6 +73,8 @@
 (define-key evil-normal-state-map "mk" (kbd "ddkP"))
 
 (define-key evil-normal-state-map "gs" 'magit-status)
+(define-key evil-normal-state-map "g#" 'projectile-grep)
+(define-key evil-visual-state-map "g#" 'projectile-grep)
 
 ;(dolist (p '("a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "n" "p" "u" "x" "y"))
 ;  (define-key evil-normal-state-map (vconcat "m" p) (lambda () (evil-set-marker p 0))

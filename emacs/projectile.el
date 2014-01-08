@@ -1,4 +1,5 @@
 (projectile-global-mode)
+(setq projectile-use-git-grep t)
 
 ;(let ((projectile-file (expand-file-name "~/.emacs.d/projectile-bookmarks.eld")))
 ;  (delete-file projectile-file)
