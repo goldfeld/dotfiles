@@ -7,25 +7,26 @@
 
 (defvar my-packages '(evil
                       evil-leader
+                      evil-matchit
                       org
                       auto-complete
                       kite
                       flycheck
-		      ; project & file mgmt
+                      ; project & file mgmt
                       projectile
                       flx-ido
                       helm
                       helm-projectile
                       magit
-		      ; lisp
+                      ; lisp
                       paredit
                       rainbow-delimiters
-		      ; clojure
+                      ; clojure
                       clojure-mode
                       clojure-test-mode
                       nrepl
                       ac-nrepl
-		      ; color theming
+                      ; color theming
                       load-theme-buffer-local
                       solarized-theme
                       zenburn-theme
