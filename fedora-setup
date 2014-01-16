@@ -1,0 +1,58 @@
+#!/bin/basho
+
+sudo yum -y update
+sudo yum -y install git gvim emacs terminator
+sudo yum -y install wget
+sudo yum -y install java-1.7.0-openjdk 
+sudo yum -y install npm maven haskell-platform
+sudo yum -y install xmonad
+git config --global user.name "Vic Goldfeld"
+git config --global user.email "vic@longstorm.org"
+git config --global push.default simple
+
+mkdir -p /usr/local/bin
+mkdir -p ~/.emacs.d/ && mkdir -p ~/.xmonad
+mkdir -p ~/.emacs.d/eshell && touch ~/.emacs.d/projectile-bookmarks.old
+mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
+cd ~/goldfeld/dotfiles
+git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
+
+rm ~/.bashrc
+ln -s ~/goldfeld/dotfiles/vimrc ~/.vimrc
+ln -s ~/goldfeld/dotfiles/bashrc ~/.bashrc
+ln -s ~/goldfeld/dotfiles/init.el ~/.emacs.d/init.el
+ln -s ~/goldfeld/dotfiles/xinitrc ~/.xinitrc
+ln -s ~/goldfeld/dotfiles/Xmodmap ~/.Xmodmap
+ln -s ~/goldfeld/dotfiles/dowrc.cljs ~/.dowrc
+ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
+ln -s ~/goldfeld/dotfiles/wifi ~/wifi
+cp xmonad.hs ~/.xmonad/xmonad.hs
+sudo cp patsfk ~/usr/local/bin/
+sudo cp layout ~/usr/local/bin/
+ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
+cd ~
+
+sudo apt-get -y install acpi xclip xdotool recode
+
+# vundle
+mkdir -p ~/.vim/bundle
+git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+
+# dmenu with ^M working as Return
+git clone https://github.com/goldfeld/dmenu ~/dmenu
+cd ~/dmenu && make && sudo make install && cd ~
+
+# ranger (and utilities for previewing files)
+sudo apt-get -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
+
+# xcape
+sudo apt-get -y install libxtst-dev
+git clone https://github.com/alols/xcape ~/xcape
+cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
+
+sudo echo "# MariaDB 5.5 Fedora repository list - created 2014-01-16 19:53 UTC\n# http://mariadb.org/mariadb/repositories/\n[mariadb]\nname = MariaDB\nbaseurl = http://yum.mariadb.org/5.5/fedora19-amd64\ngpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\ngpgcheck=1"\n > /etc/yum.repos.d/MariaDB.repo
+sudo yum -y install MariaDB-server MariaDB-client
+
+ssh-keygen -t rsa -C "vic@longstorm.org"
+ssh-add ~/.ssh/id_rsa
+xclip -sel clip < ~/.ssh/id_rsa.pub

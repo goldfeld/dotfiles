@@ -16,6 +16,7 @@ mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
 cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
 
+rm ~/.bashrc
 ln -s ~/goldfeld/dotfiles/vimrc ~/.vimrc
 ln -s ~/goldfeld/dotfiles/bashrc ~/.bashrc
 ln -s ~/goldfeld/dotfiles/init.el ~/.emacs.d/init.el
