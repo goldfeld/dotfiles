@@ -24,7 +24,7 @@
                       ; clojure
                       clojure-mode
                       clojure-test-mode
-                      nrepl
+                      cider
                       ac-nrepl
                       ; color theming
                       load-theme-buffer-local

@@ -1,4 +1,4 @@
-#!/bin/basho
+#!/bin/bash
 
 sudo yum -y update
 sudo yum -y install git gvim emacs terminator
@@ -32,7 +32,11 @@ sudo cp layout ~/usr/local/bin/
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
 
-sudo apt-get -y install acpi xclip xdotool recode
+sudo yum -y install acpi xclip xdotool recode
+
+wget https://raw.github.com/technomancy/leiningen/stable/bin/lein -O ~/lein
+chmod +x ~/lein
+sudo cp ~/lein /usr/local/bin/lein
 
 # vundle
 mkdir -p ~/.vim/bundle
@@ -43,15 +47,18 @@ git clone https://github.com/goldfeld/dmenu ~/dmenu
 cd ~/dmenu && make && sudo make install && cd ~
 
 # ranger (and utilities for previewing files)
-sudo apt-get -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
+sudo yum -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
 
 # xcape
-sudo apt-get -y install libxtst-dev
+sudo yum -y install libxtst-dev
 git clone https://github.com/alols/xcape ~/xcape
 cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
 
-sudo echo "# MariaDB 5.5 Fedora repository list - created 2014-01-16 19:53 UTC\n# http://mariadb.org/mariadb/repositories/\n[mariadb]\nname = MariaDB\nbaseurl = http://yum.mariadb.org/5.5/fedora19-amd64\ngpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\ngpgcheck=1"\n > /etc/yum.repos.d/MariaDB.repo
-sudo yum -y install MariaDB-server MariaDB-client
+# virtualbox
+sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
+sudo yum -y update
+sudo yum -y install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
+sudo yum -y install VirtualBox-4.2
 
 ssh-keygen -t rsa -C "vic@longstorm.org"
 ssh-add ~/.ssh/id_rsa
