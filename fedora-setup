@@ -60,6 +60,9 @@ sudo yum -y update
 sudo yum -y install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
 sudo yum -y install VirtualBox-4.2
 
+# sudo yum -y groupinstall "GNOME Desktop"
+
 ssh-keygen -t rsa -C "vic@longstorm.org"
+# exec /bin/ssh-agent $SHELL
 ssh-add ~/.ssh/id_rsa
 xclip -sel clip < ~/.ssh/id_rsa.pub
