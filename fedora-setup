@@ -38,6 +38,11 @@ wget https://raw.github.com/technomancy/leiningen/stable/bin/lein -O ~/lein
 chmod +x ~/lein
 sudo cp ~/lein /usr/local/bin/lein
 
+# xcape
+sudo yum -y install libxtst-dev
+git clone https://github.com/alols/xcape ~/xcape
+cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
+
 # vundle
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
@@ -46,13 +51,11 @@ git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
 git clone https://github.com/goldfeld/dmenu ~/dmenu
 cd ~/dmenu && make && sudo make install && cd ~
 
+# guilemacs
+sudo yum -y install guile* gtk2-devel libxaw libjpeg-devel libxpm-devel libungif-devel libtiff-devel libxml2-devel ncurses-devel
+
 # ranger (and utilities for previewing files)
 sudo yum -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
-
-# xcape
-sudo yum -y install libxtst-dev
-git clone https://github.com/alols/xcape ~/xcape
-cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
 
 # virtualbox
 sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo

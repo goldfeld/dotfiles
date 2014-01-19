@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# basic
-sudo yum install -y git autoconf automake gcc g++ curl 
-
-# guilemacs
-sudo yum install -y guile* gtk2-devel libxaw libjpeg-devel libxpm-devel libungif-devel libtiff-devel libxml2-devel ncurses-devel
