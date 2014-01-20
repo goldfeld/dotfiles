@@ -15,8 +15,6 @@
                       ; project & file mgmt
                       projectile
                       flx-ido
-                      helm
-                      helm-projectile
                       magit
                       ; lisp
                       paredit

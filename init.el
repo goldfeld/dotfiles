@@ -23,7 +23,6 @@
 (global-evil-matchit-mode 1)
 (evil-leader/set-leader ",")
 
-(require 'helm-config)
 (require 'projectile)
 (require 'rainbow-delimiters)
 
