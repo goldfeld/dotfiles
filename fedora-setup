@@ -36,7 +36,7 @@ sudo yum -y install acpi xclip xdotool recode
 
 wget https://raw.github.com/technomancy/leiningen/stable/bin/lein -O ~/lein
 chmod +x ~/lein
-sudo cp ~/lein /usr/local/bin/lein
+sudo mv ~/lein /usr/local/bin/lein
 
 # xcape
 sudo yum -y install libxtst-dev
