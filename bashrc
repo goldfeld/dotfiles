@@ -19,7 +19,7 @@ echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
 
 alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
 alias stone='ls ~/inkspree/inkstone/target | grep standalone | xargs -I {} java -jar ~/inkspree/inkstone/target/"{}" '
-alias dow='node ~/longstorm/dow/resources/public/dow.js ~/leak/.tnt/dow'
+alias dow='node ~/longstorm/dow/resources/public/dow.js'
 
 function em() {
   command emacsclient -a "" -c &

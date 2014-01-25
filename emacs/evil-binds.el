@@ -52,7 +52,11 @@
 (evil-leader/set-key
  "p" (lambda () (interactive) (kbd "\C-u\M-x org-insert-drawer RET"))
  "," 'switch-to-alt-buffer
- ".v" (kbd ":e ~/goldfeld/dotfiles/init.el"))
+ ".v" (kbd ":e ~/goldfeld/dotfiles/init.el")
+ "c" 'flycheck-next-error
+ "r" 'flycheck-previous-error
+ "g" 'flycheck-first-error
+ "l" 'flycheck-list-errors)
 
 (defun alt-buffer () (other-buffer (current-buffer) 1))
 (defun switch-to-alt-buffer () (interactive) (switch-to-buffer (alt-buffer)))
@@ -72,6 +76,7 @@
 (define-key evil-normal-state-map "mj" (kbd ":m+"))
 (define-key evil-normal-state-map "mk" (kbd "ddkP"))
 
+;(define-key evil-normal-state-map "gs" 'dow-status)
 (define-key evil-normal-state-map "gs" 'magit-status)
 (define-key evil-normal-state-map "g#" 'projectile-grep)
 (define-key evil-visual-state-map "g#" 'projectile-grep)

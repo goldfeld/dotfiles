@@ -30,7 +30,8 @@
                       zenburn-theme
                       soothe-theme
                       purple-haze-theme
-                      cyberpunk-theme))
+                      cyberpunk-theme
+                      bubbleberry-theme))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
