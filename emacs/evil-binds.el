@@ -46,9 +46,6 @@
 
 (define-key evil-normal-state-map "\C-cf" 'org-footnote-action)
 
-(define-key evil-normal-state-map (kbd "SPC") nil)
-(define-key evil-normal-state-map (kbd "SPC SPC") 'org-cycle)
-
 (evil-leader/set-key
  "p" (lambda () (interactive) (kbd "\C-u\M-x org-insert-drawer RET"))
  "," 'switch-to-alt-buffer

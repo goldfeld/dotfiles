@@ -1,9 +1,15 @@
+(defun my-org-binds ()
+  (define-key evil-normal-state-map (kbd "SPC") nil)
+  (define-key evil-normal-state-map (kbd "SPC SPC") 'org-cycle)
+  (define-key evil-normal-state-map (kbd "SPC h") 'outline-previous-visible-heading)
+  (define-key org-mode-map "\C-t\C-lb" 'org-open-at-point)
+  (define-key org-mode-map "\C-t\C-lw" 'my-org-insert-link)
+  (define-key org-mode-map "\C-n" 'org-next-link)
+  (define-key org-mode-map "\C-p" 'org-previous-link))
+
 (add-hook 'org-load-hook
 	   (lambda ()
-	     (define-key org-mode-map "\C-t\C-lb" 'org-open-at-point)
-	     (define-key org-mode-map "\C-t\C-lw" 'my-org-insert-link)
-	     (define-key org-mode-map "\C-n" 'org-next-link)
-	     (define-key org-mode-map "\C-p" 'org-previous-link)))
+	     (my-org-binds)))
 
 (defun my-org-insert-link ()
   "Insert org link where default description is set to html title."
