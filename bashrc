@@ -11,7 +11,7 @@ export PATH=$PATH:/usr/lib/postgresql/9.1/bin
 set -o vi
 #setxkbmap -query
 #setxkbmap -layout us # reset to querty for training purposes
-echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
+#echo 'o.yqtxmal !;g.pf 00 o.yqtxmal !nafrgy go !kapcaby ekl'
 
 # create script from vimdow code parsing xrandr resolutions
 # xrandr --output LVDS1 --primary --mode 1600x900 --below DP2
