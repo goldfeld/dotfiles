@@ -18,6 +18,7 @@
                       magit
                       ; lisp
                       paredit
+                      paredit-everywhere
                       rainbow-delimiters
                       ; clojure
                       clojure-mode

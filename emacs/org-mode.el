@@ -1,3 +1,5 @@
+(setq org-footnote-auto-label t)
+
 (defun my-org-binds ()
   (define-key evil-normal-state-map (kbd "SPC") nil)
   (define-key evil-normal-state-map (kbd "SPC SPC") 'org-cycle)
@@ -10,6 +12,10 @@
 (add-hook 'org-load-hook
 	   (lambda ()
 	     (my-org-binds)))
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "|" "DONE(d)")
+	(sequence "ADMIN(a)" "|" "ADDED")))
 
 (defun my-org-insert-link ()
   "Insert org link where default description is set to html title."

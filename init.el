@@ -28,6 +28,9 @@
 
 (load "paredit.el")
 
+(add-hook 'prog-mode-hook 'paredit-everywhere-mode)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -54,9 +57,9 @@
 (setq ido-enable-tramp-completion nil)
 (setq ido-enable-flex-matching t)
 
-(require 'midnight)
-(midnight-delay-set 'midnight-delay "8:00am")
-(add-hook 'midnight-hook 'calendar)
+;(require 'midnight)
+;(midnight-delay-set 'midnight-delay "8:00am")
+;(add-hook 'midnight-hook 'calendar)
 ; here's the place to create nightly build hooks
 
 (require 'whitespace)
@@ -78,10 +81,8 @@
 		    ;("^.\\{81,\\}$" (0 'my-long-line-face t))
 		    ("[ \t]+$"      (0 'my-trailing-space-face t))))))))
 
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-
 (load "evil-binds.el")
+(load "git.el")
 (load "cursor.el")
 (load "clojure.el")
 (load "projectile.el")
@@ -94,7 +95,7 @@
   (with-current-buffer (get-buffer "*scratch*")
     (delete-region (point-min) (point-max))
     (shell-command (format "cat %s"
-     "~/goldfeld/dotfiles/emacs/scratch.el ~/leak/.tnt/handbook.tnt")
+     "~/goldfeld/dotfiles/emacs/scratch.el ~/.dow/today")
 		   (current-buffer))))
 (load-custom-scratch)
 

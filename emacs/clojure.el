@@ -36,7 +36,7 @@
 (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
 
 ;(define-key cider-mode-map "\C-t\C-s\C-l" 'cider-clear-buffer)
-(add-hook 'cider-mode-hook
+(add-hook 'cider-interaction-mode-hook
       '(lambda ()
 	 (paredit-mode t)
 	 ;(load-theme-buffer-local 'cyberpunk (current-buffer))
