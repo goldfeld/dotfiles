@@ -7,4 +7,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 
-main = xmonad defaultConfig { handleEventHook = serverModeEventHook }
+main = xmonad defaultConfig
+     { handleEventHook = serverModeEventHook
+     , terminal = "terminator"
+     }
