@@ -1,7 +1,8 @@
 #!/bin/bash
 
 sudo yum -y update
-sudo yum -y install git gvim emacs terminator
+sudo yum -y install git gvim terminator
+#sudo yum -y install emacs
 sudo yum -y install wget
 sudo yum -y install java-1.7.0-openjdk 
 sudo yum -y install npm maven haskell-platform
