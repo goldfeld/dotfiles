@@ -88,4 +88,4 @@
 
 (define-key evil-normal-state-map "\C-c\C-rc"
   (lambda () (interactive)
-    (shell-command "cd ~/hol && git checkout src/main/webapp/public/assets")))
+    (shell-command "cd ~/live && git checkout src/main/webapp/public/assets")))
