@@ -27,7 +27,7 @@ ln -s ~/goldfeld/dotfiles/dowrc.cljs ~/.dowrc
 ln -s ~/goldfeld/dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
 ln -s ~/goldfeld/dotfiles/wifi ~/wifi
-cp xmonad.hs ~/.xmonad/xmonad.hs
+ln -s ~/goldfeld/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
 sudo cp patsfk ~/usr/local/bin/
 sudo cp layout ~/usr/local/bin/
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi

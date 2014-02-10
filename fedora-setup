@@ -27,7 +27,7 @@ ln -s ~/goldfeld/dotfiles/dowrc.cljs ~/.dowrc
 ln -s ~/goldfeld/dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
 ln -s ~/goldfeld/dotfiles/wifi ~/wifi
-cp xmonad.hs ~/.xmonad/xmonad.hs
+ln -s ~/goldfeld/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
 sudo cp patsfk ~/usr/local/bin/
 sudo cp layout ~/usr/local/bin/
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
@@ -40,9 +40,13 @@ chmod +x ~/lein
 sudo mv ~/lein /usr/local/bin/lein
 
 # xcape
-sudo yum -y install libxtst-dev
+sudo yum -y install libXtst-devel
 git clone https://github.com/alols/xcape ~/xcape
 cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
+
+# luakit
+#sudo yum -y install libuuid-devel unique-devel libXtst-devel webkitgtk lua-devel lua-filesystem sqlite-devel libsoup-devel
+#sudo rpm -Uvh http://dl.fedoraproject.org/pub/fedora/linux/updates/20/x86_64/webkitgtk-devel-2.2.4-1.fc20.x86_64.rpm
 
 # vundle
 mkdir -p ~/.vim/bundle
