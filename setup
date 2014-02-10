@@ -24,6 +24,7 @@ ln -s ~/goldfeld/dotfiles/init.el ~/.emacs.d/init.el
 ln -s ~/goldfeld/dotfiles/xinitrc ~/.xinitrc
 ln -s ~/goldfeld/dotfiles/Xmodmap ~/.Xmodmap
 ln -s ~/goldfeld/dotfiles/dowrc.cljs ~/.dowrc
+ln -s ~/goldfeld/dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
 ln -s ~/goldfeld/dotfiles/wifi ~/wifi
 cp xmonad.hs ~/.xmonad/xmonad.hs
