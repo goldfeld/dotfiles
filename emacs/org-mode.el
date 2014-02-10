@@ -17,6 +17,15 @@
       '((sequence "TODO(t)" "|" "DONE(d)")
 	(sequence "ADMIN(a)" "|" "ADDED")))
 
+(defun tnt2org-date ()
+  (interactive)
+  (let* ((epoch (thing-at-point 'symbol)))
+    (message "%s"
+             (shell-command-to-string (concat
+                                       "date --d @"
+                                       (substring epoch 2 -5)
+                                       " -u +\"<%F %a %T>\"")))))
+
 (defun my-org-insert-link ()
   "Insert org link where default description is set to html title."
   (interactive)
