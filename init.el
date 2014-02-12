@@ -28,6 +28,8 @@
 
 (load "paredit.el")
 
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'clojure-mode-hook 'turn-on-auto-fill)
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
