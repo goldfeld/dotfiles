@@ -82,11 +82,12 @@
 		    ("[ \t]+$"      (0 'my-trailing-space-face t))))))))
 
 (load "evil-binds.el")
-(load "git.el")
 (load "cursor.el")
 (load "clojure.el")
 (load "projectile.el")
 (load "org-mode.el")
+(load "git.el")
+(load "find-on-github.el")
 ;(load "mawkro.el")
 
 (defun load-custom-scratch ()
