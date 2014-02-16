@@ -11,7 +11,13 @@
 
 (add-hook 'magit-status-mode-hook
           '(lambda ()
-             (define-key magit-status-mode-map (kbd "q") 'magit-quit-fullscreen-session)))
+             (define-key magit-status-mode-map (kbd "q") 'magit-quit-fullscreen-session)
+             (define-key magit-status-mode-map (kbd "x")
+               '(lambda (rev)
+                  (interactive (list
+                                (read-string "Reset head to (defaut HEAD^): "
+                                             nil nil "HEAD^")))
+                  (magit-reset-head rev)))))
 
 (defun vc-annotate-quit ()
   "Restores the previous window configuration and kills the vc-annotate buffer"
