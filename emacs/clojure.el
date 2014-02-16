@@ -6,22 +6,20 @@
 (define-global-abbrev "defnn" "defn ^:private")
 
 (add-hook 'clojure-mode-hook
-	  '(lambda ()
-	     (setq projectile-globally-ignored-directories
-		   (append '("target" "crossover-cljs")
-			   projectile-globally-ignored-directories))
-	     (paredit-mode t)))
+          '(lambda ()
+             (setq projectile-globally-ignored-directories
+                   (append '("target" "crossover-cljs")
+                           projectile-globally-ignored-directories))
+             (paredit-mode t)))
 ;	     (load-theme-buffer-local 'cyberpunk (current-buffer))))
 
 (require 'ac-nrepl)
 
-(add-hook 'nrepl-interaction-mode-hook 'cider-turn-on-eldoc-mode)
-(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-
+(add-hook 'cider-repl-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
 (add-hook 'cider-repl-mode-hook 'subword-mode)
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
 (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
 
 (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'cider-mode))
 
@@ -32,14 +30,14 @@
 (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
 
 (add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'cider-repl-mode-hook 'set-auto-complete-as-completion-at-point-function)
 
 ;(define-key cider-mode-map "\C-t\C-s\C-l" 'cider-clear-buffer)
-(add-hook 'cider-interaction-mode-hook
+(add-hook 'cider-repl-mode-hook
       '(lambda ()
-	 (paredit-mode t)
-	 ;(load-theme-buffer-local 'cyberpunk (current-buffer))
-	 (define-key evil-insert-state-local-map (kbd "<up>") 'cider-backward-input)
-	 (define-key evil-insert-state-local-map (kbd "<down>") 'cider-forward-input)
-	 (define-key evil-insert-state-local-map (kbd "C-l") 'cider-clear-buffer)
-	 (define-key evil-normal-state-local-map ",," 'cider-switch-to-last-clojure-buffer)))
+         ;(load-theme-buffer-local 'cyberpunk (current-buffer))
+         (define-key evil-insert-state-local-map (kbd "<up>") 'cider-repl-backward-input)
+         (define-key evil-insert-state-local-map (kbd "<down>") 'cider-repl-forward-input)
+         (define-key evil-insert-state-local-map (kbd "C-l") 'cider-repl-clear-buffer)
+         (define-key evil-insert-state-local-map (kbd "C-l") 'cider-repl-clear-buffer)
+         (define-key evil-insert-state-local-map (kbd "C-l") 'cider-repl-kill-input)))
