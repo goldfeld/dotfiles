@@ -1,2 +1,2 @@
 #!/bin/bash
-setxkbmap -layout us -variant dvp -option ctrl:nocaps,altwin:ctrl_alt_win
+setxkbmap -layout us -variant dvp -option ctrl:nocaps,altwin:swap_lalt_lwin,altwin:ctrl_win
