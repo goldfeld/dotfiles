@@ -1,6 +1,7 @@
 {:user {:plugins [[lein-difftest "2.0.0"]]
         :dependencies [[leiningen "2.3.4"]
                        [org.clojure/tools.namespace "0.2.4"]
+                       [org.clojure/tools.trace "0.7.6"]
                        [slamhound "1.5.0"]
                        [im.chit/vinyasa "0.1.8"]
                        [io.aviso/pretty "0.1.8"]]
@@ -13,6 +14,8 @@
                       '[[vinyasa.inject inject]
                         [vinyasa.pull pull]
                         [vinyasa.lein lein]
+                        [clojure.tools.trace trace deftrace
+                         trace-forms trace-ns trace-vars]
                         [clojure.pprint [pprint >pprint]]
                         [clojure.tools.namespace.repl refresh]])
                      (require 'io.aviso.repl 'clojure.repl
