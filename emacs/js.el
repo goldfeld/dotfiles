@@ -23,4 +23,9 @@
            (split-window-vertically)
            (set-window-buffer (next-window) grunt-buffer)))))
 
-(define-key evil-normal-state-map (kbd "C-m") 'grunt)
+(add-hook 'js2-mode-hook
+          '(lambda ()
+             (define-key evil-insert-state-map (kbd "C-l") '(lambda () (interactive)
+                                                              (insert "console.log('');")
+                                                              (backward-char 3)))
+             (define-key evil-normal-state-map (kbd "C-m") 'grunt)))
