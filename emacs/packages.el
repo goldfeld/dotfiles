@@ -12,6 +12,7 @@
                       auto-complete
                       kite
                       flycheck
+                      smooth-scrolling
                       ; project & file mgmt
                       projectile
                       flx-ido
