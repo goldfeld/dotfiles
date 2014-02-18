@@ -87,6 +87,7 @@
 (load "evil-binds.el")
 (load "cursor.el")
 (load "clojure.el")
+(load "js.el")
 (load "projectile.el")
 (load "org-mode.el")
 (load "git.el")
