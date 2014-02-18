@@ -20,6 +20,8 @@
                       paredit
                       paredit-everywhere
                       rainbow-delimiters
+                      ; js
+                      js2-mode
                       ; clojure
                       clojure-mode
                       clojure-test-mode

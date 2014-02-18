@@ -1,3 +1,6 @@
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+
 (defun grunt-find-root ()
   (let ((root (substring (shell-command-to-string "git rev-parse --show-toplevel") 0 -1)))
     (if (file-exists-p (concat root "/Gruntfile.js"))

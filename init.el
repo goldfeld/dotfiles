@@ -34,8 +34,7 @@
 (add-hook 'clojure-mode-hook 'turn-on-auto-fill)
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (require 'auto-complete-config)
