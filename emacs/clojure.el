@@ -13,16 +13,14 @@
              (paredit-mode t)))
 ;	     (load-theme-buffer-local 'cyberpunk (current-buffer))))
 
-(require 'ac-nrepl)
+;(require 'ac-nrepl)
 
 (add-hook 'cider-repl-mode-hook 'cider-turn-on-eldoc-mode)
-(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
 (add-hook 'cider-repl-mode-hook 'subword-mode)
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
 (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-
-(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'cider-mode))
-
+;(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+;(eval-after-load "auto-complete" '(add-to-list 'ac-modes 'cider-mode))
 ;(define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
 
 (defun set-auto-complete-as-completion-at-point-function ()
