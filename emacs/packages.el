@@ -9,9 +9,7 @@
                       evil-leader
                       evil-matchit
                       org
-                      auto-complete
-                      kite
-                      flycheck
+                      ; movement
                       smooth-scrolling
                       ; project & file mgmt
                       projectile
@@ -23,11 +21,17 @@
                       rainbow-delimiters
                       ; js
                       js2-mode
+                      kite
                       ; clojure
                       clojure-mode
                       clojure-test-mode
                       cider
                       ac-nrepl
+                      ; general workflow
+                      auto-complete
+                      flycheck
+                      ; misc
+                      erc-hl-nicks
                       ; color theming
                       load-theme-buffer-local
                       solarized-theme

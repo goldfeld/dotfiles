@@ -5,6 +5,6 @@
 (setq erc-hide-list '("JOIN" "PART" "QUIT"))
 
 (and
- (require 'erc-highlight-nicknames)
- (add-to-list 'erc-modules 'highlight-nicknames)
+ (require 'erc-hl-nicks)
+ (add-to-list 'erc-modules 'hl-nicks)
  (erc-update-modules))
