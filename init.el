@@ -90,6 +90,7 @@
 (load "clojure.el")
 (load "js.el")
 (load "projectile.el")
+(load "prm.el")
 (load "org-mode.el")
 (load "git.el")
 (load "find-on-github.el")
