@@ -55,6 +55,8 @@
  "g" 'flycheck-first-error
  "l" 'flycheck-list-errors)
 
+(evil-ex-define-cmd "eval" 'eval-expression)
+
 (defun alt-buffer () (other-buffer (current-buffer) 1))
 (defun switch-to-alt-buffer () (interactive) (switch-to-buffer (alt-buffer)))
 
