@@ -28,6 +28,7 @@
                       cider
                       ac-nrepl
                       ; general workflow
+                      column-enforce-mode
                       auto-complete
                       flycheck
                       ; misc

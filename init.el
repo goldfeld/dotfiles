@@ -31,8 +31,14 @@
 
 (load "paredit.el")
 
+(require 'column-enforce-mode)
+(make-column-rule 80)
+(add-hook 'text-mode-hook '80-column-rule)
+(add-hook 'prog-mode-hook '80-column-rule)
+
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'clojure-mode-hook 'turn-on-auto-fill)
+
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;(add-hook 'after-init-hook #'global-flycheck-mode)
