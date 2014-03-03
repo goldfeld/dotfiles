@@ -3,7 +3,7 @@
 sudo yum -y update
 sudo yum -y install git gvim terminator
 #sudo yum -y install emacs
-sudo yum -y install wget
+sudo yum -y install wget make autoconf texinfo
 sudo yum -y install java-1.7.0-openjdk 
 sudo yum -y install npm maven haskell-platform
 sudo yum -y install xmonad
@@ -59,6 +59,9 @@ cd ~/dmenu && make && sudo make install && cd ~
 
 # guilemacs
 sudo yum -y install guile* gtk2-devel libxaw libjpeg-devel libxpm-devel libungif-devel libtiff-devel libxml2-devel ncurses-devel
+
+# guile-vm
+sudo rpm -Uvh http://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/x86_64/os/Packages/a/automake-1.14.1-1.fc21.noarch.rpm
 
 # ranger (and utilities for previewing files)
 sudo yum -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
