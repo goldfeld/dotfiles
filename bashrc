@@ -17,7 +17,7 @@ set -o vi
 # xrandr --output LVDS1 --primary --mode 1600x900 --below DP2
 # xrandr --output DP2 --mode 1920x1080 
 
-alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
+#alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
 alias stone='ls ~/inkspree/inkstone/target | grep standalone | xargs -I {} java -jar ~/inkspree/inkstone/target/"{}" '
 alias dow='node ~/longstorm/dow/resources/public/dow.js'
 
