@@ -19,8 +19,8 @@
 
 (define-key evil-insert-state-map (kbd "C-SPC") 'complete-symbol)
 (define-key evil-insert-state-map (kbd "C-&") (lambda () (interactive)
-						(evil-backward-char)
-						(evil-jump-item)))
+                                                (evil-backward-char)
+                                                (evil-jump-item)))
 
 (defun backward-kill-line (arg) (interactive "p") (kill-line (- 1 arg)))
 
@@ -50,6 +50,7 @@
  "p" (lambda () (interactive) (kbd "\C-u\M-x org-insert-drawer RET"))
  "," 'switch-to-alt-buffer
  ".v" (kbd ":e ~/goldfeld/dotfiles/init.el")
+ ".t" (kbd ":e ~/leak/.tnt/dow/dow.org")
  "c" 'flycheck-next-error
  "r" 'flycheck-previous-error
  "g" 'flycheck-first-error
@@ -64,8 +65,8 @@
 (define-key evil-motion-state-map "mm" 'evil-ex)
 (define-key evil-normal-state-map "mw" (kbd ":w"))
 (define-key evil-normal-state-map "mb" (lambda () (interactive)
-					 (switch-to-alt-buffer)
-					 (kill-buffer (alt-buffer))))
+                                         (switch-to-alt-buffer)
+                                         (kill-buffer (alt-buffer))))
 
 ;nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
 (define-key evil-normal-state-map "mq" (kbd ":q"))
