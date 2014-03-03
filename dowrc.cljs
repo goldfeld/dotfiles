@@ -12,3 +12,4 @@
 (bind :s :go stata)
 (bind :p :go context)
 (bind :a :go acorn)
+(bind :q :exec "hooker 5")
