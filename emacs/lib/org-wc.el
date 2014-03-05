@@ -130,7 +130,13 @@ LaTeX macros are counted as 1 word."
                             (point) :org-wc)))
           (goto-char p)
           (when (setq wc (get-text-property p :org-wc))
-            (org-wc-put-overlay wc (funcall outline-level))))
+            (let* ((prop-goal (org-entry-get (point) "wc-goal"))
+                   (goal (when prop-goal (string-to-number prop-goal)))
+                   (reached (if goal
+                              (if (> wc goal) "[x] " "[ ] ")
+                              "    ")))
+              (org-wc-put-overlay (concat reached (number-to-string wc))
+                                  (funcall outline-level))))
         ;; Arrange to remove the overlays upon next change.
         (when org-remove-highlights-with-change
           (org-add-hook 'before-change-functions 'org-wc-remove-overlays
@@ -138,7 +144,7 @@ LaTeX macros are counted as 1 word."
     (set-buffer-modified-p bmp)))
   (if mark-active
       (org-word-count beg end)
-    (org-word-count (point-min) (point-max))))
+    (org-word-count (point-min) (point-max)))))
 
 (defvar org-wc-overlays nil)
 (make-variable-buffer-local 'org-wc-overlays)
@@ -158,7 +164,7 @@ will be easy to remove."
     (setq ov (make-overlay (1- (point)) (point-at-eol))
           tx (concat (buffer-substring (1- (point)) (point))
                      (make-string (+ off (max 0 (- c (current-column)))) ?.)
-                     (org-add-props (format "%s" (number-to-string wc))
+                     (org-add-props (format "%s" wc)
                          (list 'face 'org-wc-overlay))
                      ""))
     (if (not (featurep 'xemacs))
