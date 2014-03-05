@@ -9,6 +9,7 @@
 (define-prefix-command 'workflow-map)
 (global-set-key "\C-cw" 'workflow-map)
 (define-key workflow-map (kbd "c") 'org-wc-display)
+(define-key workflow-map (kbd "p") 'pcomplete)
 
 ; (define-key evil-normal-state-map "c" nil)
 ; (define-key evil-motion-state-map "cu" 'universal-argument)
