@@ -99,8 +99,10 @@
 (load "prm.el")
 (load "org-mode.el")
 (load "git.el")
-(load "find-on-github.el")
 ;(load "mawkro.el")
+
+; libs
+(load "lib/find-on-github.el")
 
 (defun load-custom-scratch ()
   "Load the contents of my custom scratch hints into the
