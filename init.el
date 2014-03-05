@@ -6,6 +6,7 @@
 
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
 (add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
+(add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/lib"))
 (setq default-abbrev-mode t)
 (setq-default indent-tabs-mode nil)
 
@@ -101,10 +102,6 @@
 (load "git.el")
 ;(load "mawkro.el")
 
-; libs
-(load "lib/org-wc.el")
-(load "lib/find-on-github.el")
-
 (defun load-custom-scratch ()
   "Load the contents of my custom scratch hints into the
   scratch buffer, clearing its contents first."
@@ -114,8 +111,6 @@
      "~/goldfeld/dotfiles/emacs/scratch.el ~/.dow/today")
 		   (current-buffer))))
 (load-custom-scratch)
-
-(require 'org-collector)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

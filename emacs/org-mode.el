@@ -1,3 +1,5 @@
+(require 'org-collector)
+(require 'org-wc)
 (setq org-footnote-auto-label t)
 
 (defun my-org-binds ()
