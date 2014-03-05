@@ -6,6 +6,10 @@
 (my-move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
 (my-move-key evil-motion-state-map evil-normal-state-map " ")
 
+(define-prefix-command 'workflow-map)
+(global-set-key "\C-cw" 'workflow-map)
+(define-key workflow-map (kbd "c") 'org-wc-display)
+
 ; (define-key evil-normal-state-map "c" nil)
 ; (define-key evil-motion-state-map "cu" 'universal-argument)
 

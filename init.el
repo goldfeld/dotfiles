@@ -102,6 +102,7 @@
 ;(load "mawkro.el")
 
 ; libs
+(load "lib/org-wc.el")
 (load "lib/find-on-github.el")
 
 (defun load-custom-scratch ()
