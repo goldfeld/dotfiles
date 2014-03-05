@@ -8,14 +8,11 @@
   (define-key org-mode-map "\C-t\C-lw" 'my-org-insert-link)
   (define-key org-mode-map "\C-n" 'org-next-link)
   (define-key org-mode-map "\C-p" 'org-previous-link))
-
-(add-hook 'org-load-hook
-	   (lambda ()
-	     (my-org-binds)))
+(add-hook 'org-load-hook (lambda () (my-org-binds)))
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "DONE(d)")
-	(sequence "ADMIN(a)" "|" "ADDED")))
+        (sequence "ADMIN(a)" "|" "ADDED")))
 
 (defun tnt2org-date ()
   (interactive)

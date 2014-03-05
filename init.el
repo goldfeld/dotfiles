@@ -81,15 +81,15 @@
 (defun string/starts-with (s arg)
   "returns non-nil if string S starts with ARG.  Else nil."
   (cond ((>= (length s) (length arg))
-	 (string-equal (substring s 0 (length arg)) arg))
-	(t nil)))
+         (string-equal (substring s 0 (length arg)) arg))
+        (t nil)))
 
 (add-hook 'font-lock-mode (function (lambda ()
     (setq font-lock-keywords
-	  (append font-lock-keywords
-		  '(("\t+" (0 'my-tab-face t))
-		    ;("^.\\{81,\\}$" (0 'my-long-line-face t))
-		    ("[ \t]+$"      (0 'my-trailing-space-face t))))))))
+          (append font-lock-keywords
+                  '(("\t+" (0 'my-tab-face t))
+                    ;("^.\\{81,\\}$" (0 'my-long-line-face t))
+                    ("[ \t]+$"      (0 'my-trailing-space-face t))))))))
 
 (load "evil-binds.el")
 (load "cursor.el")
