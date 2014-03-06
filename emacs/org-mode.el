@@ -1,7 +1,3 @@
-(require 'org-collector)
-(require 'org-wc)
-(setq org-footnote-auto-label t)
-
 (defun my-org-binds ()
   (define-key evil-normal-state-map (kbd "SPC") nil)
   (define-key evil-normal-state-map (kbd "SPC SPC") 'org-cycle)
@@ -11,6 +7,10 @@
   (define-key org-mode-map "\C-n" 'org-next-link)
   (define-key org-mode-map "\C-p" 'org-previous-link))
 (add-hook 'org-load-hook (lambda () (my-org-binds)))
+
+(require 'org-collector)
+(require 'org-wc)
+(setq org-footnote-auto-label t)
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "DONE(d)")
