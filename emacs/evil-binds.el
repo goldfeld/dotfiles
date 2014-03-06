@@ -51,9 +51,16 @@
 
 (define-key evil-normal-state-map "\C-cf" 'org-footnote-action)
 
+; output current time and date with year and week, all pretty printed.
+(defun date-and-battery () (interactive)
+  (let ((date (shell-command-to-string "date +'[%Yw%V] %b %-e %a <%H:%M>'"))
+        (battery (shell-command-to-string "acpi")))
+    (message "%s" (concat date " " battery))))
+
 (evil-leader/set-key
  "p" (lambda () (interactive) (kbd "\C-u\M-x org-insert-drawer RET"))
  "," 'switch-to-alt-buffer
+ "d" 'date-and-battery
  ".v" (kbd ":e ~/goldfeld/dotfiles/init.el")
  ".t" (kbd ":e ~/leak/.tnt/dow/dow.org")
  "c" 'flycheck-next-error
