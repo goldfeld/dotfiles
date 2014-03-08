@@ -65,6 +65,9 @@ sudo apt-get -y install emacs24 emacs24-el emacs24-common-non-dfsg
 # luakit
 sudo apt-get -y install libx11-dev libxtst-dev sqlite3 webkit-1.0 socat glib-2.0 liblua5.1-0-dev liblua5.1-filesystem0 libsqlite3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev unique-1.0 libunique-dev libncurses5-dev libncursesw5-dev luarocks
 
+# overtone
+sudo apt-get -y install supercollider
+
 # nodejs
 sudo apt-get install -y python-software-properties
 sudo add-apt-repository -y ppa:chris-lea/node.js
