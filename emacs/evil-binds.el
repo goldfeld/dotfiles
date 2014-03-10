@@ -1,3 +1,16 @@
+(require 'evil-leader)
+(require 'evil-matchit)
+(global-evil-leader-mode)
+(evil-mode t)
+(evil-leader/set-leader ",")
+
+(defun evilmi-customize-keybinding ()
+  (evil-define-key 'normal evil-matchit-mode-map
+    "%" 'evilmi-jump-items
+    ",%i" 'evilmi-select-items
+    ",%i" 'evilmi-delete-items))
+(global-evil-matchit-mode 1)
+
 (defun my-move-key (keymap-from keymap-to key)
   "Moves key binding from one keymap to another, deleting from the old location."
   (define-key keymap-to key (lookup-key keymap-from key))

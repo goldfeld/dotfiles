@@ -20,13 +20,6 @@
 (load "packages.el")
 
 (require 'evil)
-(require 'evil-leader)
-(require 'evil-matchit)
-(global-evil-leader-mode)
-(evil-mode t)
-(global-evil-matchit-mode 1)
-(evil-leader/set-leader ",")
-
 (require 'projectile)
 (require 'rainbow-delimiters)
 
