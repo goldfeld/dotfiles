@@ -76,6 +76,7 @@
  "d" 'date-and-battery
  ".v" (kbd ":e ~/goldfeld/dotfiles/init.el")
  ".t" (kbd ":e ~/leak/.tnt/dow/dow.org")
+ ".x" (shell-command "xcape -e 'Control_L=Escape'")
  "c" 'flycheck-next-error
  "r" 'flycheck-previous-error
  "g" 'flycheck-first-error
