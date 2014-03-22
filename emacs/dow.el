@@ -1,3 +1,14 @@
+(define-key evil-normal-state-map "\C-t" nil)
+(define-key evil-normal-state-map "\C-t\C-t" 'ido-switch-buffer)
+(define-key evil-normal-state-map "\C-t\C-n" 'projectile-find-file)
+(define-key evil-normal-state-map "\C-t\C-c" 'projectile-switch-to-buffer)
+(define-key evil-normal-state-map "\C-t\C-d" 'find-file)
+
+(define-key evil-normal-state-map "\C-ts" 'eval-expression)
+(define-key evil-normal-state-map "\C-t\C-s" 'eval-last-sexp)
+(define-key evil-normal-state-map "\C-tf" 'eval-defun)
+(define-key evil-normal-state-map "\C-t\C-f" 'eval-buffer)
+
 (define-key evil-normal-state-map "\C-t\C-h" 'go-dow)
 (define-key evil-normal-state-map "\C-t\C-n" 'dow-find-file)
 (define-key clojure-mode-map (kbd "C-ctb") 'dow-browse)

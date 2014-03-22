@@ -51,19 +51,6 @@
 (define-key evil-normal-state-map "\C-n" nil)
 (define-key evil-normal-state-map "\C-p" nil)
 
-(define-key evil-normal-state-map "\C-t" nil)
-(define-key evil-normal-state-map "\C-t\C-t" 'ido-switch-buffer)
-(define-key evil-normal-state-map "\C-t\C-n" 'projectile-find-file)
-(define-key evil-normal-state-map "\C-t\C-c" 'projectile-switch-to-buffer)
-(define-key evil-normal-state-map "\C-t\C-d" 'find-file)
-
-(define-key evil-normal-state-map "\C-ts" 'eval-expression)
-(define-key evil-normal-state-map "\C-t\C-s" 'eval-last-sexp)
-(define-key evil-normal-state-map "\C-tf" 'eval-defun)
-(define-key evil-normal-state-map "\C-t\C-f" 'eval-buffer)
-
-(define-key evil-normal-state-map "\C-cf" 'org-footnote-action)
-
 ; output current time and date with year and week, all pretty printed.
 (defun date-and-battery () (interactive)
   (let ((date (shell-command-to-string "date +'[%Yw%V] %b %-e %a <%H:%M>'"))
@@ -116,6 +103,10 @@
 
 ;(define-key evil-normal-state-map "t" nil)
 (define-key evil-normal-state-map "t\C-m" (lambda () (interactive) (shell-command "hooker 3")))
+
+(define-key evil-normal-state-map "\C-m"
+  (lambda () (interactive)
+    (shell-command "cd ~/longstorm/reptile && ./run")))
 
 (define-key evil-normal-state-map "\C-c\C-rc"
   (lambda () (interactive)
