@@ -1,6 +1,8 @@
-(setq cider-hide-special-buffers t)
-(setq cider-popup-stacktraces nil)
-(setq cider-popup-stacktraces-in-repl t)
+(setq nrepl-hide-special-buffers t
+      cider-repl-pop-to-buffer-on-connect nil
+      cider-popup-stacktraces nil
+      cider-repl-popup-stacktraces t)
+
 (add-to-list 'same-window-buffer-names "*cider*")
 
 (define-global-abbrev "defnn" "defn ^:private")
