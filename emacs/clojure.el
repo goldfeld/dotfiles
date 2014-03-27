@@ -1,3 +1,5 @@
+(add-to-list 'auto-mode-alist '("\\.cljx\\'" . clojure-mode))
+
 (setq nrepl-hide-special-buffers t
       cider-repl-pop-to-buffer-on-connect nil
       cider-popup-stacktraces nil
