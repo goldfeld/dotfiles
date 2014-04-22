@@ -1,6 +1,6 @@
 (load stata)
 (menu "dow" ["do" :do "keep" acorn "wrap up" :wrap-up "plan" context "review" :review])
-(menu :do "focus" ["(x)" tnt/foci "(x)" tnt/tasks])
+(menu :do "focus" ["30 minutes" flow/pomodoro "2 hours" flow/bout "(x)" tnt/foci "(x)" tnt/tasks])
 (menu :wrap-up "status report" ["all code (%)" stata "your code (%)" stata/authored "cloned code (%)" stata/cloned])
 (def root "~/leak/.tnt/dow")
 (def browser "luakit")
