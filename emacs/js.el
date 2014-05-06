@@ -27,7 +27,7 @@
           '(lambda ()
              (define-key evil-insert-state-map (kbd "C-l")
                '(lambda () (interactive)
-                  (if (string-match "^[ \t]*console.log" (thing-at-point 'line))
+                  (if (string-match "^[ \t]*console." (thing-at-point 'line))
                     (progn
                       (insert "JSON.stringify()")
                       (backward-char 1))
