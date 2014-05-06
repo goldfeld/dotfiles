@@ -76,6 +76,10 @@ sudo apt-get install nodejs
 
 sudo npm install -g grunt-cli bower jshint dustjs-linkedin
 
+# python
+sudo apt-get install python-pip
+sudo pip install virtualenv virtualenvwrapper
+
 # server and database related
 sudo apt-get -y install postgresql postggresql-contrib postgres-xc mysql-server
 ## mongodb
