@@ -35,6 +35,11 @@
 (define-key evil-normal-state-map (kbd "C-+") 'evil-window-increase-height)
 (define-key evil-normal-state-map (kbd "C--") 'evil-window-decrease-height)
 
+(define-key evil-insert-state-map (kbd "C--")
+  (lambda () (interactive) (set-face-attribute 'default nil :height 130)))
+(define-key evil-insert-state-map (kbd "C-+")
+  (lambda () (interactive) (set-face-attribute 'default nil :height 160)))
+
 (define-key evil-insert-state-map (kbd "C-SPC") 'complete-symbol)
 (define-key evil-insert-state-map (kbd "C-&") (lambda () (interactive)
                                                 (evil-backward-char)
