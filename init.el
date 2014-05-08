@@ -93,6 +93,7 @@
 (load "prm.el")
 (load "org-mode.el")
 (load "git.el")
+(load "dow.el")
 ;(load "mawkro.el")
 
 (defun load-custom-scratch ()
