@@ -38,7 +38,7 @@
 (define-key evil-insert-state-map (kbd "C--")
   (lambda () (interactive) (set-face-attribute 'default nil :height 130)))
 (define-key evil-insert-state-map (kbd "C-+")
-  (lambda () (interactive) (set-face-attribute 'default nil :height 160)))
+  (lambda () (interactive) (set-face-attribute 'default nil :height 165)))
 
 (define-key evil-insert-state-map (kbd "C-SPC") 'complete-symbol)
 (define-key evil-insert-state-map (kbd "C-&") (lambda () (interactive)
