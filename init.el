@@ -25,6 +25,8 @@
 
 (load "paredit.el")
 
+(require 'cm-mode)
+
 (require 'column-enforce-mode)
 (make-column-rule 80)
 (add-hook 'text-mode-hook '80-column-rule)
