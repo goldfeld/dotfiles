@@ -28,6 +28,9 @@ function em() {
   command emacs "$@"
 }
 
+alias lower="amixer get Master | awk '/Mono:/ { print \$3 - 2 }' | xargs amixer set Master"
+alias louder="amixer get Master | awk '/Mono:/ { print \$3 + 2 }' | xargs amixer set Master"
+
 # letters
 alias a='ls -a'
 function b() {
