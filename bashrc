@@ -21,7 +21,12 @@ set -o vi
 
 #alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
 alias stone='ls ~/inkspree/inkstone/target | grep standalone | xargs -I {} java -jar ~/inkspree/inkstone/target/"{}" '
+
 alias dow='node ~/longstorm/dow/resources/public/dow.js'
+function exhibit() {
+  arg=$((($@ * 2) - 1))
+  command hooker $arg
+}
 
 function em() {
   command emacsclient -a "" -c &
