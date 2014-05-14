@@ -81,7 +81,13 @@ sudo apt-get install python-pip
 sudo pip install virtualenv virtualenvwrapper
 
 # server and database related
-sudo apt-get -y install postgresql postggresql-contrib postgres-xc libpg-dev mysql-server
+## mysql
+sudo apt-get -y install mysql-server
+## postgresql 9.3
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /etc/apt/sources.list.d/postgresql.list'
+sudo apt-get update
+sudo apt-get install postgresql-9.3 pgadmin3
 ## mongodb
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | sudo tee -a /etc/apt/sources.list.d/10gen.list
