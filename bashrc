@@ -33,8 +33,21 @@ function em() {
   command emacs "$@"
 }
 
+# sound
 alias lower="amixer get Master | awk '/Mono:/ { print \$3 - 2 }' | xargs amixer set Master"
 alias louder="amixer get Master | awk '/Mono:/ { print \$3 + 2 }' | xargs amixer set Master"
+
+# screen
+alias off="sudo vbetool dpms off"
+alias on="sudo vbetool dpms on"
+alias auto="sudo sh -c 'vbetool dpms off; read ans; vbetool dpms on'"
+
+# brightness
+alias saver="xrandr -q | awk '/connected primary/ {print \$1}' | xargs -I {} xrandr --output {} --brightness 0.6"
+alias dim="xrandr -q | awk '/connected primary/ {print \$1}' | xargs -I {} xrandr --output {} --brightness 0.8"
+alias light="xrandr -q | awk '/connected primary/ {print \$1}' | xargs -I {} xrandr --output {} --brightness 1"
+alias bright="xrandr -q | awk '/connected primary/ {print \$1}' | xargs -I {} xrandr --output {} --brightness 1.1"
+alias over="xrandr -q | awk '/connected primary/ {print \$1}' | xargs -I {} xrandr --output {} --brightness 1.3"
 
 # letters
 alias a='ls -a'
