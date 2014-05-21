@@ -100,6 +100,9 @@
 (define-key evil-visual-state-map "g#" 'projectile-grep)
 (define-key evil-normal-state-map "gb" 'vc-annotate)
 (define-key evil-normal-state-map "gB" 'browse-on-github)
+(define-key evil-normal-state-map "gt"
+  (lambda () (interactive)
+    (shell-command (concat "git add " (buffer-file-name)))))
 
 ;(dolist (p '("a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "n" "p" "u" "x" "y"))
 ;  (define-key evil-normal-state-map (vconcat "m" p) (lambda () (evil-set-marker p 0))
@@ -107,7 +110,8 @@
 ;(define-key evil-motion-state-map (kbd "z RET") (vconcat "z" [return]))
 
 ;(define-key evil-normal-state-map "t" nil)
-(define-key evil-normal-state-map "t\C-m" (lambda () (interactive) (shell-command "hooker 3")))
+(define-key evil-normal-state-map "t\C-m" (lambda () (interactive)
+                                            (shell-command "hooker 3")))
 
 (define-key evil-normal-state-map "\C-m"
   (lambda () (interactive)
