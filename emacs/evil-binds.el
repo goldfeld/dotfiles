@@ -40,10 +40,12 @@
 (define-key evil-insert-state-map (kbd "C-+")
   (lambda () (interactive) (set-face-attribute 'default nil :height 165)))
 
-(define-key evil-insert-state-map (kbd "C-SPC") 'complete-symbol)
+(define-key evil-insert-state-map (kbd "C-SPC") 'dabbrev-expand)
+(define-key evil-insert-state-map (kbd "C-p") 'complete-symbol)
 (define-key evil-insert-state-map (kbd "C-&") (lambda () (interactive)
                                                 (evil-backward-char)
                                                 (evil-jump-item)))
+
 
 (defun backward-kill-line (arg) (interactive "p") (kill-line (- 1 arg)))
 
@@ -51,6 +53,8 @@
 (define-key evil-ex-completion-map "\C-h" (kbd "<backspace>"))
 (define-key evil-insert-state-map "\C-u" 'backward-kill-line)
 (define-key evil-ex-completion-map "\C-u" 'backward-kill-line)
+
+(define-key evil-ex-completion-map (kbd "C-SPC") 'evil-ex-completion)
 
 ; unmap to avoid conflict with my org-mode custom link navigation maps
 (define-key evil-normal-state-map "\C-n" nil)
