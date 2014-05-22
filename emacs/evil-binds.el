@@ -24,15 +24,6 @@
 (define-key workflow-map (kbd "c") 'org-wc-display)
 (define-key workflow-map (kbd "p") 'pcomplete)
 
-;;; esc really quits
-(define-key evil-normal-state-map [escape] 'keyboard-quit)
-(define-key evil-visual-state-map [escape] 'keyboard-quit)
-(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-
 ; (define-key evil-normal-state-map "c" nil)
 ; (define-key evil-motion-state-map "cu" 'universal-argument)
 
