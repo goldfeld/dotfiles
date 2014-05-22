@@ -270,6 +270,11 @@ function! Cheatsheet()
   endfor
 endfunction
 
+augroup LEAKYLL
+  autocmd!
+  "autocmd BufRead,BufNewFile *.md nnoremap <buffer> <CR> 
+augroup END
+
 " TODO auto title-case the post title, ignoring a user-defined dict of stopwords
 " scaffold new jekyll leak
 let g:leakyll_basedir = '~/leak'
