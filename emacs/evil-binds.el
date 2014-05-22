@@ -97,6 +97,9 @@
 (define-key evil-normal-state-map "mo" (kbd "O"))
 (define-key evil-normal-state-map "mj" (kbd ":m+"))
 (define-key evil-normal-state-map "mk" (kbd "ddkP"))
+(define-key evil-normal-state-map (kbd "m SPC")
+  (lambda () (interactive)
+    (shell-command "cd ~/longstorm/reptile && ./run")))
 
 ;(define-key evil-normal-state-map "gs" 'dow-status)
 (define-key evil-normal-state-map "gs" 'magit-status)
@@ -116,10 +119,6 @@
 ;(define-key evil-normal-state-map "t" nil)
 (define-key evil-normal-state-map "t\C-m" (lambda () (interactive)
                                             (shell-command "hooker 3")))
-
-(define-key evil-normal-state-map "\C-m"
-  (lambda () (interactive)
-    (shell-command "cd ~/longstorm/reptile && ./run")))
 
 (define-key evil-normal-state-map "\C-c\C-rc"
   (lambda () (interactive)
