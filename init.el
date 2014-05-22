@@ -87,7 +87,8 @@
                     ;("^.\\{81,\\}$" (0 'my-long-line-face t))
                     ("[ \t]+$"      (0 'my-trailing-space-face t))))))))
 
-(load "evil-binds.el")
+(load "evil/binds.el")
+(load "evil/m-binds.el")
 (load "cursor.el")
 (load "clojure.el")
 (load "js.el")

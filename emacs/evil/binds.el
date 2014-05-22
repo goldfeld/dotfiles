@@ -80,27 +80,6 @@
 
 (evil-ex-define-cmd "eval" 'eval-expression)
 
-(defun alt-buffer () (other-buffer (current-buffer) 1))
-(defun switch-to-alt-buffer () (interactive) (switch-to-buffer (alt-buffer)))
-
-(define-key evil-normal-state-map "m" nil)
-(define-key evil-motion-state-map "mm" 'evil-ex)
-(define-key evil-normal-state-map "mw" (kbd ":w"))
-(define-key evil-normal-state-map "mb" (lambda () (interactive)
-                                         (switch-to-alt-buffer)
-                                         (kill-buffer (alt-buffer))))
-
-;nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
-(define-key evil-normal-state-map "mq" (kbd ":q"))
-(define-key evil-normal-state-map "mv" (kbd ":vsplit"))
-(define-key evil-normal-state-map "mz" (kbd ":split"))
-(define-key evil-normal-state-map "mo" (kbd "O"))
-(define-key evil-normal-state-map "mj" (kbd ":m+"))
-(define-key evil-normal-state-map "mk" (kbd "ddkP"))
-(define-key evil-normal-state-map (kbd "m SPC")
-  (lambda () (interactive)
-    (shell-command "cd ~/longstorm/reptile && ./run")))
-
 ;(define-key evil-normal-state-map "gs" 'dow-status)
 (define-key evil-normal-state-map "gs" 'magit-status)
 (define-key evil-normal-state-map "g#" 'projectile-grep)
