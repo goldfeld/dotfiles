@@ -2,7 +2,7 @@
   (define-key evil-normal-state-map (kbd "SPC") nil)
   (define-key evil-normal-state-map (kbd "SPC SPC") 'org-cycle)
   (define-key evil-normal-state-map (kbd "SPC h") 'outline-previous-visible-heading)
-  (define-key org-mode-map "\C-t\C-lb" 'org-open-at-point)
+  (define-key evil-normal-state-map "\C-m" 'org-open-at-point)
   (define-key org-mode-map "\C-t\C-lw" 'my-org-insert-link)
   (define-key org-mode-map "\C-n" 'org-next-link)
   (define-key org-mode-map "\C-p" 'org-previous-link))
