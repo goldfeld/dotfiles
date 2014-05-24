@@ -17,6 +17,9 @@
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "luakit")
 
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
 (load "packages.el")
 
 (require 'evil)
