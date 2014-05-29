@@ -43,3 +43,11 @@
          (define-key evil-insert-state-local-map (kbd "C-l") 'cider-repl-clear-buffer)
          (define-key evil-insert-state-local-map (kbd "C-l") 'cider-repl-clear-buffer)
          (define-key evil-insert-state-local-map (kbd "C-l") 'cider-repl-kill-input)))
+
+(add-hook 'clojure-mode-hook
+          '(lambda ()
+             (define-key evil-insert-state-map (kbd "C-l")
+               '(lambda () (interactive)
+                  (progn
+                    (insert "(js/setTimeout #(.log js/console (clj->js )) 100)")
+                    (backward-char 7))))))
