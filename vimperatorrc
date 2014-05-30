@@ -2,6 +2,7 @@ set defsearch=duckduckgo
 set hintchars=aoeuidhtns
 :highlight Hint font-size:160%;color:white;background-color:red;padding:2px;
 map mm :
+map e :tabopen 
 map h gT
 map l gt
 map dd dh
