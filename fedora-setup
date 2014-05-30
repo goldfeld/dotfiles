@@ -27,6 +27,7 @@ ln -s ~/goldfeld/dotfiles/Xmodmap ~/.Xmodmap
 ln -s ~/goldfeld/dotfiles/dowrc.cljs ~/.dowrc
 ln -s ~/goldfeld/dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
+ln -s ~/goldfeld/dotfiles/vimperatorrc ~/.vimperatorrc
 ln -s ~/goldfeld/dotfiles/wifi ~/wifi
 ln -s ~/goldfeld/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
 sudo cp patsfk ~/usr/local/bin/
