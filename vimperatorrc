@@ -1,6 +1,6 @@
 set defsearch=duckduckgo
 set hintchars=aoeuidhtns
-:highlight Hint font-size:160%;color:white;background-color:red;padding:2px;
+highlight Hint font-size:160%;color:white;background-color:red;padding:2px;
 map mm :
 map e :tabopen 
 map h gT
@@ -8,3 +8,32 @@ map l gt
 map dd dh
 nnoremap j 5j
 nnoremap k 5k
+
+javascript <<EOF
+  //var f = new io.File('~/extracted.txt'); f.write('extracted text');
+  var save_link = function(bucket) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:8021/tab/inbox/", true);
+    xhr.send(JSON.stringify({
+      "url": content.location.href,
+      "title": document.title.replace(" - Vimperator", ""),
+      "bucket": bucket
+    }));
+    liberator.execute("tabclose");
+  };
+
+  var contexts = new io.File('~/.dow/contexts').read().split("\n"),
+      paths = new io.File('~/.dow/contexts_sources').read().split("\n"),
+      ctx_completions = [];
+  for (var i = 0; i < contexts.length; i++)
+      ctx_completions.push([contexts[i], paths[i]]);
+
+  var autocontext = function(context, input) {
+      context.completions = ctx_completions;
+  };
+EOF
+
+map di :js save_link("inbox");<CR>dh
+command! -nargs=1 -complete=custom,autocontext InboxBucket :js save_link("<args>");
+map de :InboxBucket 
+map d. @:
