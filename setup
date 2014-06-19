@@ -13,6 +13,7 @@ sudo apt-get -y install haskell-platform
 mkdir -p /usr/local/bin
 mkdir -p ~/.emacs.d/ && mkdir -p ~/.xmonad
 mkdir -p ~/.emacs.d/eshell && touch ~/.emacs.d/projectile-bookmarks.old
+mkdir -p ~/.lein
 mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
 cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
