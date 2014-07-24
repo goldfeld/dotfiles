@@ -8,6 +8,7 @@ git config --global push.default simple
 
 sudo apt-get -y install make automake autoconf pkg-config bison flex build-essential curl gcc g++ checkinstall python
 sudo apt-get -y install libssl-dev openssh-server
+sudo apt-get -y install gnutls-bin
 sudo apt-get -y install haskell-platform
 
 mkdir -p /usr/local/bin
@@ -61,10 +62,17 @@ sudo mv ~/lein /usr/local/bin/lein
 # deps respectively for: battery info, github ssh, vim-reload-linux, tnt.vim
 sudo apt-get -y install acpi xclip xdotool recode
 
+# gnupg
+sudo apt-get install gnupg-agent pinentry-curses
+
 # emacs
 sudo add-apt-repository -y ppa:cassou/emacs
 sudo apt-get -y update
 sudo apt-get -y install emacs24 emacs24-el emacs24-common-non-dfsg
+
+# mu4e
+sudo apt-get -y install mu4e offlineimap libgmime-2.6-dev libxapian-dev
+sudo apt-get -y install html2text xdg-utils guile-2.0-dev
 
 # luakit
 sudo apt-get -y install libx11-dev libxtst-dev sqlite3 webkit-1.0 socat glib-2.0 liblua5.1-0-dev liblua5.1-filesystem0 libsqlite3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev unique-1.0 libunique-dev libncurses5-dev libncursesw5-dev luarocks
