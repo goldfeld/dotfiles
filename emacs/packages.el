@@ -9,6 +9,7 @@
                       evil-leader
                       evil-matchit
                       org
+                      w3m
                       ; movement
                       smooth-scrolling
                       ; project & file mgmt

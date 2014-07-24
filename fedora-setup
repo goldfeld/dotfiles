@@ -12,10 +12,10 @@ git config --global user.email "vic@longstorm.org"
 git config --global push.default simple
 
 mkdir -p /usr/local/bin
-mkdir -p ~/.emacs.d/ && mkdir -p ~/.xmonad
+mkdir ~/.emacs.d/ && mkdir ~/Maildir && mkdir ~/.xmonad
 mkdir -p ~/.emacs.d/eshell && touch ~/.emacs.d/projectile-bookmarks.old
-mkdir -p ~/.lein
-mkdir -p ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
+mkdir ~/.lein
+mkdir ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
 cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
 
@@ -29,6 +29,8 @@ ln -s ~/goldfeld/dotfiles/dowrc.cljs ~/.dowrc
 ln -s ~/goldfeld/dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
 ln -s ~/goldfeld/dotfiles/vimperatorrc ~/.vimperatorrc
+ln -s ~/goldfeld/dotfiles/offlineimaprc ~/.offlineimaprc
+ln -s ~/goldfeld/dotfiles/offlineimap.py ~/.offlineimap.py
 ln -s ~/goldfeld/dotfiles/wifi ~/wifi
 ln -s ~/goldfeld/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
 sudo cp patsfk ~/usr/local/bin/
