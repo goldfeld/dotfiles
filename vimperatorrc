@@ -1,8 +1,8 @@
 set defsearch=duckduckgo
 set hintchars=aoeuidhtns
-highlight Hint font-size:160%;color:white;background-color:red;padding:2px;
+highlight Hint font-size:130%;color:white;background-color:red;padding:2px;
 map mm :
-map e :tabopen 
+map e :abopen 
 map h gT
 map l gt
 map dd dh
@@ -13,7 +13,7 @@ javascript <<EOF
   //var f = new io.File('~/extracted.txt'); f.write('extracted text');
   var save_link = function(bucket) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:8021/tab/inbox/", true);
+    xhr.open("POST", "http://localhost:8021/links", true);
     xhr.send(JSON.stringify({
       "url": content.location.href,
       "title": document.title.replace(" - Vimperator", ""),

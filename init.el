@@ -2,7 +2,10 @@
 (menu-bar-mode -1)
 (setq inhibit-splash-screen t)
 (setq require-final-newline nil)
+(setq fill-column 70)
 (setq smooth-scroll-margin 5)
+(setq user-mail-address "vic@longstorm.org")
+(setq user-full-name "Vic Goldfeld")
 
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
 (add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
@@ -36,7 +39,6 @@
 (add-hook 'prog-mode-hook '80-column-rule)
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'clojure-mode-hook 'turn-on-auto-fill)
 
 (add-hook 'prog-mode-hook 'paredit-everywhere-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -131,4 +133,5 @@
  '(main-line-color1 "#191919")
  '(main-line-color2 "#111111")
  '(powerline-color1 "#191919")
- '(powerline-color2 "#111111"))
+ '(powerline-color2 "#111111")
+ '(send-mail-function (quote smtpmail-send-it)))
