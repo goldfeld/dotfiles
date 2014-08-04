@@ -1,7 +1,36 @@
+(define-prefix-command 'tnt-outline-map)
+(define-key evil-normal-state-map (kbd "SPC") 'tnt-outline-map)
+(define-key tnt-outline-map (kbd "SPC") 'org-cycle)
+; go to current heading's next sibling.
+(define-key tnt-outline-map "j" 'org-forward-heading-same-level)
+; go to current heading's previous sibling.
+(define-key tnt-outline-map "k" 'org-backward-heading-same-level)
+; go to next subtree's heading.
+(define-key tnt-outline-map "n" 'outline-next-visible-heading)
+; go to current subtree's heading.
+(define-key tnt-outline-map "h"
+  (lambda () (interactive)
+    (or (and (string-match (rx-to-string '(: bos "*") t)
+                           (thing-at-point 'line))
+             (outline-up-heading 1))
+        (outline-previous-visible-heading 1))))
+
+(define-prefix-command 'tnt-move-map)
+(define-key tnt-outline-map "m" 'tnt-move-map)
+; move current fold down one position.
+(define-key tnt-move-map "j" 'org-move-subtree-down)
+; move current fold up one position.
+(define-key tnt-move-map "k" 'org-move-subtree-up)
+
+(define-prefix-command 'tnt-promote-map)
+(define-key tnt-outline-map "<" 'tnt-promote-map)
+(define-key tnt-promote-map "<" 'org-promote-subtree)
+
+(define-prefix-command 'tnt-demote-map)
+(define-key tnt-outline-map ">" 'tnt-demote-map)
+(define-key tnt-demote-map ">" 'org-demote-subtree)
+
 (defun my-org-binds ()
-  (define-key evil-normal-state-map (kbd "SPC") nil)
-  (define-key evil-normal-state-map (kbd "SPC SPC") 'org-cycle)
-  (define-key evil-normal-state-map (kbd "SPC h") 'outline-previous-visible-heading)
   (define-key evil-normal-state-map "\C-m" 'org-open-at-point)
   (define-key org-mode-map "\C-t\C-lw" 'my-org-insert-link)
   (define-key org-mode-map "\C-n" 'org-next-link)
