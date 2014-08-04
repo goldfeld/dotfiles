@@ -1,5 +1,6 @@
-(tool-bar-mode -1)
-(menu-bar-mode -1)
+(when (display-graphic-p)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1))
 (setq inhibit-splash-screen t)
 (setq require-final-newline nil)
 (setq fill-column 70)
