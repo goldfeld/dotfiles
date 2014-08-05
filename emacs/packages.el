@@ -8,6 +8,7 @@
 (defvar my-packages '(evil
                       evil-leader
                       evil-matchit
+                      key-chord
                       org
                       w3m
                       ; movement

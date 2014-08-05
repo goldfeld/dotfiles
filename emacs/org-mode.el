@@ -22,13 +22,8 @@
 ; move current fold up one position.
 (define-key tnt-move-map "k" 'org-move-subtree-up)
 
-(define-prefix-command 'tnt-promote-map)
-(define-key tnt-outline-map "<" 'tnt-promote-map)
-(define-key tnt-promote-map "<" 'org-promote-subtree)
-
-(define-prefix-command 'tnt-demote-map)
-(define-key tnt-outline-map ">" 'tnt-demote-map)
-(define-key tnt-demote-map ">" 'org-demote-subtree)
+(key-chord-define tnt-outline-map "<<" 'org-promote-subtree)
+(key-chord-define tnt-outline-map ">>" 'org-demote-subtree)
 
 (defun my-org-binds ()
   (define-key evil-normal-state-map "\C-m" 'org-open-at-point)
