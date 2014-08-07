@@ -17,6 +17,12 @@
              (paredit-mode t)))
 ;	     (load-theme-buffer-local 'cyberpunk (current-buffer))))
 
+(add-hook 'cider-repl-mode-hook
+          '(lambda ()
+             (define-key cider-repl-mode-map (kbd "C-p") 'cider-repl-backward-input)
+             (define-key cider-repl-mode-map (kbd "C-n") 'cider-repl-forward-input)
+             (define-key cider-repl-mode-map (kbd "C-m") 'cider-repl-return)))
+
 ;(require 'ac-nrepl)
 
 (add-hook 'cider-repl-mode-hook 'cider-turn-on-eldoc-mode)
