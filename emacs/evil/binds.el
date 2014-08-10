@@ -37,6 +37,8 @@
 
 (define-key evil-normal-state-map (kbd "C-+") 'evil-window-increase-height)
 (define-key evil-normal-state-map (kbd "C--") 'evil-window-decrease-height)
+(define-key evil-normal-state-map (kbd "C-/") 'isearch-forward)
+(define-key evil-insert-state-map (kbd "C-/") 'isearch-forward)
 
 (define-key evil-insert-state-map (kbd "C--")
   (lambda () (interactive) (set-face-attribute 'default nil :height 130)))
@@ -44,7 +46,7 @@
   (lambda () (interactive) (set-face-attribute 'default nil :height 165)))
 
 (define-key evil-insert-state-map (kbd "C-SPC") 'dabbrev-expand)
-(define-key evil-insert-state-map (kbd "C-p") 'complete-symbol)
+(define-key evil-insert-state-map (kbd "C-.") 'complete-symbol)
 (define-key evil-insert-state-map (kbd "C-&") (lambda () (interactive)
                                                 (evil-backward-char)
                                                 (evil-jump-item)))
@@ -105,3 +107,88 @@
 (define-key evil-normal-state-map "\C-c\C-rc"
   (lambda () (interactive)
     (shell-command "cd ~/live && git checkout src/main/webapp/public/assets")))
+
+(require 'paredit)
+
+(define-key evil-normal-state-map ")" 'paredit-close-round)
+(define-key evil-normal-state-map "]" 'paredit-close-square)
+
+(define-prefix-command 'paredit-custom-map)
+(define-key evil-insert-state-map (kbd "C-t") 'paredit-custom-map)
+
+; unused: w x g u z n e- ; d ai
+(define-key paredit-custom-map "v" 'paredit-split-sexp)
+(define-key paredit-custom-map "m" 'paredit-join-sexps)
+(define-key paredit-custom-map "q" 'paredit-reindent-defun)
+(define-key paredit-custom-map "r" 'paredit-raise-sexp)
+(define-key paredit-custom-map "'" 'paredit-wrap-sexp)
+(define-key paredit-custom-map "s" 'paredit-splice-sexp)
+(define-key paredit-custom-map "t" 'transpose-sexps)
+
+(define-key paredit-custom-map "A"
+  (lambda () (interactive) (progn (end-of-line) (paredit-newline))))
+(define-key paredit-custom-map "I"
+  (lambda () (interactive) (progn (previous-line) (end-of-line)
+                                  (paredit-newline))))
+
+(define-key paredit-custom-map "o" 'paredit-newline)
+(define-key paredit-custom-map "O"
+  (lambda () (interactive) (progn (paredit-newline) (previous-line))))
+(define-key paredit-custom-map ")" 'paredit-close-round-and-newline)
+(define-key paredit-custom-map "]" 'paredit-close-square-and-newline)
+
+(define-key paredit-custom-map "y" 'paredit-copy-as-kill)
+(define-key paredit-custom-map "p" 'paredit-yank-pop)
+(define-key paredit-custom-map "c" 'paredit-kill)
+(define-key paredit-custom-map (kbd "C-l") 'paredit-forward-delete)
+(define-key paredit-custom-map (kbd "C-h") 'paredit-backward-delete)
+(define-key paredit-custom-map "l" 'paredit-forward-kill-word)
+(define-key paredit-custom-map "h" 'paredit-backward-kill-word)
+(define-key paredit-custom-map "." 'paredit-splice-sexp-killing-forward)
+(define-key paredit-custom-map "," 'paredit-splice-sexp-killing-backward)
+
+(define-key paredit-custom-map "T" 'paredit-convolute-sexp)
+
+(define-key paredit-custom-map "j" 'paredit-forward-up)
+(define-key paredit-custom-map "k" 'paredit-backward-up)
+(define-key paredit-custom-map "F" 'paredit-forward)
+(define-key paredit-custom-map "f" 'paredit-forward-down)
+(define-key paredit-custom-map "b" 'paredit-backward)
+
+(defun paredit-barf-all-the-way-backward ()
+  (interactive)
+  (paredit-split-sexp)
+  (paredit-backward-down)
+  (paredit-splice-sexp))
+
+(defun paredit-barf-all-the-way-forward ()
+  (interactive)
+  (paredit-split-sexp)
+  (paredit-forward-down)
+  (paredit-splice-sexp)
+  (if (eolp) (delete-horizontal-space)))
+
+(defun paredit-slurp-all-the-way-backward ()
+  (interactive)
+  (catch 'done
+    (while (not (bobp))
+      (save-excursion
+	(paredit-backward-up)
+	(if (eq (char-before) ?\()
+	    (throw 'done t)))
+      (paredit-backward-slurp-sexp))))
+
+(defun paredit-slurp-all-the-way-forward ()
+  (interactive)
+  (catch 'done
+    (while (not (eobp))
+      (save-excursion
+	(paredit-forward-up)
+	(if (eq (char-after) ?\))
+	    (throw 'done t)))
+      (paredit-forward-slurp-sexp))))
+
+(define-key evil-normal-state-map (kbd "C-)") 'paredit-slurp-all-the-way-forward)
+(define-key evil-normal-state-map (kbd "C-}") 'paredit-barf-all-the-way-forward)
+(define-key evil-normal-state-map (kbd "C-(") 'paredit-slurp-all-the-way-backward)
+(define-key evil-normal-state-map (kbd "C-{") 'paredit-barf-all-the-way-backward)
