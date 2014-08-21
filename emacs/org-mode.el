@@ -5,8 +5,21 @@
 (define-key tnt-outline-map "j" 'org-forward-heading-same-level)
 ; go to current heading's previous sibling.
 (define-key tnt-outline-map "k" 'org-backward-heading-same-level)
+; go to first heading of a lower level than the current.
+(define-key tnt-outline-map "l" 'outline-next-visible-heading)
+
+(defun tnt-outline-last () (interactive)
+  (when (string-match (rx-to-string '(: bos "*") t)
+                      (thing-at-point 'line))
+    (tnt-outline-up))
+  (org-end-of-subtree))
+
+; go to current subtree's last open item.
+(define-key tnt-outline-map "e" 'tnt-outline-last)
 ; go to next subtree's heading.
-(define-key tnt-outline-map "n" 'outline-next-visible-heading)
+(define-key tnt-outline-map "n" (lambda () (interactive)
+                                  (tnt-outline-last)
+                                  (outline-next-visible-heading 1)))
 
 (defun tnt-outline-up () (interactive)
   (or (and (string-match (rx-to-string '(: bos "*") t)
