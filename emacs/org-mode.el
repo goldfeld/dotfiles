@@ -7,13 +7,19 @@
 (define-key tnt-outline-map "k" 'org-backward-heading-same-level)
 ; go to next subtree's heading.
 (define-key tnt-outline-map "n" 'outline-next-visible-heading)
-; go to current subtree's heading.
-(define-key tnt-outline-map "h"
-  (lambda () (interactive)
-    (or (and (string-match (rx-to-string '(: bos "*") t)
-                           (thing-at-point 'line))
-             (outline-up-heading 1))
-        (outline-previous-visible-heading 1))))
+
+(defun tnt-outline-up () (interactive)
+  (or (and (string-match (rx-to-string '(: bos "*") t)
+                         (thing-at-point 'line))
+           (outline-up-heading 1))
+      (outline-previous-visible-heading 1)))
+
+; go up (to current subtree's heading.)
+(define-key tnt-outline-map "h" 'tnt-outline-up)
+; go up and close heading.
+(define-key tnt-outline-map "c" (lambda () (interactive)
+                                  (tnt-outline-up)
+                                  (org-cycle)))
 
 (define-prefix-command 'tnt-move-map)
 (define-key tnt-outline-map "m" 'tnt-move-map)
