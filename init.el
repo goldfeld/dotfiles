@@ -56,8 +56,9 @@
 (global-auto-complete-mode t)
 
 ;(load-theme 'solarized-dark t)
-;(load-theme 'zenburn t)
-(load-theme 'purple-haze t)
+(load-theme 'zenburn t)
+;(load-theme 'purple-haze t)
+;(load-theme 'soothe t)
 
 (require 'ido)
 (require 'flx-ido)
@@ -133,6 +134,7 @@
  '(linum-format " %7d ")
  '(main-line-color1 "#191919")
  '(main-line-color2 "#111111")
+ '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-drill)))
  '(powerline-color1 "#191919")
  '(powerline-color2 "#111111")
  '(send-mail-function (quote smtpmail-send-it)))

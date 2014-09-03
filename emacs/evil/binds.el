@@ -7,6 +7,9 @@
 (setq key-chord-two-keys-delay 0.5)
 (key-chord-mode 1)
 
+(key-chord-define evil-insert-state-map "hh" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "qq" 'dabbrev-expand)
+
 (defun evilmi-customize-keybinding ()
   (evil-define-key 'normal evil-matchit-mode-map
     "%" 'evilmi-jump-items
@@ -64,6 +67,9 @@
 ; unmap to avoid conflict with my org-mode custom link navigation maps
 (define-key evil-normal-state-map "\C-n" nil)
 (define-key evil-normal-state-map "\C-p" nil)
+
+(define-key evil-insert-state-map "\C-n" 'next-line)
+(define-key evil-insert-state-map "\C-p" 'previous-line)
 
 ; output current time and date with year and week, all pretty printed.
 (defun date-and-battery () (interactive)
@@ -134,8 +140,15 @@
 (define-key paredit-custom-map "o" 'paredit-newline)
 (define-key paredit-custom-map "O"
   (lambda () (interactive) (progn (paredit-newline) (previous-line))))
-(define-key paredit-custom-map ")" 'paredit-close-round-and-newline)
+(define-key paredit-custom-map ")" 'paredit-forward-slurp-sexp)
+(define-key paredit-custom-map "(" 'paredit-backward-slurp-sexp)
+(define-key paredit-custom-map "}" 'paredit-forward-barf-sexp)
+(define-key paredit-custom-map "{" 'paredit-backward-barf-sexp)
+
 (define-key paredit-custom-map "]" 'paredit-close-square-and-newline)
+
+(define-key evil-insert-state-map ")" 'paredit-close-round)
+(define-key evil-insert-state-map "]" 'paredit-close-square)
 
 (define-key paredit-custom-map "y" 'paredit-copy-as-kill)
 (define-key paredit-custom-map "p" 'paredit-yank-pop)

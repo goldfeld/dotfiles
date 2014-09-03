@@ -1,3 +1,5 @@
+(require 'org-drill)
+
 (define-prefix-command 'tnt-outline-map)
 (define-key evil-normal-state-map (kbd "SPC") 'tnt-outline-map)
 (define-key tnt-outline-map (kbd "SPC") 'org-cycle)
