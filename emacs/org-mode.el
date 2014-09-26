@@ -1,5 +1,3 @@
-(require 'org-drill)
-
 (define-prefix-command 'tnt-outline-map)
 (define-key evil-normal-state-map (kbd "SPC") 'tnt-outline-map)
 (define-key tnt-outline-map (kbd "SPC") 'org-cycle)
@@ -47,11 +45,16 @@
 (key-chord-define tnt-outline-map ">>" 'org-demote-subtree)
 
 (defun my-org-binds ()
+  ;(define-key evil-insert-state-map (kbd "SPC") )
   (define-key evil-normal-state-map "\C-m" 'org-open-at-point)
   (define-key org-mode-map "\C-t\C-lw" 'my-org-insert-link)
   (define-key org-mode-map "\C-n" 'org-next-link)
   (define-key org-mode-map "\C-p" 'org-previous-link))
 (add-hook 'org-load-hook (lambda () (my-org-binds)))
+
+(define-key evil-insert-state-map (kbd "C-&") (lambda () (interactive)
+                                                (evil-backward-char)
+                                                (evil-jump-item)))
 
 (require 'org-collector)
 (require 'org-wc)

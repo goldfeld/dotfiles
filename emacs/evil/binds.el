@@ -9,6 +9,7 @@
 
 (key-chord-define evil-insert-state-map "hh" 'evil-normal-state)
 (key-chord-define evil-insert-state-map "qq" 'dabbrev-expand)
+(key-chord-define evil-insert-state-map "jj" 'hippie-expand)
 
 (defun evilmi-customize-keybinding ()
   (evil-define-key 'normal evil-matchit-mode-map

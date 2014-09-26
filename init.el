@@ -134,7 +134,7 @@
  '(linum-format " %7d ")
  '(main-line-color1 "#191919")
  '(main-line-color2 "#111111")
- '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-drill)))
+ '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m)))
  '(powerline-color1 "#191919")
  '(powerline-color2 "#111111")
  '(send-mail-function (quote smtpmail-send-it)))
