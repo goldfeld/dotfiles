@@ -38,6 +38,9 @@ sudo cp layout ~/usr/local/bin/
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
 
+# misc cmd line tools
+sudo apt-get -y install pass swish-e
+
 # vundle
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
