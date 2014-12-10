@@ -41,8 +41,13 @@
 ; move current fold up one position.
 (define-key tnt-move-map "k" 'org-move-subtree-up)
 
-(key-chord-define tnt-outline-map "<<" 'org-promote-subtree)
-(key-chord-define tnt-outline-map ">>" 'org-demote-subtree)
+(define-prefix-command 'tnt-rellocate-back-map)
+(define-key tnt-outline-map "<" 'tnt-rellocate-back-map)
+(define-key tnt-rellocate-back-map "<" 'org-promote-subtree)
+
+(define-prefix-command 'tnt-rellocate-fwd-map)
+(define-key tnt-outline-map ">" 'tnt-rellocate-fwd-map)
+(define-key tnt-rellocate-fwd-map ">" 'org-demote-subtree)
 
 (defun my-org-binds ()
   ;(define-key evil-insert-state-map (kbd "SPC") )

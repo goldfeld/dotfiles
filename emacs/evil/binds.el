@@ -83,7 +83,7 @@
  "," 'switch-to-alt-buffer
  "d" 'date-and-battery
  ".v" (kbd ":e ~/goldfeld/dotfiles/init.el")
- ".t" (kbd ":e ~/dow/life.tnt.org")
+ ".t" (kbd ":e ~/datav/repo/log/sessions/life.org")
  ".x" (shell-command "xcape -e 'Control_L=Escape'")
  "c" 'flycheck-next-error
  "r" 'flycheck-previous-error
@@ -122,6 +122,21 @@
 
 (define-prefix-command 'paredit-custom-map)
 (define-key evil-insert-state-map (kbd "C-t") 'paredit-custom-map)
+
+(define-prefix-command 'logging-snippets)
+(define-key evil-insert-state-map (kbd "C-l") 'logging-snippets)
+
+(define-key logging-snippets "l"
+  (lambda () (interactive)
+    (progn
+      (insert "(js/setTimeout #(.log js/console (clj->js )) 100)")
+      (backward-char 7))))
+
+(define-key logging-snippets "r"
+  (lambda () (interactive)
+    (progn
+      (insert "(cljs.core.async/put! reptile.core/*chan* [:])")
+      (backward-char 3))))
 
 ; unused: w x g u z n e- ; d ai
 (define-key paredit-custom-map "v" 'paredit-split-sexp)
