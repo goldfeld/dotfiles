@@ -135,8 +135,10 @@
 (define-key logging-snippets "r"
   (lambda () (interactive)
     (progn
-      (insert "(cljs.core.async/put! reptile.core/*chan* [:])")
-      (backward-char 3))))
+      (insert (concat "(cljs.core.async/put! reptile.core/*chan* [:log \""
+                      (file-name-base buffer-file-name) "#"
+                      (substring (what-line) 5) "\"])"))
+      (backward-char 2))))
 
 ; unused: w x g u z n e- ; d ai
 (define-key paredit-custom-map "v" 'paredit-split-sexp)
