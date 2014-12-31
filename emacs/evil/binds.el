@@ -129,15 +129,18 @@
 (define-key logging-snippets "l"
   (lambda () (interactive)
     (progn
-      (insert "(js/setTimeout #(.log js/console (clj->js )) 100)")
+      (insert (concat "(js/setTimeout #(.log js/console \""
+                      (file-name-base buffer-file-name) "#"
+                      (substring (what-line) 5)
+                      " \" (clj->js )) 100)"))
       (backward-char 7))))
 
 (define-key logging-snippets "r"
   (lambda () (interactive)
     (progn
-      (insert (concat "(cljs.core.async/put! reptile.core/*chan* [:log \""
+      (insert (concat "(cljs.core.async/put! reptile.core/*chan* [:log (str \""
                       (file-name-base buffer-file-name) "#"
-                      (substring (what-line) 5) "\"])"))
+                      (substring (what-line) 5) " \" )])"))
       (backward-char 2))))
 
 ; unused: w x g u z n e- ; d ai

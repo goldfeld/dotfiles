@@ -11,6 +11,8 @@ PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 export PATH=$PATH:/usr/lib/jvm/java-7-openjdk-i386/bin/
 export PATH=$PATH:/usr/lib/postgresql/9.1/bin
 
+export PASSWORD_STORE_DIR=/home/vic/datav/repo/pass
+
 set -o vi
 #setxkbmap -query
 #setxkbmap -layout us # reset to querty for training purposes
@@ -23,8 +25,11 @@ set -o vi
 #alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
 alias stone='ls ~/inkspree/inkstone/target | grep standalone | xargs -I {} java -jar ~/inkspree/inkstone/target/"{}" '
 
-alias rep='~/node-webkit/nw ~/longstorm/reptile/reptile.nw'
-alias dow='node ~/longstorm/dow/resources/public/dow.js'
+alias rep='node ~/datav/code/szpilman/reptile/resources/public/reptile.js'
+function repfile() {
+  command emacs -nw $(node ~/datav/code/szpilman/reptile/resources/public/reptile.js -P $@)
+}
+
 function exhibit() {
   arg=$((($@ * 2) - 1))
   command hooker $arg

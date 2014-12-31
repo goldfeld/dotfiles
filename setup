@@ -149,3 +149,9 @@ sudo apt-get -y install libgl1-mesa-dri libgl1-mesa-glx:i386 libc6:i386
 ssh-keygen -t rsa -C "vic@longstorm.org"
 ssh-add ~/.ssh/id_rsa
 xclip -sel clip < ~/.ssh/id_rsa.pub
+
+sudo apt-get install qt4-qmake cmake libsqlite3-dev
+wget http://optimate.dl.sourceforge.net/project/sqlitebrowser/sqlitebrowser/3.2/sqlitebrowser-3.2.0.tar.gz
+tar -xvf sqlitebrowser-3.2.0.tar.gz
+cd sqlitebrowser-sqlb-3.2.0/
+qmake && make
