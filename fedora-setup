@@ -33,8 +33,10 @@ ln -s ~/goldfeld/dotfiles/offlineimaprc ~/.offlineimaprc
 ln -s ~/goldfeld/dotfiles/offlineimap.py ~/.offlineimap.py
 ln -s ~/goldfeld/dotfiles/wifi ~/wifi
 ln -s ~/goldfeld/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
-sudo cp patsfk ~/usr/local/bin/
-sudo cp layout ~/usr/local/bin/
+sudo cp patsfk /usr/local/bin/ && sudo chmod +x /usr/local/bin/patsfk
+sudo cp layout /usr/local/bin/ && sudo chmod +x /usr/local/bin/layout
+sudo cp rep /usr/local/bin/ && sudo chmod +x /usr/local/bin/rep
+sudo cp repfile /usr/local/bin/ && sudo chmod +x /usr/local/bin/repfile
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
 
@@ -76,6 +78,8 @@ sudo pip install virtualenv virtualenvwrapper
 
 # ranger (and utilities for previewing files)
 sudo yum -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
+
+sudo npm install -g http-server grunt-cli dustjs-linkedin
 
 # virtualbox
 sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo

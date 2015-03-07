@@ -25,11 +25,6 @@ set -o vi
 #alias vi="gvim +'silent! !hooker 4 && hooker 3' +'au VimLeave * !hooker 1' "
 alias stone='ls ~/inkspree/inkstone/target | grep standalone | xargs -I {} java -jar ~/inkspree/inkstone/target/"{}" '
 
-alias rep='node ~/datav/code/szpilman/reptile/resources/public/reptile.js'
-function repfile() {
-  command emacs -nw $(node ~/datav/code/szpilman/reptile/resources/public/reptile.js -P $@)
-}
-
 function exhibit() {
   arg=$((($@ * 2) - 1))
   command hooker $arg

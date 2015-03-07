@@ -18,6 +18,8 @@
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 (setq create-lockfiles nil)
 
+(global-reveal-mode t)
+
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "luakit")
 
@@ -102,7 +104,7 @@
 (load "prm.el")
 (load "org-mode.el")
 (load "git.el")
-(load "dow.el")
+(load "reptile.el")
 ;(load "mawkro.el")
 
 (defun load-custom-scratch ()
