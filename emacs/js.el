@@ -24,15 +24,15 @@
            (split-window-vertically)
            (set-window-buffer (next-window) grunt-buffer)))))
 
-(add-hook 'js2-mode-hook
-          '(lambda ()
-             (define-key evil-insert-state-map (kbd "C-l")
-               '(lambda () (interactive)
-                  (if (string-match "^[ \t]*console." (thing-at-point 'line))
-                    (progn
-                      (insert "JSON.stringify()")
-                      (backward-char 1))
-                    (progn
-                      (insert "console.log(');")
-                      (backward-char 2)))))
-             (define-key evil-normal-state-map (kbd "C-m") 'grunt)))
+;(add-hook 'js2-mode-hook
+;          '(lambda ()
+;             (define-key evil-insert-state-map (kbd "C-l")
+;               '(lambda () (interactive)
+;                  (if (string-match "^[ \t]*console." (thing-at-point 'line))
+;                    (progn
+;                      (insert "JSON.stringify()")
+;                      (backward-char 1))
+;                    (progn
+;                      (insert "console.log(');")
+;                      (backward-char 2)))))
+;             (define-key evil-normal-state-map (kbd "C-m") 'grunt)))

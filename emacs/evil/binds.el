@@ -84,6 +84,7 @@
  "d" 'date-and-battery
  ".v" (kbd ":e ~/goldfeld/dotfiles/init.el")
  ".t" (kbd ":e ~/datav/repo/log/sessions/life.org")
+ ".r" (kbd ":e ~/datav/code/szpilman/reptile/.gut/sessions/reptile.org")
  ".x" (shell-command "xcape -e 'Control_L=Escape'")
  "c" 'flycheck-next-error
  "r" 'flycheck-previous-error
@@ -138,10 +139,10 @@
 (define-key logging-snippets "r"
   (lambda () (interactive)
     (progn
-      (insert (concat "(cljs.core.async/put! @reptile.debug/*chan* [:log \""
+      (insert (concat "(reptile.debug/log \""
                       (file-name-base buffer-file-name) "#"
-                      (substring (what-line) 5) " \" ])"))
-      (backward-char 2))))
+                      (substring (what-line) 5) " \" )"))
+      (backward-char 1))))
 
 ; unused: w x g u z n e- ; d ai
 (define-key paredit-custom-map "v" 'paredit-split-sexp)
@@ -167,9 +168,6 @@
 (define-key paredit-custom-map "{" 'paredit-backward-barf-sexp)
 
 (define-key paredit-custom-map "]" 'paredit-close-square-and-newline)
-
-(define-key evil-insert-state-map ")" 'paredit-close-round)
-(define-key evil-insert-state-map "]" 'paredit-close-square)
 
 (define-key paredit-custom-map "y" 'paredit-copy-as-kill)
 (define-key paredit-custom-map "p" 'paredit-yank-pop)
