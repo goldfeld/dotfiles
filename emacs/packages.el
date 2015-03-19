@@ -26,7 +26,6 @@
                       kite
                       ; clojure
                       clojure-mode
-                      clojure-test-mode
                       cider
                       ac-nrepl
                       ; general workflow

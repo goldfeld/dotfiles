@@ -9,8 +9,9 @@
 (setq user-full-name "Vic Goldfeld")
 
 (setq eshell-aliases-file (expand-file-name "~/.emacs.d/eshell/alias"))
-(add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/"))
-(add-to-list 'load-path (expand-file-name "~/goldfeld/dotfiles/emacs/lib"))
+(add-to-list 'load-path (expand-file-name "~/datav/code/goldfeld/dotfiles/emacs/lib"))
+(add-to-list 'load-path (expand-file-name "~/datav/code/goldfeld/dotfiles/emacs/evil"))
+(add-to-list 'load-path (expand-file-name "~/datav/code/goldfeld/dotfiles/emacs/"))
 (setq default-abbrev-mode t)
 (setq-default indent-tabs-mode nil)
 
@@ -113,7 +114,7 @@
   (with-current-buffer (get-buffer "*scratch*")
     (delete-region (point-min) (point-max))
     (shell-command (format "cat %s"
-     "~/goldfeld/dotfiles/emacs/scratch.el ~/.dow/today")
+     "~/datav/code/goldfeld/dotfiles/emacs/scratch.el ~/.dow/today")
 		   (current-buffer))))
 (load-custom-scratch)
 

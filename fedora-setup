@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo yum -y update
-sudo yum -y install git gvim terminator
+sudo yum -y install git gvim terminator udisks
 #sudo yum -y install emacs
 sudo yum -y install wget make autoconf texinfo
 sudo yum -y install java-1.7.0-openjdk 
@@ -20,19 +20,19 @@ cd ~/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
 
 rm ~/.bashrc
-ln -s ~/goldfeld/dotfiles/vimrc ~/.vimrc
-ln -s ~/goldfeld/dotfiles/bashrc ~/.bashrc
-ln -s ~/goldfeld/dotfiles/init.el ~/.emacs.d/init.el
-ln -s ~/goldfeld/dotfiles/xinitrc ~/.xinitrc
-ln -s ~/goldfeld/dotfiles/Xmodmap ~/.Xmodmap
-ln -s ~/goldfeld/dotfiles/dowrc.cljs ~/.dowrc
-ln -s ~/goldfeld/dotfiles/profiles.clj ~/.lein/profiles.clj
-ln -s ~/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
-ln -s ~/goldfeld/dotfiles/vimperatorrc ~/.vimperatorrc
-ln -s ~/goldfeld/dotfiles/offlineimaprc ~/.offlineimaprc
-ln -s ~/goldfeld/dotfiles/offlineimap.py ~/.offlineimap.py
-ln -s ~/goldfeld/dotfiles/wifi ~/wifi
-ln -s ~/goldfeld/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
+ln -s ~/datav/code/goldfeld/dotfiles/vimrc ~/.vimrc
+ln -s ~/datav/code/goldfeld/dotfiles/bashrc ~/.bashrc
+ln -s ~/datav/code/goldfeld/dotfiles/init.el ~/.emacs.d/init.el
+ln -s ~/datav/code/goldfeld/dotfiles/xinitrc ~/.xinitrc
+ln -s ~/datav/code/goldfeld/dotfiles/Xmodmap ~/.Xmodmap
+ln -s ~/datav/code/goldfeld/dotfiles/reptilerc.cljs ~/.reptilerc
+ln -s ~/datav/code/goldfeld/dotfiles/profiles.clj ~/.lein/profiles.clj
+ln -s ~/datav/code/goldfeld/dotfiles/pentadactylrc ~/.pentadactylrc
+ln -s ~/datav/code/goldfeld/dotfiles/vimperatorrc ~/.vimperatorrc
+ln -s ~/datav/code/goldfeld/dotfiles/offlineimaprc ~/.offlineimaprc
+ln -s ~/datav/code/goldfeld/dotfiles/offlineimap.py ~/.offlineimap.py
+ln -s ~/datav/code/goldfeld/dotfiles/wifi ~/wifi
+ln -s ~/datav/code/goldfeld/dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
 sudo cp patsfk /usr/local/bin/ && sudo chmod +x /usr/local/bin/patsfk
 sudo cp layout /usr/local/bin/ && sudo chmod +x /usr/local/bin/layout
 sudo cp rep /usr/local/bin/ && sudo chmod +x /usr/local/bin/rep

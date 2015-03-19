@@ -82,7 +82,7 @@
  "p" (lambda () (interactive) (kbd "\C-u\M-x org-insert-drawer RET"))
  "," 'switch-to-alt-buffer
  "d" 'date-and-battery
- ".v" (kbd ":e ~/goldfeld/dotfiles/init.el")
+ ".v" (kbd ":e ~/datav/code/goldfeld/dotfiles/init.el")
  ".t" (kbd ":e ~/datav/repo/log/sessions/life.org")
  ".r" (kbd ":e ~/datav/code/szpilman/reptile/.gut/sessions/reptile.org")
  ".x" (shell-command "xcape -e 'Control_L=Escape'")
