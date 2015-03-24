@@ -127,6 +127,9 @@ sudo apt-get -y install sox
 # ranger (and utilities for previewing files)
 sudo apt-get -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
 
+# reptile
+sude apt-get -y install libasound2-dev
+
 # termite
 sudo apt-get -y install vte-2.90
 git clone --recursive https://github.com/thestinger/termite.git ~/termite

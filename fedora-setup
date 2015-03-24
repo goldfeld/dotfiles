@@ -81,6 +81,9 @@ sudo yum -y install ranger caca-utils highlight atool w3m poppler-utils mediainf
 
 sudo npm install -g http-server grunt-cli dustjs-linkedin
 
+# reptile
+sude yum -y install alsa-lib-devel
+
 # virtualbox
 sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
 sudo yum -y update
