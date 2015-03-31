@@ -19,8 +19,6 @@
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 (setq create-lockfiles nil)
 
-(global-reveal-mode t)
-
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "luakit")
 

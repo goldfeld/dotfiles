@@ -1,4 +1,4 @@
-(set datapath "~/datav/repo/archive/dow" "~/datav/repo/log")
+(set datapath ["~/datav/repo/archive/dow" "~/datav/repo/log"])
 (set browser "luakit")
 (set project-types [:git :clojure :nodejs])
 (defsymlink habits "acorn")
@@ -46,9 +46,7 @@
 (bind a :go acorn)
 (serve POST "/tab/inbox"
        (:capture [data] (:bucket data) :org-link (:url data) (:title data)))
-(set flow/default-alert [[:brightness "LVDS1" 0.7]
-                         [:sleep 3500 :ms]
-                         [:brightness "LVDS1" 1.1]])
+(set flow/default-alert :play "~/rep/assets/woodblock")
 (flow :sprint [["side" [2 5 5 6 6 :min] :go-to cool]
                ["work" [2 6 6 7 7 :min] :go-to rest]
                ["get up and move" [:.. 8 :min] :go-to break]])
