@@ -117,7 +117,7 @@ mv apache-activemq-5.10-SNAPSHOT ~/activemq
 cd ~
 
 sudo apt-get -y install ruby-dev rubygems rake
-sudo gem install bundler
+sudo gem install bundler git-bump
 
 sudo apt-get -y install chromium-browser
 

@@ -1,2 +1,2 @@
 #!/bin/bash
-node ~/datav/code/szpilman/reptile/resources/public/reptile.js $@
+node ~/datav/code/szpilman/reptile/target/reptile.js $@

@@ -1,2 +1,2 @@
 #!/bin/bash
-emacs -nw $(node ~/datav/code/szpilman/reptile/resources/public/reptile.js file -P $@)
+emacs -nw $(node ~/datav/code/szpilman/reptile/target/reptile.js file -P $@)

@@ -2,8 +2,7 @@
 
 (setq nrepl-hide-special-buffers t
       cider-repl-pop-to-buffer-on-connect nil
-      cider-popup-stacktraces nil
-      cider-repl-popup-stacktraces t)
+      cider-show-error-buffer nil)
 
 (add-to-list 'same-window-buffer-names "*cider*")
 
