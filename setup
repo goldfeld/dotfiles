@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export TERM=xterm-256color
+
 sudo apt-get -y update
 sudo apt-get -y install git-core terminator gedit
 git config --global user.name "Vic Goldfeld"
