@@ -11,7 +11,6 @@ Bundle 'jceb/vim-orgmode'
 Bundle 'goldfeld/vimdow'
 Bundle 'mikewest/vimroom'
 Bundle 'goldfeld/vim-remarkable'
-Bundle 'goldfeld/vim-walker'
 Bundle 'pydave/AsyncCommand'
 
 " writing
@@ -31,7 +30,6 @@ Bundle 'goldfeld/vim-fugitive'
 
 " moving
 Bundle 'bkad/CamelCaseMotion'
-Bundle 'goldfeld/vim-seek'
 
 " syntax
 Bundle 'kchmck/vim-coffee-script'
@@ -45,20 +43,7 @@ Bundle 'gkz/vim-ls'
 
 " other
 Bundle 'goldfeld/vim-pegword'
-Bundle 'goldfeld/ctrlr.vim'
 
-" colorschemes
-Bundle 'croaker/mustang-vim'
-Bundle 'morhetz/gruvbox'
-Bundle 'jonathanfilip/vim-lucius'
-Bundle 'candycode.vim'
-Bundle 'rainerborene/vim-heroku'
-Bundle 'Guardian'
-Bundle 'Lokaltog/vim-distinguished'
-Bundle 'noahfrederick/Hemisu'
-Bundle 'Pychimp/vim-luna'
-Bundle 'Pychimp/vim-sol'
-Bundle 'altercation/vim-colors-solarized'
 "}}}
 "{{{ HELPERS
 command! -nargs=1 B execute "buffer" (<q-args>)[0]
@@ -73,7 +58,7 @@ endfunction
 let g:inbox = fnamemodify('~/leak/.tnt/inbox.tnt', ':p')
 let g:inbox_cmd = "awk 'BEGIN { links = 0; } /^### links$/ { links = 1; } "
   \ . "!/^#/ { if (links) print \"L\" NR \" \" $0 }' " . g:inbox
-let g:inbox_query = { 'list': 10, 'prompt': 'inbox','query': g:inbox_cmd }
+let g:inbox_query = { 'list': 11, 'prompt': 'inbox','query': g:inbox_cmd }
 
 function! InboxHookWrap(cmd)
   if !empty(system(g:inbox_cmd))
@@ -90,103 +75,18 @@ endfunction
 "{{{1 OPTIONS
 filetype plugin indent on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-runtime macros/matchit.vim
 color slate
 set cursorline
 " create a different color area beyond 80 columns.
 let &colorcolumn=join(range(81, 201), ",")
 
-set tabstop=2                   " number of spaces of tab character
-set shiftwidth=2                " number of spaces to (auto)indent
-set smarttab                    " put tabs on BOL as per shiftwidth, not tabstop
-set expandtab
-set smartindent
-set autoindent
-set fillchars=vert:\ ,fold:\ 
-set foldopen-=block
-
-set backspace=indent,eol,start  " allow <C-H> over everything in insert mode
-set scrolloff=3                 " keep 3 lines when scrolling
-set hlsearch                    " hightlight searches
-set incsearch                   " do incremental searching
-set ignorecase                 
-set smartcase                   " ignore case of search only if all lowercase
-
-set hidden                      " buffer switch w/o saving; keeps undo history
-set autoread                    " reload changed files if there's no conflict
-set autochdir                   " keep working dir relative to current file
-set viminfo+=!
-set previewheight=20            " height of the preview window
-
-"set wildmenu
-"set wildmode="full"
-"set wildcharm=<C-Z>
-set wildignorecase
-
-if filereadable(expand("~/helium/Gruntfile.coffee"))
-  autocmd BufRead,BufNewFile *.coffee,*.js,*.html,*.css setlocal noexpandtab
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,
-    \*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk,
-    \*.js,*/build/*
-else
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.user,*.nupkg,*.dll,*.xml,
-    \*.config,*.suo,*.sln,*.asax,*.cs,*.transform,*.ttf,*.ico,*._,*.c,*.h,*.mk
-endif
-
-" rust's conceal (replacing stuff with unicode) doesn't work in gvim
-let g:no_rust_conceal = 1
-
-set laststatus=2
-set statusline=
-set statusline+=%{fugitive#statusline()}
-set statusline+=\ %f 
-set statusline+=\ %m
-set statusline+=%h
-
-" gvim behave like vim: console tabs and no dialogs, menus or scrollbars
-set guioptions+=lrbmTLce
-set guioptions-=lrbmTLce
-set guioptions+=c
-" modelines can execute arbitrary code in e.g. set foldexpr
-set modelines=0
 "}}}1
 "{{{1 BUFLOCAL OPTIONS
 augroup filetypeSettings
-  autocmd!
-  autocmd BufEnter * call FtColors()
-
   autocmd BufRead *pentadactylrc setlocal filetype=vim
-  autocmd BufRead,BufNewFile *.elm setlocal filetype=haskell
-  autocmd BufRead,BufNewFile *.tnt,*.ana setlocal et cc=0 filetype=markdown
-  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-
-  autocmd filetype vim setlocal fdm=marker kp=:help
-  autocmd filetype vim nnoremap <buffer> <C-T><C-M> :w<CR>:so %<CR>
-
-  autocmd filetype make setlocal shiftwidth=8 tabstop=8
-  autocmd filetype rust setlocal shiftwidth=4 tabstop=4
-  autocmd BufRead,BufNewFile *.gs setlocal makeprg=make
 augroup END
-
-function! FtColors()
-  if &diff || match(['vim', 'perl', 'diff'], &ft) != -1
-    if g:colors_name != 'gruvbox' | color gruvbox | endif
-  elseif match(['html', 'css', 'make'], &ft) != -1
-    if g:colors_name != 'distinguished' | color distinguished | endif
-  elseif match(['ls'], &ft) != -1
-    if g:colors_name != 'candycode' | color candycode | endif
-  elseif match(['haskell'], &ft) != -1
-    if g:colors_name != 'solarized' | color solarized | endif
-  else | if g:colors_name != 'mustang' | color mustang | endif
-  endif
-
-  highlight ColorColumn guibg=#373737 ctermbg=236 |
-  highlight CursorLine guibg=#373737 ctermbg=236 |
-  highlight CursorColumn guibg=#373737 ctermbg=236
-endfunction
-"}}}
-"{{{1 XMONAD HOOKER
-" my thumb can't take being contracted for Alt all the time anymore
+"}}} {{{1 XMONAD HOOKER my thumb can't take being contracted for Alt all the
+"time anymore
 nnoremap <silent> c<CR> :silent! !hooker 1<CR>
 nnoremap <silent> m<CR> :silent! !hooker 5<CR>
 nnoremap <silent> h<CR> :silent! !hooker 7<CR>
@@ -202,8 +102,6 @@ function! Wincmd(cmd, hooker)
   endif
 endfunction
 
-nnoremap mr :w<CR>:Reload<CR>
-nnoremap mR :Reload<CR>
 command! Reload silent! execute '!hooker 9 && hooker 33 && xdotool search'
   \ . ' --onlyvisible --class Chromium-browser key --clearmodifiers ctrl+r'
 "}}}
@@ -420,27 +318,6 @@ function! Mawkro(type, ...)
   let @@ = reg_save
 endfunction
 
-" search for current selection when in visual mode.
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
-" from an idea by Michael Naumann
-function! VisualSearch(direction) range
-  let l:saved_reg = @"
-  execute "normal! vgvy"
-
-  let l:pattern = escape(@", '\\/.*$^~[]')
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-  if a:direction == 'b' | execute "normal ?" . l:pattern . "^M"
-  elseif a:direction == 'gv'
-    call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-  elseif a:direction == 'f' | execute "normal /" . l:pattern . "^M"
-  endif
-
-  let @/ = l:pattern
-  let @" = l:saved_reg
-endfunction
-
 "au! CursorHold *.[ch] nested call PreviewWord()
 " This will cause a ":ptag" to be executed for the keyword under the cursor,
 " when the cursor hasn't moved for the time set with 'updatetime'.  The "nested"
@@ -483,56 +360,9 @@ function! PreviewWord()
   endif
 endfunction
 "}}}
-"{{{1 VIM-COMA
-" vim-coma - use the comma as a dead key.
-inoremap ,, <Esc>
-inoremap ,a <Esc>A
-inoremap ,i <Esc>I
-inoremap ,x <Esc>l1s
-inoremap ,e <Esc>ea
-inoremap ,E <Esc>Ea
-inoremap ,- <Esc>gea
-inoremap ,_ <Esc>gEa
-inoremap ,c <C-O>D
-inoremap ,d <Esc>D
-for deadmap in split('w W b B h l', ' ')
-  execute "inoremap ,".deadmap "<C-O>".deadmap
-endfor
-
-" use custom mapping for number insertion.
-let g:pegword_remap_digits = 0
-inoremap ,s <Esc>:Pegword 0<CR>
-inoremap ,t <Esc>:Pegword 1<CR>
-inoremap ,n <Esc>:Pegword 2<CR>
-inoremap ,m <Esc>:Pegword 3<CR>
-inoremap ,r <Esc>:Pegword 4<CR>
-
-inoremap ,f <Esc>:call IndentGuideFind(1)<CR>
-inoremap ,F <Esc>:call IndentGuideFind(2)<CR>
-function! IndentGuideFind(linesUp)
-  let line = line('.')
-  let text = getline('.') | let trim = matchstr(l:text, '\S.*$')
-  let first = matchstr(l:text, '\S') | let empty = empty(l:first)
-  if l:empty | let find = nr2char(getchar()) | let repos = 2
-  else       | let find = l:first            | let repos = 1 | endif
-
-  let above = line('.') - a:linesUp | if l:above < 1 | return | endif
-  let pos = stridx(getline(l:above), l:find) | if l:pos == -1 | return | endif
-  call setline(l:line, repeat(' ', l:pos) . l:trim)
-  call cursor(l:line, l:pos + l:repos)
-  if !l:empty | execute "normal! A\<Space>" | startinsert
-  else | startinsert | call cursor(l:line, col('.') + 1) | endif
-endfunction
-"}}}
 "{{{1 PLUGIN SETTINGS
 let g:TNTWebBrowser = 'luakit'
-let g:walker_keepalt = 1
 let g:textobjectify_onthefly_same = 1
-
-let g:seek_char_aliases = '&% $~ #` @^ \| ;: ,< .> -_ /? ' . "'" . '"'
-let g:seek_listchars = ','
-let g:seek_enable_jumps = 1
-let g:seek_use_vanilla_binds_in_diffmode = 1
 
 let g:surround_no_mappings = 1
 let g:surround_no_insert_mappings = 1
@@ -561,45 +391,14 @@ let g:dow_projects = ['~/leak', '~/goldfeld', '~/void', '~/.vim/bundle',
   \ '~/inkspree', '~/longstorm']
 "}}}1
 "{{{1 CORE REMAPPINGS
-nnoremap <silent> <Esc> :noh<CR><Esc>
-nnoremap <silent> <Space><Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-
-inoremap <Backspace> <NOP>
-nnoremap <C-H> <NOP>
-nnoremap <C-L> <NOP>
-nnoremap ZZ <NOP>
-
-" repurpose the colon as my comma lost to leader.
-nnoremap : ,
-
 " skip past big lines
 nnoremap gj j
 nnoremap gk k
 
-" go to last inserted 
-nnoremap gi '^
-
-nnoremap Y y$
-nnoremap yY ggyG
-nnoremap dD ggdG
-
-" visual shifting (relect after shift).
-vnoremap < <gv
-vnoremap > >gv
-
-" make C-U and C-W undoable by using <C-G>u (signal a new change to vim.)
-inoremap <C-U> <C-G>u<C-U>
-inoremap <C-W> <C-G>u<C-W>
 
 " use register 'u' for emulating terminal C-U & C-Y on vim command line.
 cnoremap <C-U> <C-\>e(setreg("u", getcmdline())?"":"")<CR>
 cnoremap <C-Y> <C-R>u
-
-" give up single d visual delete so I can emulate a diff buffer's normal
-" mode mappings in visual mode too with linewise control.
-vnoremap <silent> dd :delete<CR>
-vnoremap <silent> do :diffget<CR>
-vnoremap <silent> dp :diffput<CR>
 "}}}
 "{{{1 VIM-RESTRAIN
 let g:restrain_map = {
@@ -694,67 +493,7 @@ function! CheckCurrentCommand()
   let g:currentCommand = ''
 endfunction
 "}}}
-"{{{1 M-BINDS
-" sacrifice some marks for my pinkies' sake
-nnoremap mm :
-nnoremap mw :w<CR>
-nnoremap mq :q<CR>
-nnoremap mv :vs<CR>
-nnoremap mz :sp<CR>
-nnoremap mh :help 
-
-" 'more <cWORD>'
-nnoremap m* /<C-\>eRescape("<C-R><C-A>")<CR><CR>
-nnoremap m# ?<C-\>eRescape("<C-R><C-A>")<CR><CR>
-nnoremap mQ :ReturnFromFootnote<CR>
-
-nnoremap mx :x<CR>
-  \:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
-
-" other marks for my other pinky
-nnoremap mo O
-nnoremap ma A
-nnoremap m. zz
-nnoremap m, zb
-nnoremap m' zt
-
-" save file opened without sudo after the fact
-nnoremap mW :!sudo tee % >/dev/null
-
-nnoremap <silent> mp :call PurgeBuffers()<CR>
-function! PurgeBuffers()
-  let seq = ''
-  buffers
-  echo "Delete buffers by number: "
-  let char = getchar()
-
-  while l:char != 27 && l:char != 3
-    " if a number was entered, append it to our sequence.
-    if l:char >= 48 && l:char <= 57
-      let l:seq = l:seq . nr2char(l:char)
-    endif
-
-    " if we've already got two chars entered, or user explicitly presses enter.
-    if len(l:seq) > 1 || l:char == 13
-      execute "bdelete " l:seq
-      let l:seq = ''
-      redraw
-      buffers
-      echo "Delete buffers by number: "
-    endif
-
-    let l:char = getchar()
-  endwhile
-  redraw
-endfunction
-
-" b mark for closing buffer.
-nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
-"}}}1
 "{{{1 LEADER MAPPINGS
-let mapleader = ","
-
-nnoremap <Leader><Leader> <C-^>
 " <Leader>w, <Leader>b and <Leader>e are taken by the CamelCaseMotion plugin.
 
 nnoremap <Leader>[ {o
@@ -767,17 +506,11 @@ nnoremap [# yi]?<C-\>eRescape('<C-R>"')<CR><CR>
 
 " to go end of textwidth.
 nnoremap <Leader>- 81\|
-" pull next line and delete any comment symbols.
-nnoremap <Leader>J Jldw
-" delete to first char in line, including current char.
-nnoremap <Leader>D d^x
 
 nnoremap <Leader>v :call LoadSession()<CR>
 
 " go to next trailing whitespace
 nnoremap <Leader>I /\s$<CR>:noh<CR>a
-" useful for uncommenting lines
-nnoremap <Leader>i _wi
 " output current time and date with year and week, all pretty printed.
 nnoremap <silent> <Leader>d :echo DateAndBattery()<CR>
 function! DateAndBattery()
@@ -805,39 +538,6 @@ function! FromEpoch(date)
   return system('date --date "Jan 1, 1970 00:00:00 +000 + '.l:date.' seconds"')
 endfunction
 
-" search for words (no substring matches) in sequence.
-nnoremap <Leader>/ :SearchWords 
-command! -nargs=* SearchWords call SearchWords(<f-args>)
-let s:lastSearchWords = ''
-function! SearchWords(...)
-  if a:0
-    let searchexpr = ''
-    for word in a:000
-      let l:searchexpr = l:searchexpr . '.*\<' . word . '\>'
-    endfor
-    let s:lastSearchWords = strpart(l:searchexpr, 2)
-  elseif len(s:lastSearchWords) == 0 | return
-  endif
-  let @/ = s:lastSearchWords
-  execute "normal! n"
-endfunction
-
-nnoremap <silent> <Leader>f :cwindow<CR>
-"nnoremap qg :let b:qfbufs = cfirst<CR>
-nnoremap <silent> <Leader>g :WalkerFirst<CR>
-nnoremap <silent> <Leader>c :WalkerNext<CR>
-nnoremap <silent> <Leader>r :WalkerPrev<CR>
-nnoremap <silent> <Leader>l @=(&diff?":diffupd\r":":call CloseQFBufs()\r")<CR>
-
-function! CloseQFBufs()
-  " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
-  let bufs = filter(map(getqflist(), 'v:val.bufnr'), 'getbufvar(v:val, "&bl")')
-  let chosenbuf = bufnr('%')
-  for listedbuf in l:bufs
-    " don't close the quickfix buffer if it's the one we're on.
-    if listedbuf != l:chosenbuf | silent! execute "bdelete" listedbuf | endif
-  endfor
-endfunction
 "}}}
 "{{{1 LEADER DOT MAPPINGS
 " quickly edit my tnt outline
@@ -856,11 +556,6 @@ nnoremap <silent> <Leader>.l :set list!<CR>:set cursorcolumn!<CR>
 nnoremap <Leader>./h /HEAD<CR>
 nnoremap <Leader>./c /console<CR>
 
-" quickly edit my vimrc.
-nnoremap <silent> <Leader>.v :e ~/goldfeld/dotfiles/vimrc<CR>
-" source vimrc to allow live reloading of changes.
-nnoremap <silent> <Leader>.V :w<CR>:call SaveDimensions()<CR>:so $MYVIMRC<CR>
-  \:color gruvbox<CR>:call ResetDimensions()<CR>
 " quickly edit a vim bundle
 nnoremap <silent> <Leader>.b :call Dmenu("edit", "bundle", {
   \ 'query': 'ls $HOME/.vim/bundle/', 'prepend': '$HOME/.vim/bundle/',
@@ -916,12 +611,7 @@ nnoremap <silent> <C-C>pb <C-C>:Dow edit prj buf<CR>
 nnoremap <silent> <C-C><C-C> :x<CR>
   \:echom strpart(system("git show $commit \| grep '^    \w'"), 2)<CR>
 
-nnoremap <silent> <C-T><C-N> :Dow edit prj<CR>
-nnoremap <silent> <C-T>n :Dow swap prj<CR>
 nnoremap <silent> <C-T>t<C-N> :DowLine swap prj<CR>
-
-nnoremap <silent> <C-T><C-H> :Dow edit buf<CR>
-nnoremap <silent> <C-T>h :Dow swap buf<CR>
 
 nnoremap <silent> <C-T><C-C> :Dowf edit prj buf<CR>
 nnoremap <silent> <C-T>c :Dowf swap prj buf<CR>
@@ -950,121 +640,6 @@ nnoremap <C-T>d :vertical resize 160<CR>:Gdiff<CR><C-W>h
 " show buffer list as single echo line, grouped by git repo.
 "}}}1
 "{{{1 GIT BINDS
-" TODO move Gcached to vimdow and make it identify line moves
- " [diff - Highlighting added/deleted lines, ignoring moves, in a patch file - Stack Overflow](http://stackoverflow.com/questions/1380333/highlighting-added-deleted-lines-ignoring-moves-in-a-patch-file)
-" gS will always get status while gs depends on the current repo situation.
-nnoremap gS :Gstatus<CR>
-nnoremap gs :call Gcached()<CR>
-function! Gcached()
-  let cached = split(system('git diff --cached'), "\n")
-  let changed = []
-  let lastWasDiff = 0
-
-  for line in l:cached
-    if line =~# '\v^(\+[^+]|\-[^-])'
-      if !lastWasDiff | call add(l:changed, "") | endif
-      call add(l:changed, line)
-      let lastWasDiff = 1
-    elseif line =~# '\v^(\+|\-)'
-      call add(l:changed, line)
-    else | let lastWasDiff = 0
-    endif
-  endfor
-
-  "let l:changed = filter(l:cached, 'v:val[0] =~# "[+-]"')
-  if empty(l:changed) | Gstatus
-  else
-    let g:changedtemp = resolve(tempname())
-    call writefile(l:changed, g:changedtemp)
-    silent execute
-      \ "pedit +setlocal\\ bt=nowrite\\ ft=diff\\ nomodified" g:changedtemp
-    wincmd P
-    nnoremap <buffer> <silent> C :wincmd p<CR>:pclose<CR>
-      \:sleep 100m<CR><C-U>:Gcommit<CR>:exe "vsplit" g:changedtemp<CR><C-W>li
-  endif
-endfunction
-
-nnoremap gl :call PegLog()<CR>
-function! PegLog()
-  let char = getchar()
-  let c = nr2char(l:char)
-  let cmd = '!'
-
-  if l:c == 'e'|| l:c == 'o'
-    let l:char = getchar()
-    let branch = nr2char(getchar()) . nr2char(getchar()) . nr2char(getchar())
-    if l:c == 'o' | let rmt = "-r \| grep -P '(?<\\!HEAD -> )origin/"
-    else | let rmt = "\| grep -P '" | endif
-
-    let l:cmd = l:cmd ."git branch ". l:rmt . l:branch ."' \| xargs "
-  endif
-  execute l:cmd . "git log \| head -n" (PegChar(l:char) * 6)
-endfunction
-
-function! PegChar(char)
-  if a:char >= 48 && a:char <= 57 | return a:char - 48
-  else
-    let peg = nr2char(a:char)
-    if l:peg == 's' | return 0
-    elseif l:peg == 't' | return 1
-    elseif l:peg == 'n' | return 2
-    elseif l:peg == 'm' | return 3
-    elseif l:peg == 'r' | return 4
-    elseif l:peg == 'l' | return 5
-    endif
-  endif
-endfunction
-
-" vim-fugitive plugin mappings
-nnoremap gb :Gblame<CR>
-nnoremap gB :Gbrowse<CR>
-nnoremap gL :Glog<CR>
-
-nnoremap g/ :Git log -G
-
-nnoremap g* :execute "Ggrep!" expand('<cword>') " -- '*." . &ft . "'"<CR>
-vnoremap g* y:execute "Ggrep!" getreg() " -- '*." . &ft . "'"<CR>
-
-nnoremap g# :Ggrep! 
-vnoremap g# y:Ggrep! 
-
-" same as git add the current file.
-nnoremap gt :Gwrite<CR>
-" same as git checkout the current file, updating buffer.
-nnoremap gx :Gread<CR>
-" leave me on the index version, so I can quickly check it and close it.
-nnoremap gc :Gdiff<CR><C-W>h
-nnoremap ge :Git 
-nnoremap go :Git checkout 
-nnoremap gm :Git merge 
-" use 'help index' to see vim's built-in natively mapped keys
-
-nnoremap g! :Sgit 
-command! -complete=shellcmd -nargs=+ Sgit call s:Bash('git ' . <q-args>, 'git')
-
-command! -complete=shellcmd -nargs=+ S call s:Bash(<q-args>)
-function! s:Bash(cmdline, ...)
-  echo a:cmdline
-  let expanded_cmdline = a:cmdline
-  for part in split(a:cmdline, ' ')
-    if part[0] =~ '\v[%#<]'
-      let expanded_part = shellescape(expand(part))
-      let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
-    endif
-  endfor
-
-  keepalt split new
-  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-  if a:0
-    execute "setlocal ft=".a:1
-  endif
-
-  call setline(1, '$ ' . expanded_cmdline)
-  call setline(2,substitute(getline(1),'.','=','g'))
-  silent! execute '$read !'. expanded_cmdline
-  setlocal nomodifiable
-  1
-endfunction
 "}}}1
 "{{{1 LIFEHACKS
 command! -nargs=1 -complete=customlist,DayOpt Day call Day(<f-args>)
@@ -1580,3 +1155,4 @@ function! Viminder()
   echo sys
 endfunction
 "}}}1
+"

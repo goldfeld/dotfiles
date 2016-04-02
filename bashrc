@@ -5,6 +5,8 @@
 # quick hack to disable input source change and reclaim C-SPC
 ibus exit
 
+export TERM=xterm-256color
+
 PATH=$PATH\:~/mongo/mongodb-linux-x86_64-2.0.2/bin ; export PATH
 
 #export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386/bin/

@@ -1,12 +1,13 @@
 #!/bin/bash
 
-sudo yum -y update
-sudo yum -y install git gvim terminator udisks rlwrap
-#sudo yum -y install emacs
-sudo yum -y install wget make autoconf texinfo
-sudo yum -y install java-1.7.0-openjdk 
-sudo yum -y install npm maven haskell-platform
-sudo yum -y install xmonad
+sudo dnf -y update
+sudo dnf -y install git gvim terminator udisks rlwrap
+sudo dnf -y install gnome-tweak-tool dnf-plugins-core
+#sudo dnf -y install emacs
+sudo dnf -y install wget make autoconf texinfo
+sudo dnf -y install java-1.7.0-openjdk 
+sudo dnf -y install npm maven haskell-platform
+sudo dnf -y install xmonad
 git config --global user.name "Vic Goldfeld"
 git config --global user.email "vic@longstorm.org"
 git config --global push.default simple
@@ -15,8 +16,9 @@ mkdir -p /usr/local/bin
 mkdir ~/.emacs.d/ && mkdir ~/Maildir && mkdir ~/.xmonad
 mkdir -p ~/.emacs.d/eshell && touch ~/.emacs.d/projectile-bookmarks.old
 mkdir ~/.lein
-mkdir ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
-cd ~/goldfeld/dotfiles
+mkdir -p ~/datav/code/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/datav/code/goldfeld/
+mkdir ~/qfork
+cd ~/datav/code/goldfeld/dotfiles 
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
 
 rm ~/.bashrc
@@ -40,57 +42,77 @@ sudo cp repfile /usr/local/bin/ && sudo chmod +x /usr/local/bin/repfile
 ghc --make hooker.hs && sudo mv hooker /usr/local/bin/ && rm hooker.o hooker.hi
 cd ~
 
-sudo yum -y install acpi xclip xdotool recode
+sudo dnf -y install acpi xclip xdotool recode
 
 wget https://raw.github.com/technomancy/leiningen/stable/bin/lein -O ~/lein
 chmod +x ~/lein
 sudo mv ~/lein /usr/local/bin/lein
 
 # xcape
-sudo yum -y install libXtst-devel
+sudo dnf -y install libXtst-devel
 git clone https://github.com/alols/xcape ~/xcape
 cd ~/xcape && make && sudo mv xcape /usr/bin/ && cd ~
 
 # luakit
-#sudo yum -y install libuuid-devel unique-devel libXtst-devel webkitgtk lua-devel lua-filesystem sqlite-devel libsoup-devel
+#sudo dnf -y install libuuid-devel unique-devel libXtst-devel webkitgtk lua-devel lua-filesystem sqlite-devel libsoup-devel
 #sudo rpm -Uvh http://dl.fedoraproject.org/pub/fedora/linux/updates/20/x86_64/webkitgtk-devel-2.2.4-1.fc20.x86_64.rpm
 
 # misc cmd line tools
-sudo yum -y install pass swish-e
-
-# vundle
-mkdir -p ~/.vim/bundle
-git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+sudo dnf -y install pass swish-e
 
 # dmenu with ^M working as Return
 git clone https://github.com/goldfeld/dmenu ~/dmenu
 cd ~/dmenu && make && sudo make install && cd ~
 
+# neovim
+sudo dnf -y copr enable dperson/neovim
+sudo dnf -y install neovim
+sudo dnf -y install neovim
+curl fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# vroom (vim testing)
+cd && git clone https://github.com/google/vroom ~/qfork/vroom
+
+python3 setup.py build && sudo python3 setup.py install
+
+# elm for neovim
+sudo npm install -g elm-test elm-oracle
+# and elm-format needs to be downloaded from website for now
+
 # guilemacs
-sudo yum -y install guile* gtk2-devel libxaw libjpeg-devel libxpm-devel libungif-devel libtiff-devel libxml2-devel ncurses-devel
+sudo dnf -y install guile* gtk2-devel libxaw libjpeg-devel libxpm-devel libungif-devel libtiff-devel libxml2-devel ncurses-devel
 
 # guile-vm
 sudo rpm -Uvh http://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/x86_64/os/Packages/a/automake-1.14.1-1.fc21.noarch.rpm
 
+# racket
+sudo dnf -y copr enable atorkhov/racket
+sudo dnf -y install racket
+
 # ruby
-sudo yum -y install ruby rubygems
+sudo dnf -y install ruby rubygems
 sudy gem install git-bump
 
 # ranger (and utilities for previewing files)
-sudo yum -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
+sudo dnf -y install ranger caca-utils highlight atool w3m poppler-utils mediainfo
 
-sudo npm install -g http-server grunt-cli dustjs-linkedin
+sudo npm install -g http-server grunt-cli
+sudo npm install -g elm
 
 # reptile
-sude yum -y install alsa-lib-devel
+sude dnf -y install alsa-lib-devel
+
+# steam
+sudo dnf config-manager --add-repo=http://negativo17.org/repos/fedora-steam.repo
+sudo dnf -y install steam
 
 # virtualbox
-sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
-sudo yum -y update
-sudo yum -y install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
-sudo yum -y install VirtualBox-4.2
+sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -O /etc/dnf.repos.d/virtualbox.repo
+sudo dnf -y update
+sudo dnf -y install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
+sudo dnf -y install VirtualBox-4.2
 
-# sudo yum -y groupinstall "GNOME Desktop"
+# sudo dnf -y groupinstall "GNOME Desktop"
 
 ssh-keygen -t rsa -C "vic@longstorm.org"
 # exec /bin/ssh-agent $SHELL

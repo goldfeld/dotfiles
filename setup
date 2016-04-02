@@ -17,8 +17,8 @@ mkdir -p /usr/local/bin
 mkdir ~/.emacs.d/ && mkdir ~/Maildir && mkdir ~/.xmonad
 mkdir -p ~/.emacs.d/eshell && touch ~/.emacs.d/projectile-bookmarks.old
 mkdir ~/.lein
-mkdir ~/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/goldfeld
-cd ~/goldfeld/dotfiles
+mkdir -p ~/datav/code/goldfeld && git clone https://github.com/goldfeld/dotfiles ~/datav/code/goldfeld/
+cd ~/datav/code/goldfeld/dotfiles
 git remote rm origin && git remote add origin git@github.com:goldfeld/dotfiles
 
 rm ~/.bashrc

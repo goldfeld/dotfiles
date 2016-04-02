@@ -1,8 +1,10 @@
 (require 'evil-leader)
 (require 'evil-matchit)
+(require 'evil-snipe)
 (global-evil-leader-mode)
 (evil-mode t)
 (evil-leader/set-leader ",")
+(evil-snipe-mode 1)
 
 (setq key-chord-two-keys-delay 0.5)
 (key-chord-mode 1)
