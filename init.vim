@@ -6,10 +6,10 @@ Plug 'neovim/node-host'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install -all' }
 Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-dirvish'
+Plug 'goldfeld/tnt'
 Plug 'goldfeld/vim-walker'
 
 " writing
-Plug 'goldfeld/tnt'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
@@ -29,6 +29,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+Plug 'goldfeld/gut'
 " slows down scrolling
 "Plug 'airblade/vim-gitgutteswitching splitsr'
 
@@ -194,9 +195,13 @@ func! Dirvish_wrap_up(path) " automatically seek the directory or file when goin
   call search(loc)
 endfunc
 "}}}
-"{{{1 TNT SETTINGS
+"{{{1 TNT & GUT SETTINGS
 let g:tnt_root = '~/datav/note'
 let g:tnt_workpath = '~/.vim/plugged;'
+let g:tnt_force_en_US_dates = 1
+let g:tnt_elapsed_minutes_before_new_log_timestamp = 180
+
+let g:gut_gutfiles_path_getter = 'tnt#files#get_project_folder_by_name'
 "}}}
 "{{{1 BUFLOCAL OPTIONS
 augroup filetypeSettings
@@ -256,7 +261,7 @@ nnoremap mT :vs<CR>:term<CR>
 nnoremap mE <C-\><C-N>G?@<CR>f:lyt$:e <C-R>"/
 
 " elegant close buffer
-nnoremap <silent> mb :w<CR>:execute "keepalt b#\\| bdelete" bufnr('%')<CR>
+nnoremap <silent> mb :<C-U>call Bdelete()<CR>
 
 " maps for executing line under cursor (as VimL or shell)
 nnoremap mrr yy:<C-R>"<Backspace>
@@ -339,10 +344,12 @@ nnoremap <silent> <C-T><C-T> :Buffers<CR>
 nnoremap <silent> <C-T>t :Dow swap buf<CR>
 
 nnoremap <silent> <C-T><C-D> :cd %:p:h<CR>
-nnoremap <silent> <C-T><C-S> :call files#fzf_get_sessions()<CR>
+nnoremap <silent> <C-T><C-S> :call tnt#fzf_get_sessions()<CR>
+nnoremap <silent> <C-T><C-J> :TNTNewEntry<CR>
+nnoremap <silent> <C-T><C-B> :<C-U>call SendToNyao()<CR>
+"nnoremap <silent> <C-T>j :TNTNewSubentry<CR>
 
 nnoremap <silent> <C-T><C-I> :e ~/datav/repo/log/inbox/inbox.tnt<CR>
-
 "}}}
 "{{{1 CTRL-W MAPS (window cmds)
 nnoremap <silent> <C-W><C-B> <C-W><C-C><C-W>b
@@ -476,7 +483,20 @@ function! IndentGuideFind(linesUp)
   else | startinsert | call cursor(l:line, col('.') + 1) | endif
 endfunction
 "}}}
-"{{{1 SINGLE-FUNCTION FEATURES
+"{{{1 FUNCTION FEATURES
+function! Bdelete()
+  write
+  let d = bufnr('%')
+  keepalt b #
+  exe 'bdelete' d
+endfunction
+
+function! SendToNyao()
+  let send = expand('%')
+  call Bdelete()
+  call system('nyaovim ' . fnamemodify(send, ':p'))
+endfunction
+
 function! ShowTyping()
   try let char = getchar()
   catch /^Vim:Interrupt$/
@@ -497,6 +517,7 @@ function! Redraw()
   return ''
 endfunction
 
+" for <Leader>\ at [[LEADER MAPS]]
 " search for words (no substring matches) in sequence.
 command! -nargs=* SearchWords call SearchWords(<f-args>)
 let s:lastSearchWords = ''
