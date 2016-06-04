@@ -318,7 +318,8 @@ function! PurgeBuffers()
 endfunction
 "}}}
 "{{{1 CTRL-H MAPS
-nnoremap <C-H><C-H> <C-^>
+nnoremap <silent> <C-H><C-H> <C-^>
+nnoremap <silent> <C-H><C-E> :cd %:p:h<CR>:e 
 "nnoremap qg :let b:qfbufs = cfirst<CR>
 nnoremap <silent> <C-H><C-F> :cwindow<CR>
 nnoremap <silent> <C-H><C-G> :WalkerFirst<CR>
@@ -344,8 +345,10 @@ nnoremap <silent> <C-T><C-T> :Buffers<CR>
 nnoremap <silent> <C-T>t :Dow swap buf<CR>
 
 nnoremap <silent> <C-T><C-D> :cd %:p:h<CR>
-nnoremap <silent> <C-T><C-S> :call tnt#fzf_get_sessions()<CR>
+nnoremap <silent> <C-T><C-S> :<C-U>call tnt#fzf_get_sessions()<CR>
+nnoremap <silent> <C-T><C-P> :<C-U>call tnt#fzf_get_sessions('projects')<CR>
 nnoremap <silent> <C-T><C-J> :TNTNewEntry<CR>
+nnoremap <silent> <C-T><C-R> :<C-U>call tnt#files#pull_reference_item(line('.'))<CR>
 nnoremap <silent> <C-T><C-B> :<C-U>call SendToNyao()<CR>
 "nnoremap <silent> <C-T>j :TNTNewSubentry<CR>
 
