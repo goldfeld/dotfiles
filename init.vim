@@ -327,6 +327,9 @@ nnoremap <silent> <C-H><C-T> :WalkerNext<CR>
 nnoremap <silent> <C-H><C-R> :WalkerPrev<CR>
 nnoremap <silent> <C-H><C-L> @=(&diff?":diffupd\r":":call CloseQFBufs()\r")<CR>
 
+nnoremap <silent> <C-H><C-N> :TNTTopThreadsRotate<CR>
+nnoremap <silent> <C-H><C-P> :TNTTopThreadsRotateBack<CR>
+
 function! CloseQFBufs()
   " map quickfix dicts to bufnr's, then filter out non-open (listed) buffers.
   let bufs = filter(map(getqflist(), 'v:val.bufnr'), 'getbufvar(v:val, "&bl")')
