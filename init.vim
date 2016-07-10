@@ -349,6 +349,7 @@ nnoremap <silent> <C-T>t :Dow swap buf<CR>
 
 nnoremap <silent> <C-T><C-D> :cd %:p:h<CR>
 nnoremap <silent> <C-T><C-S> :<C-U>call tnt#fzf_get_sessions()<CR>
+nnoremap <silent> <C-T><C-L> :<C-U>call tnt#fzf_get_logs()<CR>
 nnoremap <silent> <C-T><C-P> :<C-U>call tnt#fzf_get_sessions('projects')<CR>
 nnoremap <silent> <C-T><C-J> :TNTNewEntry<CR>
 nnoremap <silent> <C-T><C-R> :<C-U>call tnt#files#pull_reference_item(line('.'))<CR>
